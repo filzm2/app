@@ -1,0 +1,42 @@
+<div class="download_document_block" [ngClass]="{'download_document_block-error': file.isError}"
+     [ngStyle]="{'background': uploadStatus ? 'linear-gradient(90deg, #EEF3FF ' + uploadStatus + '%, white ' + (100-uploadStatus) + '%)' : 'white'}">
+  <div class="icm-flex icm-flex-middle">
+
+    <div class="download_document_block-icon">
+      <div class="ms-icon" [ngStyle]="{'background-image': file.icon }"></div>
+    </div>
+
+    <div class="download_document_block-info">
+      <div class="download_document_block-caption">
+        <span class="ddbc_caption">{{file.caption}}</span>
+      </div>
+      <div class="download_document_block-size">
+        <span class="ddbs_caption">{{file.size}}КВ</span>
+      </div>
+    </div>
+
+  </div>
+  <div class="icm-flex icm-flex-middle">
+    <div *ngIf="file.description">
+      <div class="caption">Тип документа:</div>
+      <div class="value">{{file.description}}</div>
+    </div>
+    <div *ngIf="file.date">
+      <div class="caption">Дата:</div>
+      <div class="value">{{file.date}}</div>
+    </div>
+    <div *ngIf="file.period">
+      <div class="caption">Период:</div>
+      <div class="value">{{file.period}}</div>
+    </div>
+    <div *ngIf="budgeButton" class="download_document_block-budge">
+      <div class="icm-badge icm-badge-warning">Placeholder</div>
+    </div>
+    <div *ngIf="downloadButton" class="download_document_block-download">
+      <span class="material-icons vab_icon" (click)="removeComponent(file.i)">vertical_align_bottom</span>
+    </div>
+    <div *ngIf="delButton" class="download_document_block-delete">
+      <span class="material-icons ddbd_icon" (click)="removeComponent(file.i)">delete_outlined</span>
+    </div>
+  </div>
+</div>

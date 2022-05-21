@@ -1,0 +1,351 @@
+<div class="app-start-page">
+  <div class="page-title-container">
+    <div class="greeting">
+      Добрый день, <span class="username">{{ userName }}!</span>
+    </div>
+
+    <div class="header-search">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Поиск</mat-label>
+
+        <input
+          #search
+          [formControl]="searchFormControl"
+          matInput
+          placeholder="Поиск"
+          (change)="onSearchAll(search)"
+        />
+
+        <mat-icon class="search-logo" svgIcon="search"></mat-icon>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="main">
+    <!-- FAVORITE-DASHBOARDS-TILE -->
+    <div class="favorite-dashboards-tile">
+      <div class="dashboard-tile" [style]="{ height: gridsterScrollHeight }">
+        <div *ngIf="pinnedAndLastViewedDashboards.length === 0" class="dashboards-empty">
+          Нет избранных аналитических панелей
+        </div>
+
+        <gridster
+          *ngIf="pinnedAndLastViewedDashboards.length > 0"
+          [options]="gridsterOptions"
+          class="gridster"
+        >
+          <gridster-item
+            *ngFor="let dashboard of pinnedAndLastViewedDashboards"
+            [id]="dashboard.id"
+            [item]="dashboard"
+          >
+            <app-dashboard-card
+              [dashboard]="dashboard"
+              [permissions]="permissions"
+              [pinned]="dashboardPins[dashboard.id] || {}"
+              (setFavorite)="setFavoriteStatus(dashboard)"
+              (delete)="confirmDeletion([dashboard])"
+              (export)="exportDashboard(dashboard)"
+              (click)="redirectToDashboardForMobile(dashboard)"
+            >
+            </app-dashboard-card>
+          </gridster-item>
+        </gridster>
+
+        <a hidden href="" #downloadRef></a>
+      </div>
+    </div>
+
+    <div class="datas" [class]="{ 'datas-hidden': !isDatasetTableShowed }">
+      <!-- FAVORITE-DASHBOARDS -->
+      <div class="favorite-dashboards" [class]="{ 'datas-hidden': !isDatasetTableShowed }">
+        <div class="header-container">
+          <div class="header-title-container">
+            <img src="assets/icons/dashboards.svg" alt="dashboards" width="32" />
+            <div class="header-title">Избранные аналитические панели</div>
+          </div>
+        </div>
+
+        <div class="dashboard-table-container table-container">
+          <div *ngIf="dashboardsFavoritesTableRawData.length === 0" class="dashboards-empty">
+            Нет избранных аналитических панелей
+          </div>
+
+          <table
+            *ngIf="dashboardsFavoritesTableRawData.length > 0"
+            [dataSource]="dashboardsFavoritesTable"
+            mat-table
+            class="dashboard-table table"
+          >
+            <ng-container matColumnDef="dashboard_title">
+              <th
+                *matHeaderCellDef
+                mat-header-cell
+                class="sortable-column-header"
+                (click)="getSortListForDF('dashboard_title')"
+              >
+                <span>
+                  Название аналитической панели
+                  <mat-icon
+                    [ngClass]="{
+                      desc: sortOrderForDF === 'desc',
+                      active: sortColumnForDF === 'dashboard_title'
+                    }"
+                    svgIcon="arrow_sort_down"
+                  ></mat-icon>
+                </span>
+              </th>
+
+              <td *matCellDef="let dashboard" mat-cell>
+                <div class="cell-with-pin">
+                  <img
+                    *ngIf="dashboardPins[dashboard.id] && dashboardPins[dashboard.id].pin"
+                    src="assets/icons/pin_small.svg"
+                    width="12"
+                    height="12"
+                    style="margin-right: 8px"
+                  />
+
+                  <span class="col300"> {{ dashboard.dashboard_title }} </span>
+                </div>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="published">
+              <th
+                *matHeaderCellDef
+                mat-header-cell
+                class="sortable-column-header"
+                (click)="getSortListForDF('published')"
+              >
+                <span>
+                  Статус
+                  <mat-icon
+                    [ngClass]="{
+                      desc: sortOrderForDF === 'desc',
+                      active: sortColumnForDF === 'published'
+                    }"
+                    svgIcon="arrow_sort_down"
+                  ></mat-icon>
+                </span>
+              </th>
+
+              <td *matCellDef="let dashboard" mat-cell>
+                <div class="custom-badge custom-badge__gray" *ngIf="!dashboard.published">
+                  Черновик
+                </div>
+                <div class="custom-badge custom-badge__primary-filled" *ngIf="dashboard.published">
+                  Опубликовано
+                </div>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="changed_on_delta_humanized">
+              <th
+                *matHeaderCellDef
+                mat-header-cell
+                class="sortable-column-header"
+                (click)="getSortListForDF('changed_on_delta_humanized')"
+              >
+                <span>
+                  Изменение
+                  <mat-icon
+                    [ngClass]="{
+                      desc: sortOrderForDF === 'desc',
+                      active: sortColumnForDF === 'changed_on_delta_humanized'
+                    }"
+                    svgIcon="arrow_sort_down"
+                  ></mat-icon>
+                </span>
+              </th>
+
+              <td *matCellDef="let dashboard" mat-cell>
+                {{ dashboard.changed_on_delta_humanized }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="changed_by">
+              <th
+                *matHeaderCellDef
+                mat-header-cell
+                class="sortable-column-header"
+                (click)="getSortListForDF('changed_by.first_name')"
+              >
+                <span>
+                  Автор
+                  <mat-icon
+                    [ngClass]="{
+                      desc: sortOrderForDF === 'desc',
+                      active: sortColumnForDF === 'changed_by.first_name'
+                    }"
+                    svgIcon="arrow_sort_down"
+                  ></mat-icon>
+                </span>
+              </th>
+
+              <td *matCellDef="let dashboard" mat-cell>
+                {{ dashboard.changed_by?.first_name }} {{ dashboard.changed_by?.last_name }}
+              </td>
+            </ng-container>
+
+            <tr *matHeaderRowDef="displayedColumnsForDF" mat-header-row></tr>
+            <tr
+              *matRowDef="let row; columns: displayedColumnsForDF"
+              mat-row
+              (click)="openDashboard(row)"
+            ></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- DATASET -->
+      <div class="dataset" [class]="{ 'dataset-hidden': !isDatasetTableShowed }">
+        <div class="header-container">
+          <div class="header-title-container">
+            <img src="assets/icons/dataset.svg" alt="dataset" width="32" />
+            <div class="header-title">Наборы данных</div>
+          </div>
+
+          <div class="toggle-dataset-table" (click)="isDatasetTableShowed = !isDatasetTableShowed">
+            <span class="toggle-dataset-table-title">
+              {{ isDatasetTableShowed ? 'Скрыть' : 'Показать' }}
+            </span>
+
+            <img
+              src="/assets/icons/down.svg"
+              alt="down"
+              width="20"
+              height="20"
+              [style]="{ transform: isDatasetTableShowed ? 'rotate(0deg)' : 'rotate(180deg)' }"
+            />
+          </div>
+        </div>
+
+        <div *ngIf="isDatasetTableShowed" class="dataset-table-container table-container">
+          <div *ngIf="!datasets" class="datasets-empty">Нет наборов данных</div>
+
+          <table *ngIf="datasets" [dataSource]="datasets" mat-table class="dataset-table table">
+            <ng-container matColumnDef="table_name">
+              <th
+                *matHeaderCellDef
+                mat-header-cell
+                class="sortable-column-header"
+                (click)="getSortListForDS('table_name')"
+              >
+                <span>
+                  Наименование
+                  <mat-icon
+                    [ngClass]="{
+                      desc: sortOrderForDS === 'desc',
+                      active: sortColumnForDS === 'table_name'
+                    }"
+                    svgIcon="arrow_sort_down"
+                  ></mat-icon>
+                </span>
+              </th>
+
+              <td *matCellDef="let dataset" mat-cell>
+                <span class="col-name"> {{ dataset.table_name }}</span>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="kind">
+              <th *matHeaderCellDef mat-header-cell>Тип</th>
+
+              <td *matCellDef="let dataset" mat-cell>
+                <div *ngIf="dataset.kind === 'physical'" class="column-type" [class]="dataset.kind">
+                  <img src="/assets/icons/phisical_icon.svg" width="12" alt="phisical_icon" />
+                  <div class="column-type-text">Физический</div>
+                </div>
+
+                <div *ngIf="dataset.kind === 'virtual'" class="column-type" [class]="dataset.kind">
+                  <img src="/assets/icons/virtual_icon.svg" width="12" alt="virtual_icon" />
+                  <div class="column-type-text">Виртуальный</div>
+                </div>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="schema">
+              <th
+                *matHeaderCellDef
+                mat-header-cell
+                class="sortable-column-header"
+                (click)="getSortListForDS('schema')"
+              >
+                <span>
+                  Схема
+                  <mat-icon
+                    [ngClass]="{
+                      desc: sortOrderForDS === 'desc',
+                      active: sortColumnForDS === 'schema'
+                    }"
+                    svgIcon="arrow_sort_down"
+                  ></mat-icon>
+                </span>
+              </th>
+
+              <td *matCellDef="let dataset" mat-cell>
+                {{ dataset.schema }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="changed_on_delta_humanized">
+              <th
+                *matHeaderCellDef
+                mat-header-cell
+                class="sortable-column-header"
+                (click)="getSortListForDS('changed_on_delta_humanized')"
+              >
+                <span>
+                  Изменение
+                  <mat-icon
+                    [ngClass]="{
+                      desc: sortOrderForDS === 'desc',
+                      active: sortColumnForDS === 'changed_on_delta_humanized'
+                    }"
+                    svgIcon="arrow_sort_down"
+                  ></mat-icon>
+                </span>
+              </th>
+
+              <td *matCellDef="let dataset" mat-cell>
+                {{ dataset.changed_on_delta_humanized }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="changed_by_name">
+              <th
+                *matHeaderCellDef
+                mat-header-cell
+                class="sortable-column-header"
+                (click)="getSortListForDS('changed_by.first_name')"
+              >
+                <span>
+                  Кем изменен
+                  <mat-icon
+                    [ngClass]="{
+                      desc: sortOrderForDS === 'desc',
+                      active: sortColumnForDS === 'changed_by.first_name'
+                    }"
+                    svgIcon="arrow_sort_down"
+                  ></mat-icon>
+                </span>
+              </th>
+
+              <td *matCellDef="let dataset" mat-cell>
+                {{ dataset.changed_by_name }}
+              </td>
+            </ng-container>
+
+            <tr *matHeaderRowDef="displayedColumnsForDS" mat-header-row></tr>
+            <tr
+              *matRowDef="let i = index; let row; columns: displayedColumnsForDS"
+              mat-row
+              (click)="openDataset(row)"
+            ></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

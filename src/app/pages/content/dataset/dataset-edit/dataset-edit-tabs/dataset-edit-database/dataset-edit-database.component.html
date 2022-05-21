@@ -1,0 +1,88 @@
+<div class="dataset-edit-database">
+  <div>
+    <mat-radio-group
+      [value]="typeSelected"
+      (change)="typeChanged($event.value)"
+    >
+      <mat-radio-button value="physical">
+        Физическая таблица
+      </mat-radio-button>
+
+      <mat-radio-button value="virtual">
+        Виртуальная (SQL)
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div *ngIf="formGroup" [formGroup]="formGroup" class="form-container">
+    <div class="form">
+      <mat-form-field
+        appearance="outline"
+        class="form-input mat-form-field small-input">
+        <mat-label>База данных</mat-label>
+
+        <mat-select
+          formControlName="database_id"
+          (selectionChange)="databaseChanged($event.value)">
+          <mat-option
+            *ngFor="let database of databases"
+            [value]="database.value">
+            {{ database.text }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field
+        appearance="outline"
+        class="form-input mat-form-field small-input">
+        <mat-label>Схема</mat-label>
+
+        <mat-select
+          formControlName="schema"
+          (selectionChange)="schemaChanged($event.value)">
+          <mat-option
+            *ngFor="let schema of schemes"
+            [value]="schema">
+            {{ schema }}
+          </mat-option>
+        </mat-select>
+        <mat-icon class="refresh-icon" (click)="getSchemas(); $event.stopPropagation()" svgIcon="refresh"></mat-icon>
+      </mat-form-field>
+
+      <mat-form-field
+        *ngIf="typeSelected !== 'virtual'"
+        appearance="outline"
+        class="form-input mat-form-field small-input">
+        <mat-label>Выбор таблицы</mat-label>
+
+        <mat-select
+          formControlName="table_name"
+          (selectionChange)="tableChanged($event.value)">
+          <mat-option
+            *ngFor="let table of tables"
+            [value]="table.value">
+            {{ table.label }}
+          </mat-option>
+        </mat-select>
+        <mat-icon  class="refresh-icon" (click)="getTables(); $event.stopPropagation()" svgIcon="refresh"></mat-icon>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="typeSelected === 'virtual'" class="form-input" appearance="outline">
+        <mat-label>Название набора данных</mat-label>
+        <input matInput formControlName='table_name'>
+      </mat-form-field>
+
+    </div>
+    <div
+      *ngIf="typeSelected === 'virtual'"
+      class="sql ">
+      <label class="label">SQL</label>
+
+      <textarea
+        formControlName="sql"
+        matInput
+        rows="6"
+        class="textarea"></textarea>
+    </div>
+  </div>
+</div>

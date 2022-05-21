@@ -1,0 +1,211 @@
+<div class="database-sql-alchemy">
+  <mat-tab-group
+    (selectedTabChange)="tabChange($event)"
+    class="database-sql-alchemy-tabs"
+    [formGroup]="formGroup"
+  >
+    <mat-tab *ngIf="withConnection" label="Основные">
+      <div *ngIf="formGroup" class="database-sql-alchemy-tab database-sql-alchemy-base">
+        <app-database-connection [group]="formGroup"></app-database-connection>
+      </div>
+
+      <div *ngIf="!formGroup" class="spinner-wrapper">
+        <mat-spinner></mat-spinner>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="SQL lab">
+      <div *ngIf="formGroup" class="database-sql-alchemy-tab database-sql-alchemy-sql">
+        <mat-hint class="mat-hint-title">
+          Настройка взаимодействия этой базы данных с SQL Lab
+        </mat-hint>
+
+        <div class="database-sql-alchemy-sql-main-checkbox">
+          <mat-checkbox formControlName="expose_in_sqllab">
+            Открыть базу данных в SQL Lab
+            <span matTooltip="Открыть базу данных в SQL Lab" class="mat-tooltip-icon">i</span>
+          </mat-checkbox>
+        </div>
+
+        <div class="database-sql-alchemy-sql-columns">
+          <div>
+            <mat-checkbox
+              (change)="ctasCvasClick(ctas.checked, cvas.checked)"
+              formControlName="allow_ctas"
+              #ctas
+            >
+              Разрешать CREATE TABLE AS
+              <span matTooltip="Разрешать CREATE TABLE AS" class="mat-tooltip-icon">i</span>
+            </mat-checkbox>
+
+            <mat-checkbox
+              (change)="ctasCvasClick(ctas.checked, cvas.checked)"
+              formControlName="allow_cvas"
+              #cvas
+            >
+              Разрешать CREATE VIEW AS
+              <span matTooltip="Разрешать CREATE VIEW AS" class="mat-tooltip-icon">i</span>
+            </mat-checkbox>
+
+            <app-form-field
+              [relativeHint]="true"
+              [control]="getFormControl('force_ctas_schema')"
+              label="CTAS & CVAS схема"
+              hint="Принудительно создавать все таблицы и представления в этой схеме при нажатии CTAS или CVAS в SQL Lab."
+            >
+            </app-form-field>
+          </div>
+
+          <div>
+            <mat-checkbox formControlName="allow_dml">
+              Разрешать DML<span matTooltip="Разрешать DML" class="mat-tooltip-icon">i</span>
+            </mat-checkbox>
+
+            <mat-checkbox formControlName="cost_estimate_enabled">
+              Включить оценку стоимости запроса
+              <span matTooltip="Включить оценку стоимости запроса" class="mat-tooltip-icon">
+                i
+              </span>
+            </mat-checkbox>
+
+            <mat-checkbox formControlName="allows_virtual_table_explore">
+              Разрешить изучение этой базы данных
+              <span matTooltip="Разрешить изучение этой базы данных" class="mat-tooltip-icon">
+                i
+              </span>
+            </mat-checkbox>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="!formGroup" class="spinner-wrapper">
+        <mat-spinner></mat-spinner>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Производительность">
+      <div *ngIf="formGroup" class="database-sql-alchemy-tab database-sql-alchemy-performance">
+        <mat-hint class="mat-hint-title">Настройка производительности базы данных</mat-hint>
+
+        <div class="database-sql-alchemy-performance-field-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Тайм-аут кэша графиков</mat-label>
+            <input
+              formControlName="cache_timeout"
+              matInput
+              type="number"
+              min="0"
+              inputmode="number"
+              (change)="checkInputFieldNumber($event)"
+            />
+          </mat-form-field>
+
+          <span matTooltip="Тайм-аут кэша графиков" class="mat-tooltip-icon">i</span>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Тайм-аут кэша схем</mat-label>
+            <input
+              formControlName="schema_cache_timeout"
+              matInput
+              type="number"
+              min="0"
+              inputmode="number"
+              (change)="checkInputFieldNumber($event)"
+            />
+          </mat-form-field>
+
+          <span matTooltip="Тайм-аут кэша схем" class="mat-tooltip-icon">i</span>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Тайм-аут кэша таблиц</mat-label>
+            <input
+              formControlName="table_cache_timeout"
+              matInput
+              type="number"
+              min="0"
+              inputmode="number"
+              (change)="checkInputFieldNumber($event)"
+            />
+          </mat-form-field>
+
+          <span matTooltip="Тайм-аут кэша таблиц" class="mat-tooltip-icon">i</span>
+        </div>
+
+        <div class="database-sql-alchemy-performance-checkboxes">
+          <mat-checkbox formControlName="allow_run_async">
+            Асинхронное выполнение запроса
+            <span matTooltip="Асинхронное выполнение запроса" class="mat-tooltip-icon">i</span>
+          </mat-checkbox>
+
+          <mat-checkbox formControlName="cancel_query_on_windows_unload">
+            Отменить запрос при закрытии окна
+            <span matTooltip="Отменить запрос при закрытии окна" class="mat-tooltip-icon">i</span>
+          </mat-checkbox>
+        </div>
+      </div>
+
+      <div *ngIf="!formGroup" class="spinner-wrapper">
+        <mat-spinner></mat-spinner>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Безопасность">
+      <div *ngIf="formGroup" class="database-sql-alchemy-tab database-sql-alchemy-security">
+        <mat-hint class="mat-hint-title">Дополнительная информация о соединении</mat-hint>
+        <div class="database-sql-alchemy-security-columns">
+          <div class="database-sql-alchemy-security-column">
+            <!--            <app-json-editor-->
+            <!--              [control]="getFormControl('encrypted_extra')"-->
+            <!--              height="s"-->
+            <!--              hint="Строка JSON, содержащая дополнительную конфигурацию-->
+            <!--                подключения. Используется для предоставления-->
+            <!--                информации о соединении для таких систем, как Hive,-->
+            <!--                Presto и BigQuery, которые не соответствуют синтаксису-->
+            <!--                username:password, обычно используемому SQLAlchemy"-->
+            <!--              label="Дополнительные данные по безопасности">-->
+            <!--            </app-json-editor>-->
+            <div class="custom-form-field">
+              <app-chips-autocomplete-field
+                label="Схемы, разрешенные для загрузки CSV"
+                [allOptions]="schemas"
+                [formControl]="getFormControl('schemas_allowed_for_csv_upload')"
+              >
+              </app-chips-autocomplete-field>
+
+              <mat-hint>
+                Список схем, разделенных запятыми, в которые разрешена загрузка файлов CSV.
+              </mat-hint>
+            </div>
+
+            <mat-checkbox formControlName="impersonate_user">
+              Разрешить загрузку данных
+              <span matTooltip="Разрешить загрузку данных" class="mat-tooltip-icon">i</span>
+            </mat-checkbox>
+          </div>
+
+          <div class="database-sql-alchemy-security-column">
+            <mat-form-field appearance="outline" class="mat-textarea relative-hint-field">
+              <mat-label>Корневой сертификат</mat-label>
+              <textarea
+                formControlName="server_cert"
+                placeholder="Ведите CA_BUNDLE"
+                matInput
+              ></textarea>
+
+              <mat-hint>
+                Необязательное содержимое CA_BUNDLE для проверки запросов HTTPS. Доступно только в
+                определенных движках баз данных
+              </mat-hint>
+            </mat-form-field>
+            <!--            <mat-checkbox formControlName="allow_csv_upload">Impersonate logged in user (Presto & Hive)<span-->
+            <!--              matTooltip="Impersonate logged in user (Presto & Hive)" class="mat-tooltip-icon">i</span></mat-checkbox>-->
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="!formGroup" class="spinner-wrapper">
+        <mat-spinner></mat-spinner>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

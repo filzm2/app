@@ -1,0 +1,46 @@
+<div class="popup-gc-body">
+  <p class="modal-title">Поиск компании</p>
+  <app-ui-stepper [steps]="modalSteps"></app-ui-stepper>
+  <hr>
+  <div class="modal__step--title">
+    Поиск компании
+  </div>
+
+  <form class="example-form">
+    <mat-form-field class="example-full-width">
+      <input type="text"
+             placeholder="Полное наименование, ИНН или КПП"
+             aria-label="Company"
+             matInput
+             [formControl]="myControl"
+             [matAutocomplete]="auto"
+             (keydown)="onChangeInput()"
+      >
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option
+          *ngFor="let option of filteredOptions | async"
+          [value]="option.title"
+          (click)="changePopupStatus(option.id)">
+          {{option.title}}
+        </mat-option>
+        <mat-option disabled="true" *ngIf="!isSearchResultExist && myControl.dirty">Совпадений нет</mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+  <div class="popup-gc-body-actions">
+    <app-ui-button (clickButton)="completeTask()"
+                   title="Добавить компанию"
+                   [mat-dialog-close]="true"
+                   [disable]="!myControl.touched || myControl.value == null || !isSearchResultExist"
+                   color="blue">
+    </app-ui-button>
+    <app-ui-button
+      *ngIf="!isSearchResultExist && myControl.dirty"
+      [title]="'Новый клиент'"
+      [color]="'lBlue'"
+      (clickButton)="createNewClient($event)"
+    ></app-ui-button>
+    <app-hint class="popup-gc-body-actions-hint" [caption]="'Начните искать компанию, чтобы продолжить'"></app-hint>
+  </div>
+
+</div>

@@ -1,0 +1,95 @@
+@import "../../../../../styles/exd-colors.scss";
+@import "../../../../../styles/mixins.scss";
+@import "../../../../../styles/variables.scss";
+
+.chart-add {
+  margin: 78px auto 0;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 744px;
+  min-height: 424px;
+  border-radius: 8px;
+  padding: 20px 0 40px;
+  background-color: map-get($exd-primary, 1);
+  * {
+    box-sizing: border-box;
+  }
+  &__title {
+    padding: 0 32px 20px;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 24px;
+    color: map-get($exd-primary, 0);
+  }
+  &__description {
+    margin: 0 32px;
+    &-label {
+      font-size: 16px;
+      color: map-get($exd-grayscale, 400);
+    }
+  }
+  &__body {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    padding: 20px 22px;
+    &-item {
+      max-width: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      margin: 0 10px 20px 10px;
+      svg {
+        transition: opacity .3s;
+        opacity: 0.6;
+      }
+      &.active {
+        .chart-add__body-icon-wrapper {
+          border: 3px solid map-get($exd-psb-blue, 300);
+        }
+        svg {
+          opacity: 1;
+        }
+      }
+      &.disabled {
+        .database-add__body-name {
+          color: map-get($exd-grayscale, 300);
+        }
+      }
+    }
+    &-name {
+      @include font(14px, 500);
+      padding-top: 16px;
+      text-align: center;
+      height: 56px;
+    }
+    &-icon-wrapper {
+      width: 120px;
+      height: 120px;
+      background: map-get($exd-grayscale, 50);
+      border: 3px solid map-get($exd-grayscale, 50);
+      border-radius: $main-radius;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all .3s;
+      mat-icon {
+        width: 60px;
+        height: 60px;
+      }
+    }
+  }
+  &__actions {
+    margin: 0 32px 0;
+    display: flex;
+    gap: 16px;
+    .close-button {
+      margin-right: auto;
+    }
+  }
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}

@@ -1,0 +1,335 @@
+/* MODAL STYLES
+-------------------------------*/
+app-popup {
+  /* modals ar-ye scroll  by default */
+  display: none;
+
+
+
+  .jw-modal {
+    /* modal container fixed across whole screen */
+    position: fixed;
+    top: 0;
+    right: -10px;
+    bottom: 0;
+    left: 0;
+
+    /* z-index must be higher than .jw-modal-background */
+    z-index: 903;
+
+    /* enables scrolling for tall modals */
+    overflow: auto;
+
+    .order-modal-second-body {
+      .modal__step--title {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 16px;
+        color: #000000;
+        margin-bottom: 16px;
+      }
+      position: relative;
+      box-sizing: border-box;
+      padding: 32px;
+      background: #fff;
+      width: 402px;
+      height: 164px;
+      border-radius: 4px;
+      /* margin exposes part of the modal background */
+      margin: 250px auto;
+      .modal-title {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 20px;
+        color: #000000;
+        margin-bottom: 16px;
+      }
+      .client-select{
+        width: 338px;
+      }
+    }
+
+    .order-modal-body {
+      position: relative;
+      box-sizing: border-box;
+      padding: 32px;
+      background: #fff;
+      width: 798px;
+      border-radius: 4px;
+      /* margin exposes part of the modal background */
+      margin: 200px auto;
+      .modal__popup_attention {
+        display: flex;
+        width: 734px;
+        height: 80px;
+        background: #FFFCF9;
+        border: 1px solid #F37A1F;
+        box-sizing: border-box;
+        border-radius: 4px;
+        padding: 16px;
+        &__icon_container {
+          display: flex;
+          align-items: center;
+          color: #F37A1F;
+          margin: 5px 26px 5px 10px;
+          .modal__popup_attention__icon {
+            width: 44px;
+            height: 44px;
+            font-size: 44px;
+          }
+        }
+        &__text {
+          font-size: 16px;
+          line-height: 24px;
+        }
+      }
+      .modal__step--title {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 16px;
+        color: #000000;
+        margin-bottom: 16px;
+      }
+      .modal-title {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 20px;
+        color: #000000;
+        margin-bottom: 16px;
+      }
+      .badge__stepper {
+        margin-bottom: 24px;
+        .badge__divider {
+          display: inline-block;
+          margin: 0 8px 4px 8px;
+          width: 26px;
+          height: 1px;
+          border-bottom: 1px solid #B9B9B9;
+        }
+        .modal__badge {
+          display: inline-block;
+          width: 24px;
+          height: 24px;
+          color: #ffffff;
+          border-radius: 12px;
+          line-height: 26px;
+
+
+          &.badge--done {
+            margin-right: 8px;
+            text-align: center;
+            background-color: #F37A1F;;
+          }
+          &.badge--pass {
+            margin-right: 8px;
+            text-align: center;
+            background-color: #D6D6D6;;
+          }
+        }
+      }
+
+      .search__panel {
+        border-radius: 10px 10px 0px 0px;
+        width: 734px;
+        height: 56px;
+      }
+    }
+
+    .confirmation {
+      margin-top: 113px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      height: 36px;
+      background-color: #ffffff;
+      border-radius: 4px;
+      box-sizing: border-box;
+      color: #dadada;
+      .icons__warning {
+        color: #DADADA;
+        width: 24px;
+        height: 24px;
+        margin: 0 10px 0 0px;
+      }
+      .btn {
+        width: 172px;
+        height: 36px;
+        color: #ffffff;
+        border: none;
+        background: #D8D8D8;;
+        border-radius: 4px;
+        margin: 0;
+        .icons__direction--right {
+
+        }
+      }
+    }
+
+  }
+  .btn__modal--close {
+    position: absolute;
+    right: -56px;
+    top: 24px;
+
+    border-radius: 4px;
+    width: 40px;
+    height: 40px;
+    background: #3D50B7;
+    color: #ffffff;
+    text-align: center;
+    mat-icon {
+      line-height: 39px;
+      margin: 0 auto;
+    }
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .jw-modal-background {
+    /* modal background fixed across whole screen */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    /* semi-transparent black  */
+    background-color: #000;
+    opacity: 0.75;
+
+    /* z-index must be below .jw-modal and above everything else  */
+    z-index: 900;
+  }
+
+  .jw-modal-second {
+    /* modal container fixed across whole screen */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    /* z-index must be higher than .jw-modal-background */
+    z-index: 951;
+
+    /* enables scrolling for tall modals */
+    overflow: auto;
+
+    .order-modal-second-body {
+      .modal__step--title {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 16px;
+        color: #000000;
+        margin-bottom: 16px;
+      }
+      position: relative;
+      box-sizing: border-box;
+      padding: 32px;
+      background: #fff;
+      width: 402px;
+      height: 164px;
+      border-radius: 4px;
+      /* margin exposes part of the modal background */
+      margin: 250px auto;
+      .modal-title {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 20px;
+        color: #000000;
+        margin-bottom: 16px;
+      }
+      .client-select{
+        width: 338px;
+      }
+    }
+
+    .order-modal-body {
+      position: relative;
+      box-sizing: border-box;
+      padding: 32px;
+      background: #fff;
+      width: 798px;
+      height: 408px;
+      border-radius: 4px;
+      /* margin exposes part of the modal background */
+      margin: 200px auto;
+
+      .modal__step--title {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 16px;
+        color: #000000;
+        margin-bottom: 16px;
+      }
+      .modal-title {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 20px;
+        color: #000000;
+        margin-bottom: 16px;
+      }
+      hr {
+        margin-bottom: 16px;
+      }
+
+      .search__panel {
+        border-radius: 10px 10px 0px 0px;
+        width: 734px;
+        height: 56px;
+      }
+    }
+
+    .confirmation {
+      margin-top: 128px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      height: 36px;
+      background-color: #ffffff;
+      border-radius: 4px;
+      box-sizing: border-box;
+      color: #dadada;
+      .icons__warning {
+        color: #DADADA;
+        width: 24px;
+        height: 24px;
+        margin: 0 10px 0 28px;
+      }
+      .btn {
+        width: 172px;
+        height: 36px;
+        color: #ffffff;
+        border: none;
+        background: #D8D8D8;;
+        border-radius: 4px;
+        margin: 0;
+        .icons__direction--right {
+
+        }
+      }
+    }
+
+  }
+
+  .jw-modal-background-second {
+    /* modal background fixed across whole screen */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    /* semi-transparent black  */
+    background-color: #000;
+    opacity: 0.75;
+
+    /* z-index must be below .jw-modal and above everything else  */
+    z-index: 950;
+  }
+}
+
+body.jw-modal-open {
+  /* body overflow i-ys scroll  to hide main scrollbar when modal window is open */
+  overflow-y: scroll ;
+}

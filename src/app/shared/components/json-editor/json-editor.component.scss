@@ -1,0 +1,88 @@
+@import '../../../../styles/exd-colors.scss';
+@import '../../../../styles/variables.scss';
+@import '../../../../styles/mixins.scss';
+
+.custom-json-editor {
+  border: 1px solid map-get($exd-grayscale, 100);
+  border-radius: $main-radius;
+  overflow: hidden;
+  transition: .3s;
+  position: relative;
+  * {
+    box-sizing: border-box;
+  }
+  &-label {
+    padding: 0 5px;
+    @include font(12px, 500, 16px);
+    color: map-get($exd-grayscale, 400);
+    position: absolute;
+    background: white;
+    border-radius: $main-radius;
+    z-index: 10;
+    top: -12px;
+    left: 10px;
+  }
+  &-wrapper {
+    margin-top: 6px;
+    position: relative;
+    .mat-hint, .mat-error {
+      @include font(12px, 500);
+      padding-left: 12px;
+      display: block;
+      margin-top: 3px;
+      margin-bottom: 20px;
+    }
+  }
+  &-outline {
+    overflow: hidden;
+    border: 1px solid transparent;
+    transition: .3s;
+    border-radius: $main-radius;
+    &.s {
+      height: 96px;
+      .ace-jsoneditor {
+        height: 96px;
+        min-height: 96px;
+      }
+    }
+    &.m {
+      height: 120px;
+      .ace-jsoneditor {
+        height: 120px;
+        min-height: 120px;
+      }
+    }
+  }
+  &.focus {
+    border: 1px solid map-get($exd-psb-blue, 500) !important;
+    .custom-json-editor-outline {
+      border: 1px solid map-get($exd-psb-blue, 500) !important;
+    }
+  }
+  &:hover {
+    border: 1px solid map-get($exd-grayscale, 500);
+    .custom-json-editor-outline {
+      border: 1px solid map-get($exd-grayscale, 500);
+    }
+  }
+  .jsoneditor {
+    border: none;
+    border-radius: $main-radius;
+    height: 100%;
+  }
+  .ace-jsoneditor {
+    box-sizing: border-box;
+    border: none;
+    .ace_gutter {
+      right: 0;
+      left: auto !important;
+      top: 0;
+    }
+    .ace_scroller {
+      left: 0 !important;
+    }
+  }
+  .ace-jsoneditor .ace_marker-layer .ace_active-line {
+    background: map-get($exd-primary, 100);
+  }
+}

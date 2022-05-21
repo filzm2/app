@@ -1,0 +1,113 @@
+<div class="dialog-chart">
+  <div *ngIf="data.key === 'time_range'"
+       [ngClass]="{custom: type === 'custom'}"
+       class="dialog-chart__time-range">
+    <h3 mat-dialog-title class="dialog-chart__title">Диапазон времени</h3>
+    <div class="dialog-chart__content" [formGroup]="formGroup" *ngIf="formGroup">
+      <div class="dialog-chart__content_field full-width">
+        <mat-form-field class="relative-hint-field" appearance="outline">
+          <mat-label>Тип диапозона</mat-label>
+          <mat-select formControlName="type">
+            <mat-option *ngFor="let action of typesOfRange" [value]="action.value">{{action.label}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <span class="mat-tooltip-icon" matTooltipClass="app-tooltip" matTooltip='Диапазон времени'>i</span>
+      </div>
+
+      <mat-radio-group *ngIf="type === 'last'" formControlName="last_radio">
+
+        <mat-radio-button [value]="'last_day'">
+          За последний день
+        </mat-radio-button>
+        <mat-radio-button [value]="'last_week'">
+          За последнюю неделю
+        </mat-radio-button>
+        <mat-radio-button [value]="'last_month'">
+          За последний месяц
+        </mat-radio-button>
+        <mat-radio-button [value]="'last_quarter'">
+          За последний квартал
+        </mat-radio-button>
+        <mat-radio-button [value]="'last_year'">
+          За последний год
+        </mat-radio-button>
+      </mat-radio-group>
+
+      <mat-radio-group *ngIf="type === 'previous'" formControlName="previous_radio">
+
+        <mat-radio-button [value]="'previous_week'">
+          За предыдущую неделю
+        </mat-radio-button>
+        <mat-radio-button [value]="'previous_month'">
+          За предыдущий месяц
+        </mat-radio-button>
+        <mat-radio-button [value]="'previous_year'">
+          За предыдущий год
+        </mat-radio-button>
+      </mat-radio-group>
+
+
+      <div *ngIf="type === 'custom'" class="custom-filter-container">
+        <div class="dialog-chart__content_description">Настроить собственный временной диапазон</div>
+        <div class="dialog-chart__time-range_custom">
+
+            <mat-form-field class="relative-hint-field" appearance="outline">
+              <mat-label>C</mat-label>
+              <mat-select formControlName="custom_start_type">
+                <mat-option value="now">Сейчас</mat-option>
+                <mat-option value="midnight">Полночь</mat-option>
+                <mat-option value="calendar">Задать дату/время</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="relative-hint-field" appearance="outline">
+              <mat-label>По</mat-label>
+              <mat-select formControlName="custom_end_type">
+                <mat-option value="now">Сейчас</mat-option>
+                <mat-option value="midnight">Полночь</mat-option>
+                <mat-option value="calendar">Задать дату/время</mat-option>
+              </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="dialog-chart__time-range_custom">
+          <mat-form-field *ngIf="customDateSettings.startType === 'calendar'" appearance="outline"
+                          class="custom-form-field">
+            <mat-label>Начало</mat-label>
+            <input matInput [matDatepicker]="datepickerStart" formControlName="custom_start">
+            <mat-datepicker-toggle matSuffix [for]="datepickerStart"></mat-datepicker-toggle>
+            <mat-datepicker #datepickerStart>
+              <mat-datepicker-actions>
+                <button mat-raised-button color="primary" class="small-button" matDatepickerApply>Выбрать</button>
+              </mat-datepicker-actions>
+            </mat-datepicker>
+          </mat-form-field>
+          <mat-form-field *ngIf="customDateSettings.endType === 'calendar'" appearance="outline"
+                          class="custom-form-field">
+            <mat-label>Окончание</mat-label>
+            <input matInput [matDatepicker]="datepickerEnd" formControlName="custom_end">
+            <mat-datepicker-toggle matSuffix [for]="datepickerEnd"></mat-datepicker-toggle>
+            <mat-datepicker #datepickerEnd>
+              <mat-datepicker-actions>
+                <button mat-raised-button color="primary" class="small-button" matDatepickerApply>Выбрать</button>
+              </mat-datepicker-actions>
+            </mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="dialog-chart__content_description">
+        <div class="mat-caption">Фактический временной диапазон</div>
+        <div *ngIf="type !== 'no_filter' && !wrongDate"> {{ dates.startDate | date:'shortDate' }} < col < {{ dates.endDate | date: 'shortDate' }}</div>
+        <div *ngIf="type === 'no_filter' && !wrongDate"> {{ dates.startDate }} < col < {{ dates.endDate }}</div>
+        <div class="wrong-date" *ngIf="wrongDate"><mat-icon>highlight_off</mat-icon>Некоректный временной диапазон</div>
+      </div>
+    </div>
+    <div>
+
+    </div>
+    <div mat-dialog-actions class="dialog-chart__actions">
+      <button [disabled]="wrongDate" mat-raised-button color="primary" class="small-button" (click)="submit()">Применить</button>
+      <button mat-stroked-button class="primary-color small-button" color="primary" (click)="close()">Закрыть</button>
+    </div>
+  </div>
+</div>

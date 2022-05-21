@@ -1,0 +1,18 @@
+<div class="status">
+
+  <ng-template [ngIf]="type === 'success'">
+    <span class="material-icons"  [ngStyle]="{color: '#3D50B7'}">assignment_turned_in</span>
+    <div  class="status_caption"  [ngStyle]="{color: '#3D50B7'}">{{caption}}</div>
+  </ng-template>
+
+  <ng-template [ngIf]="type === 'alerted'">
+    <span class="material-icons"  [ngStyle]="{color: '#F37A1F'}">assignment_late</span>
+    <div  class="status_caption"  [ngStyle]="{color: '#F37A1F'}">{{caption}}</div>
+  </ng-template>
+
+  <ng-template [ngIf]="type === 'denied'">
+    <span class="material-icons"  [ngStyle]="{color: '#F31F1F'}">highlight_off</span>
+    <div  class="status_caption"  [ngStyle]="{color: '#F31F1F'}">{{caption}}</div>
+  </ng-template>
+
+</div>

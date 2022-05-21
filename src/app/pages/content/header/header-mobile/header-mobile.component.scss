@@ -1,0 +1,81 @@
+@import '../../../../../styles/exd-colors.scss';
+
+.app-header-mobile {
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  right: 0;
+  min-height: 364px;
+  padding: 12px;
+  background-color: map-get($exd-primary, 550);
+  animation: app-header-mobile-slide-down 0.2s both;
+  will-change: transform;
+
+  .container {
+    margin: 78px auto 0;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 800px;
+
+    @media (max-width: 800px) {
+      flex-direction: column;
+      max-width: 400px;
+      padding-bottom: 40px;
+    }
+
+    .column {
+      flex-grow: 1;
+
+      .link-title {
+        margin-top: 12px;
+        display: block;
+        font-weight: bold;
+        font-size: 20px;
+        line-height: 32px;
+        color: map-get($exd-primary, 1);
+        text-decoration: none;
+        cursor: pointer;
+
+        // reset button style
+        border: none;
+        padding: 0;
+        background-color: transparent;
+
+        &.not-button {
+          cursor: default;
+        }
+      }
+
+      .links {
+        margin: 12px 0 0 18px;
+      }
+
+      .link {
+        margin-bottom: 2px;
+        display: block;
+        font-weight: bold;
+        font-size: 14px;
+        line-height: 26px;
+        color: map-get($exd-primary, 1);
+        text-decoration: none;
+        cursor: pointer;
+
+        // reset button style
+        padding: 0;
+        border: none;
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+@keyframes app-header-mobile-slide-down {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}

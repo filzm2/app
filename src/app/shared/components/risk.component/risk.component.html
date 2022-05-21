@@ -1,0 +1,15 @@
+<ng-container >
+  <div class="icm-flex-inline icm-margin-small-bottom">
+    <div *ngIf="data.type === 'Вопрос'" class="icm-pledge-primary icm-margin-xsmall-right">{{data.type}}</div>
+    <div *ngIf="data.type === 'Ответ'" class="icm-pledge-second icm-margin-xsmall-right">{{data.type}}</div>
+    <div class="icm-pledge-mute">{{data.date}}</div>
+  </div>
+  <p class="icm-text--paragraph">{{data.text}}</p>
+  <div class="icm-flex">
+    <div class="test-avatar icm-margin-xsmall-right"></div>
+    <div>
+      <div class="icm-text-meta icm-text--very-small">{{data.user.role}}</div>
+      <div class="icm-text--paragraph">{{data.user.name}}</div>
+    </div>
+  </div>
+</ng-container>

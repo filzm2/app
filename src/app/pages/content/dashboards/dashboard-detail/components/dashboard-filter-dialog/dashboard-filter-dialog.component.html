@@ -1,0 +1,132 @@
+<div class="filter-dialog">
+  <div class="filter-dialog__header">
+    <div class="mat-h2">Конфигурация фильтров</div>
+
+    <button
+      mat-stroked-button
+      color="primary"
+      class="small-button primary-color"
+      (click)="addNewFilter()"
+    >
+      <mat-icon svgIcon="plus" style="stroke: #0400bf"></mat-icon>
+      Добавить фильтр
+    </button>
+  </div>
+
+  <div class="filter-dialog__content">
+    <div class="filter-dialog__content-list">
+      <div
+        class="filter-dialog__content-list-element"
+        *ngFor="let filter of filterData; let filterIndex = index"
+        (click)="selectFilter(filterIndex)"
+        [ngClass]="{
+          'list-element__selected': filterIndex === selectedFilterIndex
+        }"
+      >
+        <div>{{ filter.name }}</div>
+        <button
+          mat-icon-button
+          *ngIf="filterIndex === selectedFilterIndex"
+          (click)="deleteFilter(filterIndex)"
+        >
+          <mat-icon svgIcon="delete" class="delete-button"></mat-icon>
+        </button>
+      </div>
+      <!-- <div class="filter-dialog__content-list-element list-element__selected">
+        Название фильтра
+      </div> -->
+    </div>
+    <div class="filter-dialog__content-form">
+      <div class="filter-dialog__content-empty" *ngIf="!filterData.length">
+        <div>Фильтры отсутствуют. Чтобы добавить, нажмите "Добавить фильтр"</div>
+      </div>
+      <form *ngIf="filterData.length">
+        <mat-form-field
+          appearance="outline"
+          color="primary"
+          class="small-input form-input filter-type"
+        >
+          <mat-label>Тип фильтра</mat-label>
+          <mat-select [required] [value]="'time'">
+            <mat-option value="time">Диапазон времени</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field
+          appearance="outline"
+          color="primary"
+          class="small-input form-input filter-name"
+        >
+          <mat-label>Название фильтра</mat-label>
+
+          <input
+            [(ngModel)]="selectedData.name"
+            name="filterName"
+            matInput
+            placeholder="Введите название"
+          />
+        </mat-form-field>
+
+        <!-- <mat-divider></mat-divider> -->
+
+        <mat-accordion class="ui-accordion">
+          <mat-expansion-panel expanded>
+            <mat-expansion-panel-header>
+              <mat-panel-title> Основные настройки </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <app-dashboard-filter-bar
+              [filterData]="selectedData"
+              (changeFilter)="changeFilter($event)"
+            ></app-dashboard-filter-bar>
+
+            <!-- <mat-form-field appearance="outline" color="accent" class="small-input filter-formfield">
+              <mat-label>Выберите диапазон дат</mat-label>
+
+              <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+                <input matStartDate formControlName="start" placeholder="Начало">
+                <input matEndDate formControlName="end" placeholder="Конец">
+              </mat-date-range-input>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+
+              <mat-date-range-picker #picker></mat-date-range-picker>
+
+              <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date
+              </mat-error>
+
+              <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date
+              </mat-error>
+            </mat-form-field> -->
+          </mat-expansion-panel>
+        </mat-accordion>
+
+        <!-- <div class="filter-actions">
+          <button mat-raised-button color="primary" class="small-button"  [mat-dialog-close]="filterData">
+            Сохранить
+          </button>
+          <button mat-stroked-button color="primary" class="small-button cancel-button primary-color" mat-dialog-close>
+            Отменить
+          </button>
+        </div> -->
+      </form>
+      <div class="filter-actions">
+        <button
+          mat-raised-button
+          color="primary"
+          class="small-button"
+          [mat-dialog-close]="filterData"
+        >
+          Сохранить
+        </button>
+        <button
+          mat-stroked-button
+          color="primary"
+          class="small-button cancel-button primary-color"
+          mat-dialog-close
+        >
+          Отменить
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

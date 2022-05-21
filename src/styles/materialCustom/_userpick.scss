@@ -1,0 +1,76 @@
+@font-face {
+  font-family: Gilroy;
+  src: url('../../assets/fonts/gilroy/Gilroy-Medium_0.otf') format("opentype");
+}
+
+// Стилевой фал для аватара
+
+.ui-userpick {
+  display: flex;
+  font-weight: 400;
+  position: relative;
+  align-items: start;
+  font-family: Gilroy, serif;
+
+  &__marker {
+    position: absolute;
+    border-radius: 50px;
+    border: 2px solid white;
+    background-color: #91ADFA;
+  }
+
+  &__ava {
+    overflow: hidden;
+    border-radius: 50%;
+    background-size: cover;
+    background: url('../../assets/icons/ava_template.png') center;
+
+    img { width: 100%; }
+  }
+
+  &__info {
+    box-sizing: border-box;
+    &-position { color: #A1A1A1; }
+    &-name { color: #1A1A1A; }
+    &-department { color: #656565; }
+  }
+
+  &.size5 {
+    .ui-userpick__ava { width: 88px; height: 88px; min-width: 88px; min-height: 88px; }
+    .ui-userpick__marker { width: 20px; height: 20px; left: 68px; top: 68px;}
+    .ui-userpick__info { padding-left: 20px; }
+    .ui-userpick__info-position { font-size: 14px; margin-bottom: 5px; }
+    .ui-userpick__info-name { font-size: 20px; margin-bottom: 5px; }
+    .ui-userpick__info-department { font-size: 14px; margin: 0;  }
+  }
+
+  &.size4 {
+    .ui-userpick__ava { width: 56px; height: 56px; min-width: 56px; min-height: 56px; }
+    .ui-userpick__marker { width: 14px; height: 14px; left: 42px; top: 42px; }
+    .ui-userpick__info { padding-left: 15px; }
+    .ui-userpick__info-position, .ui-userpick__info-department { font-size: 12px; margin: 0; }
+    .ui-userpick__info-name { font-size: 16px;  margin: 0; }
+  }
+
+  &.size3 {
+    .ui-userpick__ava { width: 44px; height: 44px; min-width: 44px; min-height: 44px; }
+    .ui-userpick__marker { width: 12px; height: 12px; left: 32px; top: 32px; }
+    .ui-userpick__info { padding-left: 12px; }
+    .ui-userpick__info-position, .ui-userpick__info-department { font-size: 12px; margin: 0; }
+    .ui-userpick__info-name { font-size: 16px;  margin: 0; }
+  }
+
+  &.size2 {
+    .ui-userpick__ava { width: 32px; height: 32px; min-width: 32px; min-height: 32px; }
+    .ui-userpick__marker { width: 8px; height: 8px; left: 24px; top: 24px; }
+    .ui-userpick__info { padding-left: 12px; }
+    .ui-userpick__info-position, .ui-userpick__info-name, .ui-userpick__info-department { font-size: 12px; margin: 0; line-height: 16px; }
+  }
+
+  &.size1 {
+    .ui-userpick__ava { width: 24px; height: 24px; min-width: 24px; min-height: 24px; }
+    .ui-userpick__marker { width: 6px; height: 6px; left: 18px; top: 18px; }
+    .ui-userpick__info { padding-left: 12px; }
+    .ui-userpick__info-position, .ui-userpick__info-name, .ui-userpick__info-department { font-size: 12px; margin: 0; line-height: 16px; }
+  }
+}

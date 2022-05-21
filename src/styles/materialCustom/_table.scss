@@ -1,0 +1,73 @@
+@import "../../styles/exd-colors.scss";
+
+.mat-table {
+  padding: 20px;
+  // background-color: white;
+  .sortable-column-header {
+    position: relative;
+    cursor: pointer;
+    padding-right: 25px;
+    span {
+      position: relative;
+      white-space: nowrap;
+      display: inline-block;
+    }
+    mat-icon {
+      position: absolute;
+      transition: .3s;
+      top: -5px;
+      right: -20px;
+      opacity: 0;
+      transform: rotate(180deg);
+      &.active {
+        opacity: 1;
+      }
+      &.desc {
+        transform: rotate(0deg);
+      }
+      svg path {
+        fill: map-get($exd-grayscale, 200);
+      }
+    }
+  }
+
+  th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type {
+    padding: 0;
+  }
+}
+
+.mat-header-cell.mat-header-cell {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: map-get($exd-grayscale, 300);
+}
+
+.mat-row.mat-row {
+  transition: background-color 0.1s;
+  cursor: pointer;
+
+  &:hover {
+    background-color: map-get($exd-psb-blue, 50);
+  }
+
+  .mat-cell {
+    border: none;
+    box-shadow: inset 0px -1px 0px map-get($exd-grayscale, 100);
+
+    &.cdk-column-select {
+      width: 40px;
+    }
+  }
+}
+
+.mat-cell.mat-cell {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: map-get($exd-primary, 0);
+}
+
+.mat-sort-header-content {
+user-select: none;
+}

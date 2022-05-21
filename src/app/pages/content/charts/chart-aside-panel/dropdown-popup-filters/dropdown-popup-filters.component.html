@@ -1,0 +1,68 @@
+<div class="dialog-chart">
+  <div class="dialog-chart__time-range">
+    <h3 mat-dialog-title class="dialog-chart__title">Фильтр</h3>
+    <div class="dialog-chart__content" [formGroup]="formGroup" *ngIf="formGroup">
+      <mat-tab-group [selectedIndex]="selectedIndex" (selectedTabChange)="tabSelect($event)">
+        <mat-tab label="Простая">
+
+          <div class="dialog-chart__content_field full-width">
+            <mat-form-field class="relative-hint-field" appearance="outline">
+              <mat-label>Столбцы</mat-label>
+              <mat-select formControlName="subject">
+                <mat-option *ngFor="let column of availableColumns" [value]="column.column_name">{{column.column_name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="relative-hint-field" appearance="outline">
+              <mat-label>Операторы</mat-label>
+              <mat-select formControlName="operatorId">
+                <mat-option value="EQUALS">Содержит</mat-option>
+                <mat-option value="NOT_EQUALS">Не содержит</mat-option>
+                <mat-option value="LESS_THAN">&lt;</mat-option>
+                <mat-option value="GREATER_THAN">&gt;</mat-option>
+                <mat-option value="LESS_THAN_OR_EQUAL">&lt;=</mat-option>
+                <mat-option value="GREATER_THAN_OR_EQUAL">&gt;=</mat-option>
+                <mat-option value="IN">In</mat-option>
+                <mat-option value="NOT_IN">Not in</mat-option>
+                <mat-option value="LIKE_INSENSITIVE">Like (case insensitive)</mat-option>
+                <mat-option value="LIKE">Like</mat-option>
+                <mat-option value="IS_NOT_NULL">Is not null</mat-option>
+                <mat-option value="IS_NULL">Is null</mat-option>
+                <mat-option value="IS_TRUE">Is true</mat-option>
+                <mat-option value="IS_FALSE">Is false</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <app-chips-autocomplete-field label="Опции"
+                                          [allOptions]="availableOptions"
+                                          [formControl]="getFormControl('comparator')">
+            </app-chips-autocomplete-field>
+
+          </div>
+        </mat-tab>
+        <mat-tab label="Расширенный SQL">
+
+          <div class="comments-container__add-textarea">
+
+            <mat-form-field class="relative-hint-field" appearance="outline">
+              <mat-select formControlName="clause" #type>
+                <mat-option value="WHERE">Где</mat-option>
+                <mat-option value="HAVING">Имеет</mat-option>
+              </mat-select>
+              <mat-hint *ngIf="type.value === 'HAVING'">Фильтры по метрикам</mat-hint>
+              <mat-hint *ngIf="type.value === 'WHERE'">Фильтры по столбцам</mat-hint>
+
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="mat-textarea" style="width: 100%; height: 100%">
+              <mat-label></mat-label>
+              <textarea matInput formControlName="sqlExpression"></textarea>
+            </mat-form-field>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+      <div mat-dialog-actions class="dialog-chart__actions">
+        <button mat-raised-button color="primary" class="small-button" (click)="submit()">Применить</button>
+        <button mat-stroked-button class="primary-color small-button" color="primary" (click)="close()">Закрыть</button>
+      </div>
+    </div>
+  </div>

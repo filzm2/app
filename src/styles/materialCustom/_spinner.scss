@@ -1,0 +1,26 @@
+@import "../../styles/exd-colors.scss";
+
+.mat-progress-spinner, .mat-spinner {
+  .ng-star-inserted {
+    stroke-width: 4px !important;
+    stroke: map-get($exd-psb-blue, 400);
+  }
+}
+
+.mat-spinner {
+  margin: auto;
+}
+
+.mat-progress-bar.mat-progress-bar {
+  height: 4px !important;
+
+  .mat-progress-bar-buffer {
+    background-color: map-get($exd-psb-blue, 450);
+  }
+
+  .mat-progress-bar-fill {
+    &::after {
+      background-color: map-get($exd-psb-blue, 400) !important;
+    }
+  }
+}

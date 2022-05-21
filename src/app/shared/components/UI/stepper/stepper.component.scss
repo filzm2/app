@@ -1,0 +1,40 @@
+.badge__stepper {
+  display: flex;
+  align-items: center;
+  .badge__divider {
+    display: inline-block;
+    margin: 0 8px 4px 8px;
+    width: 24px;
+    height: 1px;
+    border-bottom: 1px solid #B9B9B9;
+  }
+
+  .modal__badge {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    color: #ffffff;
+    border-radius: 12px;
+    line-height: 26px;
+
+
+    &.badge--done {
+      margin-right: 8px;
+      text-align: center;
+      background-color: #F37A1F;;
+    }
+    &.badge--pass {
+      margin-right: 8px;
+      text-align: center;
+      background-color: #D6D6D6;;
+    }
+  }
+}
+
+//.badge__item + .badge__item {
+//
+//  margin: 0 8px 0px 8px;
+//  width: 26px;
+//  height: 1px;
+//  border-bottom: 1px solid #B9B9B9;
+//}

@@ -1,0 +1,80 @@
+@import "../../../../../../styles/exd-colors.scss";
+@import "../../../../../../styles/variables.scss";
+
+.dialog-chart {
+  background: white;
+  border-radius: $main-radius;
+  padding: 16px;
+  &__content {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 10px;
+    padding-bottom: 10px;
+    position: relative;
+    overflow: visible;
+    &_description {
+      margin: 8px 0;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 20px;
+    }
+    &_field {
+      display: flex;
+      align-items: center;
+      &.full-width {
+        width: 100%;
+      }
+      mat-form-field {
+        margin-right: 10px;
+      }
+    }
+    .mat-caption {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 20px;
+      color: map-get($exd-grayscale, 300);
+      padding-bottom: 5px;
+    }
+
+    .wrong-date {
+      color: map-get($exd-warning, 400);
+      display: flex;
+      align-items: center;
+    }
+  }
+  &__time-range {
+    width: 332px;
+    &.custom {
+      width: 588px;
+      .mat-form-field {
+        width: calc(50% - 10px);
+      }
+      .dialog-chart__content_description {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+    &_custom {
+      display: flex;
+      gap: 16px;
+    }
+  }
+  &__actions {
+    padding-bottom: 20px;
+  }
+
+  mat-radio-group {
+    display: flex;
+    flex-direction: column;
+    .mat-radio-button {
+      margin-left: 0;
+      padding-bottom: 10px;
+    }
+  }
+  .mat-form-field {
+    width: 100%;
+  }
+}

@@ -1,0 +1,84 @@
+@import "../../styles/exd-colors.scss";
+
+mat-accordion.ui-accordion {
+  .mat-expansion-panel {
+    box-shadow: none;
+    border-radius: 0 !important;
+    border-top: 1px solid map-get($exd-grayscale, 100);
+  }
+
+  .mat-expansion-panel-header {
+    padding: 0 2px;
+  }
+
+  .mat-expansion-panel-header-title {
+    color: map-get($exd-primary, 480);
+  }
+
+  .mat-expansion-indicator::after {
+    color: map-get($exd-primary, 480);
+  }
+
+  .mat-expansion-panel-body {
+    padding: 0;
+  }
+
+}
+
+mat-accordion.mat-accordion.ui-accordion-v2 {
+  .mat-expansion-panel {
+    border: 1px solid #E4E4E4;
+    border-bottom: none;
+
+    &:first-of-type {
+      border-top-right-radius: 8px;
+      border-top-left-radius: 8px;
+    }
+
+    &:last-of-type {
+      border-bottom-right-radius: 8px;
+      border-bottom-left-radius: 8px;
+      border-bottom: 1px solid #E4E4E4;
+    }
+
+    .mat-expansion-panel-header {
+      height: 52px;
+      padding: 0 8px 0 72px;
+      position: relative;
+
+      .arrow-drop-down {
+        position: absolute;
+        left: 14px;
+        top: 15px;
+
+        svg {
+          transition: transform .3s;
+          transform: rotate(-90deg);
+
+          path {
+            fill: #0037FA;
+          }
+        }
+      }
+    }
+
+    .mat-expansion-panel-header.mat-expanded,
+    .mat-expansion-panel-header.mat-expanded:focus,
+    .mat-expansion-panel-header.mat-expanded:hover {
+      background: #E1E1E1;
+      height: 52px;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+
+      .arrow-drop-down svg {
+        transform: rotate(0);
+      }
+    }
+
+    .mat-expansion-panel-header-title {
+      width: 30%;
+      position: relative;
+      padding: 16px 0 16px 4px;
+    }
+  }
+}

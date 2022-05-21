@@ -1,0 +1,41 @@
+@import '../../../../../../styles/mixins.scss';
+@import '../../../../../../styles/exd-colors.scss';
+
+.database-parameters-form {
+  display: flex;
+  gap: 20px;
+  padding: 20px 32px;
+  flex-wrap: wrap;
+  &-container {
+    display: flex;
+    gap: 20px;
+  }
+  &-main-field {
+    width: 100%;
+    border-bottom: 1px solid map-get($exd-grayscale, 100);
+  }
+  &-row {
+    display: flex;
+    gap: 20px;
+    padding-bottom: 47px;
+  }
+  &-column {
+    width: 50%;
+  }
+
+  &-errors {
+    @include font(14px, 500);
+    margin-left: 40px;
+    padding: 5px 32px 20px 32px;
+    position: relative;
+    overflow: visible;
+    mat-icon {
+      position: absolute;
+      top: 5px;
+      left: -8px;
+      path {
+        fill: map-get($exd-warning, 400);
+      }
+    }
+  }
+}

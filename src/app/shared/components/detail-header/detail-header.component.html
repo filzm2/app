@@ -1,0 +1,175 @@
+<div class="task_header" *ngIf="(headerService.headerParams | async) as headerParams">
+  <mat-card class="mc-task_header">
+    <mat-card-content class="mcc-task_header">
+
+      <!--        название задачи-->
+      <div class="text_header_caption" *ngIf="headerParams.showCaption">
+<!--        кнопка назад-->
+        <div class="backdoor" *ngIf="headerParams.showBackDoor">
+          <a routerLink="/dashboard">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+          </a>
+        </div>
+        <div *ngIf="headerParams.showBackDoor" class="header-vertical-separator"></div>
+<!--        главное название в хэдере-->
+        <span>{{headerParams.caption || headerParams.data.task.name}}</span>
+<!--        статус формы с бейджем-->
+        <div *ngIf="headerParams.showBadgeStatus" class="icm-margin-large-left icm-badge icm-badge-{{headerParams.showBadgeStatus.type}} mr24">{{headerParams.showBadgeStatus.text}}</div>
+        <div *ngIf="headerParams.request?.showPriority" class="icm-badge icm-badge-icon icm-badge-primary icm-badge-icon-only mr24">
+          <mat-icon>bolt</mat-icon>
+        </div>
+        <!--        название заявки (кто в ней клиент)-->
+        <div class="order_status" *ngIf="headerParams.request?.showTitle">
+          <div class="order_status_caption">Заявка</div>
+          <div class="order_status_type">{{
+              headerParams.data.task.associatedDocuments.loanApplication.applicant.companyGroup?.groupName
+              || headerParams.data.task.associatedDocuments.loanApplication.applicant.company?.fullName
+              || headerParams.data.task.associatedDocuments.loanApplication.applicant.company?.shortName
+            }}</div>
+        </div>
+
+        <!--            менеджер заявки-->
+        <div class="task__author" *ngIf="headerParams.showUser">
+          <div class="task__userAvatar" [ngStyle]="{'background-image': headerParams.data.user.avatar}">
+          </div>
+          <div [ngStyle]="{'padding-left': '15px'}">
+            <div><span class="task__userRole">Менеджер заявки</span></div>
+            <div><a class="task__userName">{{headerParams.data.user.fio}}</a></div>
+          </div>
+        </div>
+
+        <!--            дата создания заявки-->
+        <div class="SLA_of_order mr24" *ngIf="headerParams.request?.showDate">
+          <div class="readOnly-icon">
+            <div class="readOnly-field-label">Дата создания</div>
+            <div class="readOnly-field-text">
+              <img src="assets/icons/calendar_blue_24px.png" alt="">
+              <span class="readOnly-field-text-with-icon">
+                21.02.2021
+                <!--                {{headerParams.data.task.created | date:'dd.MM.yyyy'}}-->
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!--           Этап -->
+        <div class="SLA_of_order" *ngIf="headerParams.request?.showDate">
+          <div class="readOnly-field">
+            <div class="readOnly-field-label">Этап</div>
+            <div class="readOnly-field-text">Инициализация и первичные проверки</div>
+          </div>
+        </div>
+
+        <!--            sla заявки-->
+        <div class="SLA_of_order" *ngIf="headerParams.request?.showSLA">
+          <span class="task__item_clock material-icons">timer</span>
+          <div>
+            <div class="SLA_of_order_caption">SLA заявки</div>
+            <div>21ч 43м</div>
+          </div>
+        </div>
+      </div>
+
+      <!--        список подразделений-->
+      <div class="icm-outline-small-field header__list" *ngIf="headerParams.userPosition === 'boss'">
+        <mat-form-field appearance="outline">
+          <mat-label>Подразделение</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let item of headerParams.bossList" [value]="item">
+              <div class="icm-outline-small-field-select-option">{{item}}</div>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!--        клиенты, заявки, задачи в числах -->
+      <div class="header__numbers" *ngIf="headerParams.numbers">
+        <div class="header__numbers-block">
+          <span class="header__numbers-block_label">Клиенты:</span>
+          <span class="header__numbers-block_count">{{headerParams.numbers[0]}}</span>
+        </div>
+        <div class="header__numbers-block" *ngIf="headerParams.numbers[1]">
+          <span class="header__numbers-block_label">Заявки:</span>
+          <span class="header__numbers-block_count">{{headerParams.numbers[1]}}</span>
+        </div>
+        <div class="header__numbers-block" *ngIf="headerParams.numbers[2]">
+          <span class="header__numbers-block_label">Задачи:</span>
+          <span class="header__numbers-block_count">{{headerParams.numbers[2]}}</span>
+        </div>
+      </div>
+
+      <!--        статус задачи-->
+      <div *ngIf="headerParams.showAboutTask">
+        <div class="task_status_type">В работе</div>
+      </div>
+
+      <!--      создание заявки-->
+      <div class="text_header_btn" *ngIf="headerParams.showCreateBtn">
+        <app-ui-button
+          color="clearBlue"
+          title="+ Создать заявку"
+          (clickButton)="create()"
+        ></app-ui-button>
+      </div>
+
+      <div class="header_info">
+
+        <!--        поисковая строка-->
+        <ng-container *ngIf="headerParams.showSearch">
+          <div class="icm-outline-small-field header__search">
+
+            <mat-form-field appearance="outline" [hideRequiredMarker]="true">
+              <mat-label>По клиенту/ИНН, номеру заявки, задаче, исполнителю</mat-label>
+              <input type="text" matInput [(ngModel)]="valueSearch">
+              <button mat-button matSuffix mat-icon-button aria-label="Search" (click)="search()">
+                <mat-icon>search</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+        </ng-container>
+
+<!--        кнопки в карточке заявки-->
+        <ng-container *ngIf="headerParams.showOrderActions">
+          <div class="icm-flex ws">
+            <button *ngIf="headerParams.showOrderActions.send"
+                    class="icm-btn icm-btn-outlined icm-btn-small icm-btn-outlined-accent mr24"
+                    (click)="sendOrder.emit()">
+              <span>Запустить проверки</span>
+            </button>
+            <button *ngIf="headerParams.showOrderActions.edit"
+                    class="icm-btn icm-btn-small icm-btn-accent icm-btn-small-icon-left mr24"
+                    (click)="editOrder.emit()">
+              <mat-icon>edit</mat-icon>
+              <span>Редактировать заявку</span>
+            </button>
+
+            <button *ngIf="headerParams.showOrderActions.cancel"
+                    (click)="closeOrder.emit()"
+                    class="icm-btn icm-btn-outlined icm-btn-small icm-btn-outlined-alert">
+              Отклонить заявку
+            </button>
+          </div>
+        </ng-container>
+
+<!--        кнопки в создании заявки-->
+        <ng-container *ngIf="headerParams.showOrderCreateActions">
+          <div class="icm-flex">
+            <button *ngIf="headerParams.showOrderCreateActions.send"  (click)="sendOrder.emit()" class="icm-btn icm-btn-small icm-btn-primary">Отправить заявку</button>
+            <button *ngIf="headerParams.showOrderCreateActions.edit"  (click)="editOrder.emit()" class="icm-btn icm-btn-small icm-btn-primary">Отправить заявку</button>
+            <button *ngIf="headerParams.showOrderCreateActions.close" (click)="closeOrder.emit()" class="icm-btn icm-btn-outlined icm-btn-small icm-btn-outlined-alert icm-margin-small-left">Закрыть заявку</button>
+          </div>
+        </ng-container>
+
+      </div>
+      <ng-content>
+      </ng-content>
+    </mat-card-content>
+  </mat-card>
+
+  <!--  статус степпер, компонент для отображения статуса заявки в формах задач-->
+  <div *ngIf="headerParams.showOrderStatus">
+    <div class="header-status_separator"></div>
+    <app-status-stepper></app-status-stepper>
+  </div>
+
+</div>

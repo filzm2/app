@@ -1,0 +1,79 @@
+<mat-card class="mc-about-company">
+  <mat-card-content>
+    <mat-tab-group animationDuration="0ms" class="remove-border-bottom">
+      <mat-tab label="О компании">
+        <div class="tab-container">
+          <div class="company-gk" *ngIf="companyData.gk && companyData.company.companies && companyData.company.companies.length > 1">
+            <h1>{{companyData.company.groupName}}</h1>
+            <div class="mc_related_company_list">
+              <div class="related_company_item"
+                   *ngFor="let item of companyData.company.companies; let i = index;"
+                   (click)="showClient(item)">
+                <div>
+                  <div class="about_related_company">
+                    <!-- TODO: скорее всего надо будет заменить на fullName-->
+                    <div class="name">{{item.shortName}}</div>
+                    <div class="inn">ИНН {{item.inn}}</div>
+                  </div>
+                </div>
+                <div class="chevron_right_container">
+                  <span class="material-icons">chevron_right</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="company-client" *ngIf="this.showClientEntity || (companyData.gk && companyData.company.companies && (companyData.company.companies.length <= 1) && (companyData.company.companies.length != 0))">
+            <div class="company-client__close" *ngIf="companyData.company && companyData.company.companies.length > 1">
+              <button (click)="closeClientEntity()" mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+                <mat-icon>highlight_off</mat-icon>
+              </button>
+            </div>
+            <h1 [ngStyle]="{'padding-right': companyData.company ? '40px' : '0'}">
+              {{companyData.company ? companyData.company.groupName : clientEntity.opf + ' ' + clientEntity.fullName}}
+            </h1>
+            <h2 *ngIf="companyData.company">{{clientEntity.opf + ' ' + clientEntity.fullName}}</h2>
+            <div class="company-client__body">
+              <div class="w50 client-block">
+                <p class="client-caption">ИНН</p>
+                <p class="client-value">{{clientEntity.inn}}</p>
+              </div>
+              <div class="w50 client-block">
+                <p class="client-caption">КПП</p>
+                <p class="client-value">{{clientEntity.kpp}}</p>
+              </div>
+              <div class="w50 client-block">
+                <p class="client-caption">ОГРН</p>
+                <p class="client-value">{{clientEntity.ogrn}}</p>
+              </div>
+              <div class="w50 client-block">
+                <p class="client-caption">ОКПО</p>
+                <p class="client-value">{{clientEntity.okpo}}</p>
+              </div>
+              <div class="b1 client-block">
+                <p class="client-caption">Юридический адрес</p>
+                <p class="client-value fw400">{{clientEntity.legalAddress}}</p>
+              </div>
+              <div class="b1 client-block">
+                <p class="client-caption">Фактический адрес</p>
+                <p class="client-value fw400">{{clientEntity.actualAddress}}</p>
+              </div>
+<!--              <div class="b1 client-separator"></div>-->
+<!--              <div class="b1 client-block">-->
+<!--                <p class="client-caption">Ответственное лицо</p>-->
+<!--                <p class="client-value">{{clientEntity.contacts_fio}}</p>-->
+<!--              </div>-->
+<!--              <div class="b1 client-contacts">-->
+<!--                <mat-icon aria-hidden="false" aria-label="phone">phone</mat-icon><span class="client-contacts__text">{{clientEntity.contacts_phone}}</span>-->
+<!--              </div>-->
+<!--              <div class="b1 client-contacts">-->
+<!--                <mat-icon aria-hidden="false" aria-label="phone">mail</mat-icon><span class="client-contacts__text">{{clientEntity.contacts_email}}</span>-->
+<!--              </div>-->
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Задачи по этапу">Задачи по этапу</mat-tab>
+      <mat-tab label="Команда">Команда</mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>

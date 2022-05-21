@@ -1,0 +1,10 @@
+<div class="card b1 plr24 icm-position-relative">
+  <div class="title-h1" [ngClass]="isOpen ? 'mb24' : ''">{{title}}</div>
+  <mat-icon class="open-icon" (click)="toggleContent()">
+    <ng-container *ngIf="isOpen">horizontal_rule</ng-container>
+    <ng-container *ngIf="!isOpen">add</ng-container>
+  </mat-icon>
+  <div class="exp-content" [ngClass]="isOpen ? 'exp-content-open' : 'exp-content-closed'">
+    <ng-content></ng-content>
+  </div>
+</div>

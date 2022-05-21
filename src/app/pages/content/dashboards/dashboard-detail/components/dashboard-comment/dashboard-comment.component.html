@@ -1,0 +1,47 @@
+<div class="comment-container" (mouseover)="showEdit()" (mouseleave)="hideEdit()">
+  <div class="comment-row">
+    <div class="comment-container__column">
+      <div class="comment-container__avatar">
+        <mat-icon svgIcon="person"></mat-icon>
+      </div>
+    </div>
+    <div class="comment-container__fio">
+      {{ data.user.fio }}
+    </div>
+    <div class="comment-container__actions">
+      <button
+        *ngIf="showEditButton"
+        class="comment-container__edit"
+        mat-icon-button
+        (click)="editComment(data.comments_id)"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button
+        class="comment-container__delete"
+        mat-icon-button
+        (click)="deleteComment(data.comments_id)"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="comment-row">
+    <div class="comment-container__column">
+      <ng-container [ngSwitch]="data.status">
+        <mat-icon svgIcon="comments_com" *ngSwitchCase="1"></mat-icon>
+        <mat-icon svgIcon="comments_question" *ngSwitchCase="2"></mat-icon>
+        <mat-icon svgIcon="comments_attention" *ngSwitchCase="3"></mat-icon>
+      </ng-container>
+    </div>
+    <div class="comment-container__text">
+      {{ data.comment }}
+    </div>
+  </div>
+  <div class="comment-row">
+    <div class="comment-container__column"></div>
+    <div class="comment-container__date mat-caption">
+      {{ momentFromNow(data.date) }}
+    </div>
+  </div>
+</div>

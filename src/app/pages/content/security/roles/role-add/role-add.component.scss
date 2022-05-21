@@ -1,0 +1,25 @@
+@import "../../../../../../styles/exd-colors.scss";
+
+.role-add {
+  margin: 40px auto 0;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 900px;
+  min-height: 424px;
+  border-radius: 8px;
+  padding: 20px 0 2px;
+  background-color: map-get($exd-primary, 1);
+
+  &__title {
+    padding: 0 32px;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 24px;
+    color: map-get($exd-primary, 0);
+  }
+
+  &__body {
+    padding: 0 12px;
+  }
+
+}

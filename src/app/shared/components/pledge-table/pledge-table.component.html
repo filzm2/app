@@ -1,0 +1,143 @@
+<div class="icm-width icm-margin-medium-top">
+
+  <table mat-table
+         [dataSource]="suretyDataSource" multiTemplateDataRows
+         class="mat-elevation-z8 icm-width surety-table" [ngStyle]="{'box-shadow': 'none'}">
+
+    <!-- Вид поручительства -->
+    <ng-container matColumnDef="surety_type">
+      <th mat-header-cell *matHeaderCellDef>{{suretyType}}</th>
+      <td mat-cell *matCellDef="let element"> {{element.surety_type}} </td>
+    </ng-container>
+
+    <!-- Залогодатель/Поручитель -->
+    <ng-container matColumnDef="pledger">
+      <th mat-header-cell *matHeaderCellDef>Залогодатель/Поручитель</th>
+      <td mat-cell *matCellDef="let element"> {{element.pledger}} </td>
+    </ng-container>
+
+    <!-- ИНН/КИО -->
+    <ng-container matColumnDef="inn">
+      <th mat-header-cell *matHeaderCellDef>ИНН/КИО</th>
+      <td mat-cell *matCellDef="let element"> {{element.inn}} </td>
+    </ng-container>
+
+    <!-- Действия -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <div class="actions">
+          <ng-container *ngIf="editable">
+            <div class="edit" (click)="editSuretyItem(element)">
+              <div class="download_document_block-edit icm-color-grey-60">
+                <span class="material-icons-outlined edit_icon">edit</span>
+              </div>
+            </div>
+            <div class="delete" (click)="deleteSuretyItem(element)">
+              <div class="download_document_block-delete icm-color-grey-60">
+                <span class="material-icons ddbd_icon">delete_outlined</span>
+              </div>
+            </div>
+          </ng-container>
+          <div class="edit" style="padding-left: 40px">
+            <div class="download_document_block-edit icm-color-grey-60">
+              <span class="material-icons-outlined edit_icon">expand_more</span>
+            </div>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- Дитэйл-->
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let element" [attr.colspan]="suretyColumnsToDisplay.length">
+        <div class="example-element-detail"
+             [@detailExpand]="element.expand ? 'expanded' : 'collapsed'">
+          <div class="client-detail">
+            <div class="uls">
+              <div
+                *ngIf="element.pledge_type || element.estimate_cost || element.marker_value || element.assessment_report"
+                class="row-start icm-margin-medium-top">
+                <div *ngIf="element.pledge_type" class="readOnly-field col b6">
+                  <div class="readOnly-field-label">Вид залога</div>
+                  <div class="readOnly-field-text">{{element.pledge_type}}</div>
+                </div>
+                <div *ngIf="element.estimate_cost" class="readOnly-field col b6">
+                  <div class="readOnly-field-label">Оценка стоимости</div>
+                  <div class="readOnly-field-text">{{element.estimate_cost}}</div>
+                </div>
+                <div *ngIf="element.marker_value" class="readOnly-field col b6">
+                  <div class="readOnly-field-label">Рыночная стоимость</div>
+                  <div class="readOnly-field-text"
+                       [ngStyle]="{'color': '#008556'}">{{element.marker_value}}</div>
+                </div>
+                <div *ngIf="element.assessment_report" class="readOnly-field col b6">
+                  <div class="readOnly-field-label">Отчет об оценке</div>
+                  <div class="readOnly-field-text">{{element.assessment_report}}</div>
+                </div>
+              </div>
+              <div
+                *ngIf="element.citizenship || element.dul || element.dul_serial || element.dul_section || element.dul_date"
+                class="row-start icm-margin-medium-top">
+                <div *ngIf="element.citizenship" class="readOnly-field col b5">
+                  <div class="readOnly-field-label">Гражданство</div>
+                  <div class="readOnly-field-text">{{element.citizenship}}</div>
+                </div>
+                <div *ngIf="element.dul" class="readOnly-field col b5">
+                  <div class="readOnly-field-label">ДУЛ</div>
+                  <div class="readOnly-field-text">{{element.dul}}</div>
+                </div>
+                <div *ngIf="element.dul_serial" class="readOnly-field col b5">
+                  <div class="readOnly-field-label">ДУЛ: серия и номер</div>
+                  <div class="readOnly-field-text">{{element.dul_serial}}</div>
+                </div>
+                <div *ngIf="element.dul_section" class="readOnly-field col b5">
+                  <div class="readOnly-field-label">ДУЛ: код подразделения</div>
+                  <div class="readOnly-field-text">{{element.dul_section}}</div>
+                </div>
+                <div *ngIf="element.dul_date" class="readOnly-icon col b5">
+                  <div class="readOnly-field-label">ДУЛ: дата выдачи</div>
+                  <div class="readOnly-field-text">
+                    <mat-icon [ngStyle]="{'color': '#2C5DE5'}">calendar_today</mat-icon>
+                    <span class="readOnly-field-text-with-icon">{{element.dul_date}}</span>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="element.dul_who || element.birth_place || element.birth_date"
+                   class="row-start icm-margin-medium-top">
+                <div *ngIf="element.dul_who" class="readOnly-field col b2-60">
+                  <div class="readOnly-field-label">ДУЛ: кем выдан</div>
+                  <div class="readOnly-field-text">{{element.dul_who}}</div>
+                </div>
+                <div *ngIf="element.birth_place" class="readOnly-field col b5">
+                  <div class="readOnly-field-label">Место рождения</div>
+                  <div class="readOnly-field-text">{{element.birth_place}}</div>
+                </div>
+                <div *ngIf="element.birth_date" class="readOnly-icon col b5">
+                  <div class="readOnly-field-label">Дата рождения</div>
+                  <div class="readOnly-field-text">
+                    <mat-icon [ngStyle]="{'color': '#2C5DE5'}">calendar_today</mat-icon>
+                    <span class="readOnly-field-text-with-icon">{{element.birth_date}}</span>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="element.description" class="row icm-margin-medium-top">
+                <div class="readOnly-field">
+                  <div class="readOnly-field-label">Описание обеспечения</div>
+                  <div class="readOnly-field-text">{{element.description}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="suretyColumnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let element; columns: suretyColumnsToDisplay;"
+        class="example-element-row"
+        [class.example-expanded-row]="element.expand"
+        (click)="element.expand = !element.expand">
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+  </table>
+</div>

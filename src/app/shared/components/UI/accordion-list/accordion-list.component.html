@@ -1,0 +1,102 @@
+<div class="accordion__header">
+  <div class="text--very-small idx">#</div>
+  <div class="text--very-small product">Продукт</div>
+  <div class="text--very-small borrower">Заемщик</div>
+  <div class="text--very-small inn">ИНН</div>
+  <div class="text--very-small summary">Сумма</div>
+</div>
+<mat-accordion
+  class="accordion"
+  [displayMode]="flat"
+  #accordion="matAccordion"
+>
+
+  <mat-expansion-panel
+
+    [disabled]="panel.isDisabled"
+    [expanded]="panel.isExpanded"
+    [hideToggle]="true"
+    (opened)="beforePanelOpened(panel)"
+    (closed)="beforePanelClosed(panel)"
+    (afterCollapse)="afterPanelClosed($event)"
+    (afterExpand)="afterPanelOpened($event)"
+    *ngFor="let panel of accordionList; let idx = index"
+  >
+    <mat-expansion-panel-header #panelH (click)="panelH._toggle()">
+      <mat-panel-description>
+        <div class="accordion__item--header">
+          <div class="text--very-small idx">{{idx +1}}</div>
+          <div class="text--very-small product">{{panel.product}}</div>
+          <div class="text--very-small borrower">{{panel.borrower}}</div>
+          <div class="text--very-small inn">{{panel.inn}}</div>
+          <div class="text--very-small summary">{{panel.summary}}</div>
+          <mat-icon [ngStyle]="{color: '#DADADA'}" (click)="deleteItemProduct(panel.id)">delete_outline</mat-icon>
+          <mat-icon [ngStyle]="{color: '#DADADA'}" (click)="panelH._toggle()" >{{panelH.panel.expanded ? 'keyboard_arrow_up' : "keyboard_arrow_down"}}</mat-icon>
+        </div>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div class="item__description">
+      <div class="flex-row">
+        <mat-form-field  class="quarter" appearance="fill">
+          <mat-label>Сумма продукта</mat-label>
+          <input [(ngModel)]="panel.summary" matInput>
+        </mat-form-field>
+        <mat-form-field class="third" appearance="fill">
+          <mat-label>Целевое использование</mat-label>
+          <mat-select>
+            <mat-option value="option">Option</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="quarter" appearance="fill">
+          <mat-label>Срок продукта</mat-label>
+          <input matInput [matDatepicker]="tt">
+          <mat-datepicker-toggle matSuffix [for]="tt"></mat-datepicker-toggle>
+          <mat-datepicker #tt></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="flex-row">
+        <mat-form-field  class="quarter" appearance="fill">
+          <mat-label>Срок транша</mat-label>
+          <input matInput>
+        </mat-form-field>
+        <mat-form-field class="quarter" appearance="fill">
+          <mat-label>Единицы измерений</mat-label>
+          <mat-select>
+            <mat-option value="option">Option</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field  class="third" appearance="fill">
+          <mat-label>Комментарий</mat-label>
+          <input matInput>
+        </mat-form-field>
+      </div>
+      <div class="flex-row">
+        <ul>
+          <li *ngFor="let borrower of panel.borrowerGroup; let bIdx = index" class="flex-row">
+            <div class="badge badge__content">{{bIdx + 1}}</div>
+            <mat-form-field class="third" appearance="fill">
+              <mat-label>Заемщик</mat-label>
+              <mat-select [value]="borrower.borrower" disabled>
+                <mat-option [value]="borrower.borrower">{{borrower.borrower}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field  class="semi margin-left-24px" appearance="fill">
+              <mat-label>ИНН</mat-label>
+              <input disabled [value]="borrower.inn" matInput>
+            </mat-form-field>
+            <div class="flex-row quarter">
+              <mat-form-field class="semi margin-left-24px" appearance="fill">
+                <mat-label>КПП</mat-label>
+                <input disabled [value]="borrower.kpp" matInput>
+              </mat-form-field>
+              <div class="flex-row">
+                <mat-icon [ngStyle]="{color: '#DADADA'}" (click)="clearItemBorrower(idx, borrower.borrower)" class="badge margin-left-24px">delete_outline</mat-icon>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>

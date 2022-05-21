@@ -1,0 +1,12 @@
+.dashboard-container__element-markdown,
+.markdown-component {
+  img {
+    max-width: 100%;
+  }
+
+  pre[class*='language-'] {
+    width: fit-content;
+    overflow: initial;
+    background-color: #272822;
+  }
+}

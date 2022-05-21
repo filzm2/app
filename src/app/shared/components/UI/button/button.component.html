@@ -1,0 +1,8 @@
+<button
+  class="{{color}}"
+  (click)="onClick()"
+  [disabled]="disable"
+>
+  {{title}}
+  <ng-content select="[slot=icon]"></ng-content>
+</button>

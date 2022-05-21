@@ -1,0 +1,59 @@
+// @font-face {
+//   font-family: Gilroy;
+//   src: url('../../assets/fonts/gilroy/Gilroy-Medium_0.otf') format("opentype");
+// }
+// // Стилевой фал для чипсов
+
+// $color_blue: #2C5DE5;
+// $color_red: #DE1C22;
+// $color_orange: #E86825;
+// $color_green: #008556;
+// $color_white: #ffffff;
+// $color_gray: #A1A1A1;
+
+// .ui-chip {
+//   display: flex;
+//   color: #656565;
+//   cursor: pointer;
+//   font-size: 14px;
+//   font-weight: 500;
+//   padding: 8px 16px;
+//   //text-align: center;
+//   align-items: center;
+//   border-radius: 18px;
+//   flex-direction: row;
+//   background: $color_white;
+//   font-family: Gilroy, serif;
+//   border: 1px solid $color_gray;
+
+//   mat-icon {
+//     width: 20px;
+//     height: 20px;
+//     font-size: 20px;
+
+//     &.icon-prefix { margin-right: 10px; }
+//     &.icon-postfix { margin-left: 10px; }
+//     &.icon-cancel { color: $color_red; }
+//     &.icon-delete { color: $color_gray; }
+//     &.icon-error { color: $color_orange; }
+//     &.icon-check { color: $color_green; }
+//   }
+
+//   &.primary { border-color: $color_blue; color: $color_blue; }
+//   &.active, &.primary.active {
+//     border: none; background-color: $color_blue; color: $color_white;
+//     mat-icon.icon-cancel, mat-icon.icon-delete, mat-icon.icon-error, mat-icon.icon-check { color: $color_white }
+//   }
+// }
+
+.chart-type-chip svg {
+    // width: 18px;
+    // height: 18px;
+    // fill: white !important;
+
+    path {
+      fill: white !important;
+    }
+  }  
+
+

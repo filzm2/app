@@ -1,0 +1,100 @@
+@import '../../../../../../../styles/exd-colors.scss';
+
+.comment-container {
+  height: 100%;
+
+  &__column {
+    width: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__avatar {
+    height: 25px;
+    width: 25px;
+    background-color: map-get($exd-grayscale, 200);
+    border-radius: 50%;
+  }
+
+  &__fio {
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 16px;
+    margin-left: 14px;
+  }
+
+  &__actions {
+    margin-left: auto;
+  }
+
+  &__edit {
+    color: map-get($exd-grayscale, 200);
+  }
+
+  &__delete {
+    color: map-get($exd-grayscale, 200);
+  }
+
+  &__text {
+    margin-left: 14px;
+    max-width: calc(100% - 14px - 20px - 2px);
+    overflow-wrap: break-word;
+    white-space: normal;
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  &__date {
+    margin-left: 14px;
+    margin-top: 8px;
+    color: map-get($exd-grayscale, 300);
+  }
+
+  .comment-row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .status-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    padding: 4px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__comment {
+      background-color: map-get($exd-grayscale, 300);
+
+      mat-icon {
+        width: 12px;
+        height: 12px;
+      }
+    }
+
+    &__question {
+      background-color: map-get($exd-psb-blue, 450);
+
+      mat-icon {
+        width: 14px;
+        height: 14px;
+      }
+    }
+
+    &__warning {
+      background-color: map-get($exd-warning, 400);
+      color: white;
+      mat-icon {
+        width: 14px;
+        height: 14px;
+        path {
+          fill: white;
+        }
+      }
+    }
+  }
+}

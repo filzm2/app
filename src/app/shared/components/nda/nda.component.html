@@ -1,0 +1,36 @@
+<div *ngIf="formType === 'required'" class="nda">
+  <div [ngStyle]="{display: 'flex', alignItems: 'center'}">
+    <span class="header-size text--header">NDA подписан?</span>
+    <mat-radio-group
+      color="primary"
+      aria-label="Select an option"
+      [(ngModel)]="requireRes"
+      (ngModelChange)="logResult()"
+    >
+      <mat-radio-button class="radio__item" [value]="true">Да</mat-radio-button>
+      <mat-radio-button class="radio__item" [value]="false">Нет</mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div *ngIf="requireRes && !isUploaded">
+    <app-upload-file (change)="fileUpload($event)"></app-upload-file>
+    <app-hint [caption]="'Прикрепите к заявке подписанный NDA'"></app-hint>
+  </div>
+  <div class="document" *ngIf="isUploaded">
+    <app-download-file-button (delete)="isUploaded= false"></app-download-file-button>
+  </div>
+</div>
+
+<div *ngIf="formType === 'sign'" class="nda">
+  <div [ngStyle]="{display: 'flex', alignItems: 'center'}">
+    <span class="header-size text--header">NDA нужен?</span>
+    <mat-radio-group
+      color="primary"
+      aria-label="Select an option"
+      [(ngModel)]="signRes"
+      (ngModelChange)="logResult()"
+    >
+      <mat-radio-button class="radio__item" [value]="true">Да</mat-radio-button>
+      <mat-radio-button class="radio__item" [value]="false">Нет</mat-radio-button>
+    </mat-radio-group>
+  </div>
+</div>

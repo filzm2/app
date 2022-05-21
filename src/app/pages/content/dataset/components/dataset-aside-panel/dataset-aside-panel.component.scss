@@ -1,0 +1,153 @@
+@import "../../../../../../styles/exd-colors.scss";
+@import "../../../../../../styles/mixins.scss";
+@import "../../../../../../styles/variables.scss";
+
+.dataset-detail-aside {
+  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: calc(100% - 60px);
+  flex-basis: inherit;
+  width: inherit;
+  flex-shrink: 0;
+  transition: .3s;
+  border-radius: $main-radius;
+  background: white;
+  overflow: hidden;
+  &-header{
+    display: flex;
+    margin: 12px;
+    &-icon.mat-icon {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+    }
+    app-icon-button {
+      margin-left: auto;
+    }
+  }
+  &-title {
+    @include font(16px, 700);
+    padding-left: 16px;
+    padding-top: 4px;
+    margin-bottom: -4px;
+  }
+  &-body {
+    overflow: hidden;
+    margin: 20px;
+
+    .search-field {
+      margin-top: 12px;
+      margin-bottom: 12px;
+      width: 100%;
+    }
+  }
+  &-description {
+    width: 415px;
+    font-family: 'Montserrat', serif;
+    height: auto;
+    white-space: normal;
+    overflow: hidden;
+    position: relative;
+    .expand-button {
+      font-weight: 700;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      color: white;
+      background: map-get($exd-grayscale, 250);
+      border-radius: 6px;
+      width: 12px;
+      height: 12px;
+      line-height: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  &-group {
+    border-top: 1px solid map-get($exd-grayscale, 100);
+    &-header {
+      @include font(12px, 700);
+      overflow: hidden;
+      cursor: pointer;
+      padding-top: 12px;
+      color: map-get($exd-psb-blue, 450);
+      display: flex;
+      justify-content: space-between;
+    }
+    &-list {
+      @include font(12px, 500);
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      max-height: 250px;
+      overflow: auto;
+      &-href {
+        margin-top: 5px;
+        cursor: pointer;
+        @include font(12px, 500);
+        color: map-get($exd-grayscale, 100);
+      }
+    }
+    &-item {
+      padding-bottom: 8px;
+      &-label {
+        margin-right: 13px;
+        display: inline-block;
+        mat-icon {
+          width: 12px;
+          height: 12px;
+          position: relative;
+          top: 3px;
+          margin-left: 5px;
+        }
+      }
+      .mat-tooltip-icon {
+        padding-left: 7px;
+        &.description {
+          padding-left: 8px;
+        }
+      }
+      &-type-icon {
+        margin-right: 16px;
+        .mat-icon {
+          width: 12px;
+          height: 12px;
+          svg {
+            width: 12px;
+            height: 12px;
+            circle, line {
+              stroke: map-get($exd-main, 500);
+            }
+          }
+        }
+      }
+    }
+    &-count {
+      @include font(12px, 500);
+      color: map-get($exd-grayscale, 100);
+      padding-bottom: 8px;
+    }
+  }
+
+  &-footer {
+    padding: 12px 10px;
+    border-top: 1px solid map-get($exd-grayscale, 100);
+    display: flex;
+    justify-content: flex-end;
+    margin-top: auto;
+    app-icon-button {
+      svg {
+        transition: .25s;
+        transform: rotate(0);
+      }
+      &.hide {
+        svg {
+          transform: rotate(180deg);
+        }
+      }
+    }
+  }
+}

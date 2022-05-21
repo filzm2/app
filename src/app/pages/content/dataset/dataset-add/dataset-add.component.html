@@ -1,0 +1,70 @@
+<div class="dataset-add">
+  <div class="container">
+    <div class="title">
+      Новый набор данных
+    </div>
+
+    <div class="form">
+      <mat-form-field
+        appearance="outline"
+        class="mat-form-field small-input">
+        <mat-label>Источник данных</mat-label>
+
+        <mat-select [(value)]="dataSourceSelected" (selectionChange)="sourceChanged($event.value)">
+          <mat-option
+            *ngFor="let source of dataSources"
+            [value]="source.id">
+            {{ source.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+      <mat-form-field
+        appearance="outline"
+        class="mat-form-field small-input">
+        <mat-label>Схема</mat-label>
+
+        <mat-select [(value)]="schemaSelected" (selectionChange)="schemaChanged($event.value)">
+          <mat-option
+            *ngFor="let schema of schemes"
+            [value]="schema">
+            {{ schema }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field
+        appearance="outline"
+        class="mat-form-field small-input">
+        <mat-label>Таблица</mat-label>
+
+        <mat-select [(value)]="tableSelected" (selectionChange)="tableChanged($event.value)">
+          <mat-option
+            *ngFor="let table of tables"
+            [value]="table.value">
+            {{ table.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="actions">
+      <button
+        mat-raised-button
+        color="primary"
+        class="add-button small-button"
+        (click)="createDataset()">
+        Добавить
+      </button>
+
+      <button
+        mat-stroked-button
+        color="primary"
+        class="cancel-button small-button"
+        (click)="routeBack()">
+        Отмена
+      </button>
+    </div>
+  </div>
+</div>

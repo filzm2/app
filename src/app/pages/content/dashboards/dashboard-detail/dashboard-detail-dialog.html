@@ -1,0 +1,98 @@
+<div class="dashboard-detail-dialog">
+  <div
+    class="close"
+    (click)="onNoClick()"
+  >
+    <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M13.2988 1.0355C13.1119 0.843043 12.8583 0.734887 12.5938 0.734887C12.3292 0.734887 12.0756 0.843043 11.8888 1.0355L6.99875 6.05105L2.10875 1.02522C1.92192 0.832765 1.66827 0.724609 1.40375 0.724609C1.13923 0.724609 0.885582 0.832765 0.69875 1.02522C0.30875 1.42605 0.30875 2.07355 0.69875 2.47439L5.58875 7.50022L0.69875 12.5261C0.30875 12.9269 0.30875 13.5744 0.69875 13.9752C1.08875 14.3761 1.71875 14.3761 2.10875 13.9752L6.99875 8.94939L11.8888 13.9752C12.2788 14.3761 12.9088 14.3761 13.2988 13.9752C13.6888 13.5744 13.6888 12.9269 13.2988 12.5261L8.40875 7.50022L13.2988 2.47439C13.6788 2.08383 13.6788 1.42605 13.2988 1.0355Z"
+        fill="white"
+      />
+    </svg>
+  </div>
+
+  <h2 class="title">
+    {{ data.title }}
+  </h2>
+
+  <div class="inputs-container">
+    <div
+      *ngFor="let email of data.emails; let i = index"
+      class="input-container"
+    >
+      <mat-form-field
+        appearance="outline"
+        class="input-title"
+      >
+        <mat-label>E-mail</mat-label>
+
+        <input
+          matInput
+          placeholder="Введите e-mail"
+          [(ngModel)]="email.value"
+        >
+      </mat-form-field>
+
+      <button
+        [class.hide]="i !== data.emails.length - 1"
+        mat-stroked-button
+        color="primary"
+        class="input-add-email small-button primary-color"
+        (click)="addRowEmail()"
+      >
+        <mat-icon style="display: inline;">add</mat-icon>
+
+        Добавить e-mail
+      </button>
+    </div>
+  </div>
+
+  <div class="sub-container">
+    <label
+      *ngIf="!data.isBlockSub"
+      class="sub-title"
+    >
+      <mat-slide-toggle [(ngModel)]="data.isEmailSub"></mat-slide-toggle>
+
+      <span class="sub-title-text">
+        Подписаться на рассылку
+      </span>
+    </label>
+  </div>
+
+  <!-- todo
+  <mat-form-field
+    appearance="outline"
+    color="accent"
+    class="app-mat-select"
+  >
+    <mat-label>Периодичность</mat-label>
+
+    <mat-select (selectionChange)="frequencyChanged($event.value)">
+      <mat-option value="1">1 раз в день</mat-option>
+      <mat-option value="7">1 раз в неделю</mat-option>
+      <mat-option value="28">1 раз в месяц</mat-option>
+    </mat-select>
+  </mat-form-field>
+  -->
+
+  <div class="buttons">
+    <button
+      mat-stroked-button
+      color="primary"
+      class="mat-raised-button small-button mat-primary"
+      (click)="onOkClick()"
+    >
+      Отправить
+    </button>
+
+    <button
+      mat-stroked-button
+      color="primary"
+      class="cancel-button small-button primary-color"
+      (click)="onNoClick()"
+    >
+      Отмена
+    </button>
+  </div>
+</div>

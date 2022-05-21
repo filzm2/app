@@ -1,0 +1,12 @@
+<div class="dialog-warning">
+  <h3 mat-dialog-title class="dialog-warning__title">{{data.title}}</h3>
+  <div mat-dialog-content class="dialog-warning__content">
+    <mat-icon svgIcon="warning"></mat-icon>
+    <pre *ngIf="data.json">{{data.text | json}}</pre>
+    <div *ngIf="!data.json">{{data.text}}</div>
+  </div>
+  <div mat-dialog-actions class="dialog-warning__actions">
+    <button mat-raised-button color="primary" class="small-button" (click)="onConfirmClick()">{{data.btnSuccessTitle}}</button>
+    <button *ngIf="data?.btnCancelTitle" mat-stroked-button class="primary-color small-button" color="primary" (click)="onCancelClick()">{{data.btnCancelTitle}}</button>
+  </div>
+</div>

@@ -1,0 +1,98 @@
+<div class="filter-bar-container">
+  <form [formGroup]="filterForm" (ngSubmit)="onFormSubmit()">
+    <div>
+      <mat-checkbox formControlName="default">Значение фильтра по умолчанию</mat-checkbox>
+    </div>
+
+    <mat-form-field appearance="outline" color="primary" class="small-input form-input filter-type">
+      <mat-label>Тип диапазона</mat-label>
+
+      <mat-select formControlName="type">
+        <mat-option value="last">За последний</mat-option>
+        <mat-option value="calendar">Предыдущий календарный</mat-option>
+        <mat-option value="custom">Календарь</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div *ngIf="filterForm.value.type === 'last'">
+      <mat-radio-group class="filter-radio-group" formControlName="last">
+        <mat-radio-button
+          class="filter-radio-button"
+          *ngFor="let item of lastFilter"
+          [value]="item.name"
+        >
+          {{ item.title }}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div *ngIf="filterForm.value.type === 'calendar'">
+      <mat-radio-group class="filter-radio-group" formControlName="lastCalendar">
+        <mat-radio-button
+          class="filter-radio-button"
+          *ngFor="let item of lastCalendarFilter"
+          [value]="item.name"
+        >
+          {{ item.title }}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div *ngIf="filterForm.value.type === 'custom'" class="custom-filter-container">
+      <mat-form-field appearance="outline" class="custom-form-field">
+        <mat-label>Начало</mat-label>
+        <input matInput [matDatepicker]="datepickerStart" formControlName="start" />
+        <mat-datepicker-toggle matSuffix [for]="datepickerStart"></mat-datepicker-toggle>
+        <mat-datepicker #datepickerStart>
+          <mat-datepicker-actions>
+            <button mat-raised-button color="primary" class="small-button" matDatepickerApply>
+              Выбрать
+            </button>
+          </mat-datepicker-actions>
+        </mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="custom-form-field">
+        <mat-label>Окончание</mat-label>
+        <input matInput [matDatepicker]="datepickerEnd" formControlName="end" />
+        <mat-datepicker-toggle matSuffix [for]="datepickerEnd"></mat-datepicker-toggle>
+        <mat-datepicker #datepickerEnd>
+          <mat-datepicker-actions>
+            <button mat-raised-button color="primary" class="small-button" matDatepickerApply>
+              Выбрать
+            </button>
+          </mat-datepicker-actions>
+        </mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <div class="mat-caption">Фактический временной диапазон</div>
+      <div>
+        {{ factStartDate ? (factStartDate | date: 'shortDate') : '' }} < col <
+        {{ factEndDate ? (factEndDate | date: 'shortDate') : '' }}
+      </div>
+    </div>
+
+    <!-- <div class="filter-actions">
+      <button type="submit" mat-raised-button color="primary" class="small-button">
+        Сохранить
+      </button>
+      <button mat-stroked-button color="primary" class="small-button cancel-button primary-color">
+        Отменить
+      </button>
+    </div> -->
+
+    <!-- <mat-form-field appearance="outline" color="accent" class="small-input filter-formfield">
+        <mat-label>Выберите диапазон дат</mat-label>
+        <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+            <input matStartDate formControlName="start" placeholder="Начало">
+            <input matEndDate formControlName="end" placeholder="Конец">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+
+        <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date
+        </mat-error>
+        <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date
+        </mat-error>
+    </mat-form-field> -->
+  </form>
+</div>

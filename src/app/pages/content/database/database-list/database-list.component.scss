@@ -1,0 +1,231 @@
+@import '../../../../../styles/exd-colors.scss';
+@import '../../../../../styles/mixins.scss';
+
+.database-list {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+
+  &-container {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 455px 1fr;
+    grid-template-rows: 60px 1fr;
+    gap: 20px;
+
+    * {
+      box-sizing: border-box;
+    }
+  }
+
+  &-actions {
+    display: flex;
+    gap: 16px;
+    margin-left: auto;
+
+    .mat-form-field-wrapper {
+      height: 36px;
+    }
+
+    mat-form-field {
+      position: relative;
+      width: 176px;
+    }
+
+    &-wrapper {
+      background: white;
+      border-radius: 8px;
+      display: flex;
+      width: 100%;
+      height: 60px;
+      align-items: center;
+      padding: 0 12px;
+      justify-content: space-between;
+    }
+  }
+
+  &-header {
+    padding: 12px 20px;
+    background: white;
+    border-radius: 8px;
+    width: 100%;
+    height: 60px;
+
+    h1 {
+      margin: 0;
+    }
+  }
+
+  &-filters {
+    border-radius: 8px;
+    background: white;
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+
+    .mat-form-field {
+      width: 100%;
+
+      .mat-form-field-outline {
+        height: 48px;
+      }
+
+      .mat-form-field-infix {
+        margin-top: 7px;
+      }
+
+      .mat-form-field-label .ng-star-inserted {
+        font-size: 16px !important;
+      }
+    }
+
+    .mat-button-toggle-group {
+      margin-bottom: 20px;
+    }
+
+    &-wrapper {
+      width: 100%;
+    }
+  }
+
+  &-list {
+    border-radius: 8px;
+    width: 100%;
+    background: white;
+    position: relative;
+    min-height: calc(100vh - 200px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &-table {
+    // position: relative;
+    margin-top: 20px;
+    width: 100%;
+    padding: 0 20px;
+
+    .mat-header-row {
+      .mat-header-cell {
+        // position: sticky;
+        // z-index: 1;
+        // top: 0;
+        padding: 0 4px;
+        word-wrap: break-word;
+        white-space: normal;
+      }
+
+      .mat-header-cell:nth-child(1) {
+        min-width: 300px;
+        width: 800px;
+      }
+
+      .mat-header-cell:nth-child(2) {
+        min-width: 100px;
+        width: 110px;
+        max-width: 120px;
+      }
+
+      .mat-header-cell:nth-child(3) {
+        min-width: 60px;
+        width: 70px;
+        max-width: 80px;
+      }
+
+      .mat-header-cell:nth-child(4) {
+        min-width: 60px;
+        width: 70px;
+        max-width: 80px;
+      }
+
+      .mat-header-cell:nth-child(5) {
+        min-width: 110px;
+        width: 120px;
+        max-width: 130px;
+      }
+
+      .mat-header-cell:nth-child(6) {
+        min-width: 80px;
+        width: 90px;
+        max-width: 100px;
+      }
+
+      .mat-header-cell:nth-child(7) {
+        min-width: 100px;
+        width: 110px;
+        max-width: 120px;
+      }
+
+      .mat-header-cell:nth-child(8) {
+        min-width: 100px;
+        width: 110px;
+        max-width: 120px;
+      }
+
+      .mat-header-cell:nth-child(9) {
+        min-width: 40px;
+        width: 40px;
+        max-width: 40px;
+      }
+    }
+
+    .mat-row {
+      height: 52px;
+      cursor: auto;
+
+      .mat-cell {
+        padding: 0 4px;
+        word-wrap: break-word;
+        white-space: normal;
+
+        &:nth-child(1) {
+          font-size: 16px;
+          line-height: 24px;
+        }
+      }
+    }
+
+    .boolean-table-column {
+      width: 120px;
+    }
+
+    .action-table-column {
+      width: 52px;
+    }
+
+    .check-icon {
+      @include font(14px, 700);
+      width: 14px;
+      height: 14px;
+    }
+
+    &-actions {
+      &-button {
+        button.icon-button {
+          background: white;
+
+          &:hover {
+            background: white;
+          }
+        }
+      }
+    }
+
+    &-footer {
+      display: flex;
+      position: sticky;
+      bottom: 0;
+      border-radius: 8px;
+      background: white;
+      justify-content: space-between;
+
+      .mat-paginator {
+        margin-left: auto;
+      }
+    }
+  }
+}

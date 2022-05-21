@@ -1,0 +1,226 @@
+@font-face {
+  font-family: 'icm-icon';
+  src:  url('fonts/icm-icon.eot?xk5lyb');
+  src:  url('fonts/icm-icon.eot?xk5lyb#iefix') format('embedded-opentype'),
+    url('fonts/icm-icon.ttf?xk5lyb') format('truetype'),
+    url('fonts/icm-icon.woff?xk5lyb') format('woff'),
+    url('fonts/icm-icon.svg?xk5lyb#icm-icon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="i_"], [class*=" i_"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icm-icon' !important;
+  font-size: 24px;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.i_arrow_drop_down_24px:before {
+  content: "\e900";
+}
+.i_arrow_drop_up_24px:before {
+  content: "\e901";
+}
+.i_arrow_forward_left_24px:before {
+  content: "\e902";
+}
+.i_arrow_forward_right_24px:before {
+  content: "\e903";
+}
+.i_arrow_sort_down_24px:before {
+  content: "\e904";
+}
+.i_arrow_sort_up_24px:before {
+  content: "\e905";
+}
+.i_assessment_24px:before {
+  content: "\e906";
+}
+.i_bolt:before {
+  content: "\e907";
+}
+.i_book:before {
+  content: "\e908";
+}
+.i_box:before {
+  content: "\e909";
+}
+.i_calendar_24px:before {
+  content: "\e90a";
+}
+.i_calendar_today_24px:before {
+  content: "\e90b";
+}
+.i_call__24px:before {
+  content: "\e90c";
+}
+.i_chat_24px:before {
+  content: "\e90d";
+}
+.i_check_24px:before {
+  content: "\e90e";
+}
+.i_check:before {
+  content: "\e90f";
+}
+.i_chevron_left_24px:before {
+  content: "\e910";
+}
+.i_chevron_right_24px:before {
+  content: "\e911";
+}
+.i_close_24px:before {
+  content: "\e912";
+}
+.i_cloud:before {
+  content: "\e913";
+}
+.i_create_24px:before {
+  content: "\e914";
+}
+.i_cross:before {
+  content: "\e915";
+}
+.i_delete_24px:before {
+  content: "\e916";
+}
+.i_done:before {
+  content: "\e917";
+}
+.i_drag_handle_24px:before {
+  content: "\e918";
+}
+.i_email_24px:before {
+  content: "\e919";
+}
+.i_error_24px:before {
+  content: "\e91a";
+}
+.i_expand_less_24px:before {
+  content: "\e91b";
+}
+.i_expand_more_24px:before {
+  content: "\e91c";
+}
+.i_file_24px:before {
+  content: "\e91d";
+}
+.i_file_download_24px:before {
+  content: "\e91e";
+}
+.i_file_upload_24px:before {
+  content: "\e91f";
+}
+.i_filter_24px:before {
+  content: "\e920";
+}
+.i_flag:before {
+  content: "\e921";
+}
+.i_floppy_disk_24px:before {
+  content: "\e922";
+}
+.i_attention:before {
+  content: "\e923";
+}
+.i_back:before {
+  content: "\e924";
+}
+.i_group_work_24px:before {
+  content: "\e925";
+}
+.i_help_outline:before {
+  content: "\e926";
+}
+.i_history:before {
+  content: "\e927";
+}
+.i_home_24px:before {
+  content: "\e928";
+}
+.i_info_24px:before {
+  content: "\e929";
+}
+.i_list:before {
+  content: "\e92a";
+}
+.i_logout_24px:before {
+  content: "\e92b";
+}
+.i_markunread_mailbox_24px:before {
+  content: "\e92c";
+}
+.i_menu:before {
+  content: "\e92d";
+}
+.i_minus_24px:before {
+  content: "\e92e";
+}
+.i_notification:before {
+  content: "\e92f";
+}
+.i_options_horizontal_24px:before {
+  content: "\e930";
+}
+.i_options_vertical_24px:before {
+  content: "\e931";
+}
+.i_page_first_24px:before {
+  content: "\e932";
+}
+.i_page_last_24px:before {
+  content: "\e933";
+}
+.i_pause_circle_outline-24px-1:before {
+  content: "\e934";
+}
+.i_person_-replace_24px:before {
+  content: "\e935";
+}
+.i_plus_24px:before {
+  content: "\e936";
+}
+.i_print:before {
+  content: "\e937";
+}
+.i_refresh_24px:before {
+  content: "\e938";
+}
+.i_search_24px:before {
+  content: "\e939";
+}
+.i_settings_24px:before {
+  content: "\e93a";
+}
+.i_sort_24px:before {
+  content: "\e93b";
+}
+.i_target:before {
+  content: "\e93c";
+}
+.i_timer_24px:before {
+  content: "\e93d";
+}
+.i_track_changes_24px:before {
+  content: "\e93e";
+}
+.i_trending_down_24px:before {
+  content: "\e93f";
+}
+.i_trending_up_24px:before {
+  content: "\e940";
+}
+.i_warning_24px:before {
+  content: "\e941";
+}

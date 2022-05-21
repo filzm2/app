@@ -1,0 +1,25 @@
+<div
+  [ngStyle]="{border: '1px solid #cecece', borderRadius: '4px'}"
+  class="icm-flex icm-flex-left icm-padding-medium">
+  <div class="icm-flex icm-width-1-3 icm-flex-middle">
+    <div class="file-docx-icon icm-margin-xsmall-right"></div>
+    <div>
+      <div *ngIf="data.status.title === 'Проверен'" class="icm-text--very-small icm-color-green">{{data.status.title}}</div>
+      <div *ngIf="data.status.title === 'Не проверен'" class="icm-text--very-small icm-color-orange">{{data.status.title}}</div>
+      <div class="icm-text--small-medium">{{data.status.text}}</div>
+    </div>
+  </div>
+
+  <div class="icm-width-1-3">
+    <div class="icm-color-meta icm-text--small">{{data.user.title}}:</div>
+    <div class="icm-text--small-medium">{{data.user.text}}</div>
+  </div>
+
+  <div class="icm-width-1-3 icm-flex-middle">
+    <div class="icm-flex ">
+      <div class="bank-logo-16 icm-margin-xsmall-right"></div>
+      <div class="icm-color-meta icm-text--small">{{data.bank.title}}:</div>
+    </div>
+    <div class="icm-text--small-medium">{{data.bank.text}}</div>
+  </div>
+</div>

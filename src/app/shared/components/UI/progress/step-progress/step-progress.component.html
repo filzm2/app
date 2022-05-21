@@ -1,0 +1,12 @@
+<div class="card__body--progress">
+  <div>
+    <span class="body__progress--step text--small">Шаг {{steps}}/{{chain.length}}</span>
+    <span class="text--small-medium">{{title}}</span>
+  </div>
+  <div class="chain">
+    <div *ngFor="let link of chain"
+         class="link"
+         [ngClass]="{done: link.condition === 'done'}"
+    ></div>
+  </div>
+</div>

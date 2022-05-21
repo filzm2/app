@@ -1,0 +1,155 @@
+@import "../../../../../styles/exd-colors.scss";
+@import "../../../../../styles/mixins.scss";
+@import "../../../../../styles/variables.scss";
+
+.chart-detail__chart {
+  height: 70vh;
+}
+
+.chart-detail {
+  height: calc(100vh - 80px);
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 100vw;
+  box-sizing: border-box;
+  width: 100%;
+  gap: 20px;
+  padding: 20px;
+  overflow: hidden;
+  * {
+    box-sizing: border-box;
+  }
+  &-header {
+    width: 100%;
+    flex-basis: 100%;
+    align-items: center;
+    border-radius: $main-radius;
+    background: white;
+    overflow: hidden;
+    display: flex;
+    height: 60px;
+    padding: 12px 20px;
+    &-title {
+      @include font(24px, 700);
+      padding-right: 20px;
+    }
+    .custom-badge {
+      height: 20px;
+      margin-right: 20px;
+      &__green {
+        margin-right: auto;
+      }
+    }
+    >button {
+      margin-right: 20px;
+    }
+    .star-checkbox {
+      margin-top: 6px;
+      margin-right: 15px;
+    }
+  }
+  &-container {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    height: 100%;
+    gap: 20px;
+
+    .chart-bignumber {
+      height: 60%;
+      display: flex;
+      margin-top: 10%;
+      color: map-get($exd-psb-orange, 500);
+      font-weight: 600;
+
+      .bignumber-text {
+        font-size: 48px;
+        padding: 10px;
+      }
+    }
+  }
+  app-dataset-aside-panel {
+    min-width: 56px;
+    flex-shrink: 0;
+  }
+  app-chart-aside-panel {
+    width: 455px;
+    flex-shrink: 0;
+  }
+  &-cell {
+    padding-left: 25px !important;
+  }
+  &-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    height: calc(100% - 70px);
+    flex-basis: 100%;
+    width: 100%;
+    transition: .3s;
+    overflow: auto;
+    &-dataset {
+      table {
+        width: 100%;
+      }
+    }
+    &-spinner {
+      margin: auto;
+    }
+    &-paginator {
+      position: sticky;
+      left: 0;
+      bottom: 0;
+    }
+    &-wrapper {
+      display: flex;
+      flex-direction: column;
+      height: calc(100% - 60px);
+      width: 100%;
+      border-radius: $main-radius;
+      background: white;
+      overflow: hidden;
+      padding: 20px 16px 0 20px;
+    }
+    &-table {
+      margin: 0;
+      padding: 0;
+      .mat-cell.mat-cell {
+        &:nth-child(2) {
+          font-size: 12px;
+          line-height: 16px;
+        }
+      }
+      &-item-type-icon {
+        display: inline-block;
+        position: relative;
+        padding-right: 16px;
+        .mat-icon {
+          width: 12px;
+          height: 12px;
+          svg {
+            width: 12px;
+            height: 12px;
+            circle, line {
+              stroke: map-get($exd-main, 500);
+            }
+          }
+        }
+        &::after {
+          position: absolute;
+          content: '';
+          right: 8px;
+          top: 0;
+          width: 1px;
+          background: map-get($exd-grayscale, 100);
+          height: 16px;
+        }
+      }
+    }
+  }
+  &-view-toggle {
+    margin: 20px auto;
+    flex-shrink: 0;
+  }
+}

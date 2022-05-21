@@ -1,0 +1,231 @@
+<section>
+  <div class="text--header">Информация о продуктах, входящих в лимит</div>
+
+  <form
+    [formGroup]="form"
+    (ngSubmit)="submitHandler()"
+    class="fields-group">
+
+    <div class="flex-row">
+        <mat-form-field class="half" appearance="fill">
+          <mat-label>Продукт</mat-label>
+          <mat-select formControlName="product_type">
+            <mat-option *ngFor="let productType of productTypes" value="{{productType.id}}">{{productType.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="half" appearance="fill">
+          <mat-label>Целевое использование</mat-label>
+          <mat-select formControlName="appointment">
+            <mat-option *ngFor="let appointment of appointmentList" value="{{appointment.id}}">{{appointment.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div class="flex-row">
+        <mat-form-field  class="quarter" appearance="fill">
+        <mat-label>Сумма продукта</mat-label>
+        <input type="number" formControlName="amount" matInput>
+      </mat-form-field>
+        <mat-form-field class="quarter" appearance="fill">
+          <mat-label>Срок продукта</mat-label>
+          <input readonly formControlName="period" matInput [matDatepicker]="tt">
+          <mat-datepicker-toggle matSuffix [for]="tt"></mat-datepicker-toggle>
+          <mat-datepicker #tt></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field  class="quarter" appearance="fill">
+          <mat-label>Срок транша</mat-label>
+          <input type="number" formControlName="transh_period" matInput>
+        </mat-form-field>
+        <mat-form-field class="quarter" appearance="fill">
+          <mat-label>Единицы измерения</mat-label>
+          <mat-select formControlName="transhUnit">
+            <mat-option value="hour">Часов</mat-option>
+            <mat-option value="day">Дней</mat-option>
+            <mat-option value="month">Месяцев</mat-option>
+          </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field class="full" appearance="fill">
+        <mat-label>Комментарий</mat-label>
+        <input formControlName="note" matInput>
+      </mat-form-field>
+    </div>
+
+    <ul>
+      <li *ngFor="let borrower of selectedBorrowers; let idx = index" class="flex-row">
+        <div class="badge badge__content">{{idx + 1}}</div>
+        <div class="quarter">
+          <label class="label">Заемщик</label>
+          <p class="text--paragraph">{{borrower.shortName}}</p>
+        </div>
+        <div class="quarter">
+          <label class="label">ИНН</label>
+          <p class="text--paragraph">{{borrower.inn}}</p>
+        </div>
+        <div class="flex-row quarter">
+          <div>
+            <label class="label">КПП</label>
+            <p class="text--paragraph">{{borrower.kpp}}</p>
+          </div>
+        </div>
+        <div [ngStyle]="{width: '80px'}" class="flex-row">
+          <mat-icon (click)="deleteBorrower(idx, borrower)" class="badge badge__delete">delete</mat-icon>
+          <mat-icon *ngIf="idx === selectedBorrowers.length - 1 && this.borrowers.length && !isShowAddBorrows"
+                    (click)="isShowAddBorrows = true;" class="badge badge__add">add</mat-icon>
+        </div>
+      </li>
+      <li class="flex-row" *ngIf="isShowAddBorrows">
+        <div class="badge badge__content">{{selectedBorrowers.length + 1}}</div>
+        <mat-form-field class="third" appearance="fill">
+          <mat-label>Заемщик</mat-label>
+          <mat-select [(value)]="currentBorrower" (selectionChange)="addBorrower($event)" >
+            <mat-option *ngFor="let borrower of borrowers" [value]="borrower">{{borrower.shortName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="quarter">
+          <label class="label">ИНН</label>
+          <p class="text--paragraph">{{currentBorrower.inn}}</p>
+        </div>
+        <div class="quarter">
+          <label class="label semi">КПП</label>
+          <p class="text--paragraph">{{currentBorrower.kpp}}</p>
+        </div>
+      </li>
+    </ul>
+
+    <app-ui-button
+      [disable]="!form.valid || (selectedBorrowers.length < 1)"
+      type="submit"
+      title="Добавить"
+      color="orange" ></app-ui-button>
+  </form>
+
+  <div *ngIf="accordionList.length">
+    <div class="accordion__header">
+      <div class="text--very-small idx">#</div>
+      <div class="text--very-small product">Продукт</div>
+      <div class="text--very-small borrower">Заемщик</div>
+      <div class="text--very-small inn">ИНН</div>
+      <div class="text--very-small summary">Сумма</div>
+    </div>
+    <mat-accordion
+      class="accordion"
+      [displayMode]="flat"
+      #accordion="matAccordion"
+    >
+
+      <mat-expansion-panel
+        [disabled]="panel.isDisabled"
+        [expanded]="panel.isExpanded"
+        [hideToggle]="true"
+        (opened)="beforePanelOpened(panel)"
+        (closed)="beforePanelClosed(panel)"
+        (afterCollapse)="afterPanelClosed($event)"
+        (afterExpand)="afterPanelOpened($event)"
+        *ngFor="let panel of accordionList; let idx = index"
+      >
+        <mat-expansion-panel-header #panelH (click)="panelH._toggle()">
+          <mat-panel-description>
+            <div class="accordion__item--header">
+              <div class="text--very-small idx">{{idx +1}}</div>
+              <div class="text--very-small product">{{getPproductTitle(panel.product_type)}}</div>
+              <div class="text--very-small borrower">
+                <p style="margin: 0;" *ngFor="let borrower of panel.borrowers">{{borrower.shortName}}</p>
+              </div>
+              <div class="text--very-small inn">
+                <p style="margin: 0;" *ngFor="let borrower of panel.borrowers">{{borrower.inn}}</p>
+              </div>
+              <div class="text--very-small summary">{{panel.amount}}</div>
+              <div class="row-icons">
+                <mat-icon [ngStyle]="{color: '#DADADA'}" (click)="deleteItemProduct(idx)">delete_outline</mat-icon>
+                <mat-icon [ngStyle]="{color: '#DADADA'}" (click)="panelH._toggle()" >{{panelH.panel.expanded ? 'keyboard_arrow_up' : "keyboard_arrow_down"}}</mat-icon>
+              </div>
+            </div>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div class="item__description">
+          <div class="flex-row">
+            <mat-form-field  class="quarter" appearance="fill">
+              <mat-label>Сумма продукта</mat-label>
+              <input type="number" [(ngModel)]="panel.amount" matInput>
+            </mat-form-field>
+            <mat-form-field class="half" appearance="fill">
+              <mat-label>Целевое использование</mat-label>
+              <mat-select [(ngModel)]="panel.appointment">
+                <mat-option *ngFor="let appointment of appointmentList" value="{{appointment.id}}">{{appointment.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="quarter" appearance="fill">
+              <mat-label>Срок продукта</mat-label>
+              <input matInput readonly [matDatepicker]="tt" [(ngModel)]="panel.period">
+              <mat-datepicker-toggle matSuffix [for]="tt"></mat-datepicker-toggle>
+              <mat-datepicker #tt></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="flex-row">
+            <mat-form-field  class="quarter" appearance="fill">
+              <mat-label>Срок транша</mat-label>
+              <input matInput type="number" [(ngModel)]="panel.transh_period">
+            </mat-form-field>
+            <mat-form-field class="quarter" appearance="fill">
+              <mat-label>Единицы измерения</mat-label>
+              <mat-select [(ngModel)]="panel.transhUnit">
+                <mat-option value="hour">Часов</mat-option>
+                <mat-option value="day">Дней</mat-option>
+                <mat-option value="month">Месяцев</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field  class="half" appearance="fill">
+              <mat-label>Комментарий</mat-label>
+              <input matInput [(ngModel)]="panel.note">
+            </mat-form-field>
+          </div>
+          <div class="flex-row">
+            <ul>
+              <li *ngFor="let borrower of panel.borrowers; let bIdx = index" class="flex-row borrower-row">
+                <div class="badge badge__content">{{bIdx + 1}}</div>
+                <mat-form-field class="half" appearance="fill">
+                  <mat-label>Заемщик</mat-label>
+                  <mat-select [value]="borrower" (selectionChange)="changeBorrowerInTable($event, idx, bIdx)">
+                    <mat-option *ngFor="let item of getBorrowersListForTable(idx, borrower, panel.borrowers)" [value]="item">{{item.shortName}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field  class="quarter" appearance="fill">
+                  <mat-label>ИНН</mat-label>
+                  <input placeholder="01234567890" disabled [value]="borrower.inn" matInput>
+                </mat-form-field>
+                <mat-form-field class="quarter " appearance="fill">
+                  <mat-label>КПП</mat-label>
+                  <input placeholder="01234567890" disabled [value]="borrower.kpp" matInput>
+                </mat-form-field>
+                <mat-icon [ngStyle]="{color: '#DADADA'}" (click)="clearItemBorrower(idx, bIdx)" class="badge margin-left-24px">delete_outline</mat-icon>
+              </li>
+              <li class="flex-row borrower-row" *ngIf="panel && panel.borrowers && this.borrowersForTable && panel.borrowers.length !== this.borrowersForTable.length">
+                <div class="badge badge__content">{{panel.borrowers.length + 1}}</div>
+                <mat-form-field class="half" appearance="fill">
+                  <mat-label>Добавить заемщика</mat-label>
+                  <mat-select (selectionChange)="addBorrowerToTable($event, idx)" >
+                    <mat-option *ngFor="let borrower of getNewBorrowersListForTable(idx, panel.borrowers)" [value]="borrower">{{borrower.shortName}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field  class="quarter" appearance="fill">
+                  <mat-label>ИНН</mat-label>
+                  <input placeholder="01234567890" disabled matInput>
+                </mat-form-field>
+                <mat-form-field class="quarter " appearance="fill">
+                  <mat-label>КПП</mat-label>
+                  <input placeholder="01234567890" disabled matInput>
+                </mat-form-field>
+                <mat-icon [ngStyle]="{color: '#DADADA', cursor: 'default'}" class="badge margin-left-24px">plus</mat-icon>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</section>

@@ -1,0 +1,135 @@
+<!-- prettier-ignore -->
+<div class="role-form" [formGroup]="formGroup">
+  <app-form-field [control]="getFormControl(formGroup, 'name')" label="Наименование роли" size="l"></app-form-field>
+  <div class="role-form__main-checkbox">
+    <mat-icon (click)="toggleAnimationState('all')" [@turn90]="animationState.all" class="drop-down-icon" svgIcon="arrow_drop_down">
+    </mat-icon>
+    <mat-checkbox class="indeterminate"
+                  [checked]="this.groupCheckboxesState.all.check"
+                  [indeterminate]="this.groupCheckboxesState.all.indeterminate"
+                  (change)="checkAll($event.checked, 'all')">
+      Все разрешения
+    </mat-checkbox>
+  </div>
+  <div [@verticalHideL]="animationState.all" class="role-form__body">
+    <div class="role-form__group" formGroupName="admin">
+      <mat-icon (click)="toggleAnimationState('admin')" [@turn90]="animationState.admin" class="drop-down-icon" svgIcon="arrow_drop_down">
+      </mat-icon>
+      <mat-checkbox class="indeterminate"
+                    [checked]="this.groupCheckboxesState.admin.check"
+                    [indeterminate]="this.groupCheckboxesState.admin.indeterminate"
+                    (change)="checkAll($event.checked, 'admin')">
+        Права администратора
+      </mat-checkbox>
+      <div [@verticalHide]="animationState.admin" class="role-form__expansion">
+        <mat-checkbox formControlName="can_create_db">Можно добавить новую базу данных
+        </mat-checkbox>
+        <mat-checkbox formControlName="can_create_udbmv">Можно создать пользователя
+        </mat-checkbox>
+        <mat-checkbox formControlName="can_delete_udbmv">Можно удалить пользователя
+        </mat-checkbox>
+        <mat-checkbox formControlName="can_create_rmv">Можно создать роль
+        </mat-checkbox>
+        <mat-checkbox formControlName="can_delete_rmv">Можно удалить роль
+        </mat-checkbox>
+<!--        <mat-checkbox formControlName="available_reset_my_password">resetmypassword в UserDBModelView-->
+<!--        </mat-checkbox>-->
+<!--        <mat-checkbox formControlName="can_connect_to_db">Можно протестировать соединение базы данных-->
+<!--        </mat-checkbox>-->
+      </div>
+    </div>
+    <div class="role-form__group" formGroupName="edit">
+      <mat-icon (click)="toggleAnimationState('edit')" [@turn90]="animationState.edit" class="drop-down-icon" svgIcon="arrow_drop_down">
+      </mat-icon>
+      <mat-checkbox class="indeterminate"
+                    [checked]="this.groupCheckboxesState.edit.check"
+                    [indeterminate]="this.groupCheckboxesState.edit.indeterminate"
+                    (change)="checkAll($event.checked, 'edit')">
+        Права на редактирование
+      </mat-checkbox>
+      <div [@verticalHide]="animationState.edit" class="role-form__expansion">
+        <mat-checkbox formControlName="can_edit_dataset">Можно редактировать набор данных
+        </mat-checkbox>
+        <mat-checkbox formControlName="can_create_dataset">Можно создавать набор данных
+        </mat-checkbox>
+        <mat-checkbox formControlName="can_create_dashboard">Можно создавать аналитическую панель
+        </mat-checkbox>
+        <mat-checkbox formControlName="can_edit_dashboard">Можно редактировать аналитическую панель
+        </mat-checkbox>
+        <mat-checkbox formControlName="can_create_chart">Можно создавать график
+        </mat-checkbox>
+        <mat-checkbox formControlName="can_edit_udbmv">Можно редактировать пользователя
+        </mat-checkbox>
+        <mat-checkbox formControlName="can_edit_rmv">Можно редактировать роль
+        </mat-checkbox>
+<!--        <mat-checkbox formControlName="can_edit_profile">Можно редактировать в личном кабинете-->
+<!--        </mat-checkbox>-->
+<!--        <mat-checkbox formControlName="can_edit_favorite_status">Можно добавить в избранное-->
+<!--        </mat-checkbox>-->
+<!--        <mat-checkbox formControlName="available_sql">можно писать SQL запросы-->
+<!--        </mat-checkbox>-->
+<!--        <mat-checkbox formControlName="can_filter_dashboard">Можно фильтровать аналитическую панель-->
+<!--        </mat-checkbox>-->
+      </div>
+    </div>
+    <div class="role-form__group" formGroupName="read">
+      <mat-icon (click)="toggleAnimationState('read')" [@turn90]="animationState.read" class="drop-down-icon" svgIcon="arrow_drop_down">
+      </mat-icon>
+      <mat-checkbox class="indeterminate"
+                    [checked]="this.groupCheckboxesState.read.check"
+                    [indeterminate]="this.groupCheckboxesState.read.indeterminate"
+                    (change)="checkAll($event.checked, 'read')">
+        Права на просмотр
+      </mat-checkbox>
+      <div [@verticalHide]="animationState.read" class="role-form__expansion">
+        <mat-checkbox formControlName="can_comment">Можно комментировать аналитические панели
+        </mat-checkbox>
+        <mat-checkbox formControlName="can_read_database">Можно посмотреть базы данных
+        </mat-checkbox>
+        <mat-checkbox formControlName="can_read_chart">Можно просмотреть график
+        </mat-checkbox>
+        <mat-checkbox formControlName="can_read_log">Можно прочитать в журнале
+        </mat-checkbox>
+        <mat-checkbox formControlName="can_read_rmv">Можно просматривать роли
+        </mat-checkbox>
+        <mat-checkbox formControlName="can_read_udbmv">Можно просматривать пользователей
+        </mat-checkbox>
+        <!--        <mat-checkbox formControlName="can_read_dataset">Можно просмотреть наборы данных-->
+        <!--        </mat-checkbox>-->
+        <!--        <mat-checkbox formControlName="can_read_dashboard">Можно просмотреть аналитические панели-->
+        <!--        </mat-checkbox>-->
+<!--        <mat-checkbox formControlName="can_read_saved_query">Можно просмотреть сохраненные запросы-->
+<!--        </mat-checkbox>-->
+<!--        <mat-checkbox formControlName="can_read_control_panel">Можно просмотреть на панели управления-->
+<!--        </mat-checkbox>-->
+<!--        <mat-checkbox formControlName="can_read_annotation">Можно просмотреть аннотации-->
+<!--        </mat-checkbox>-->
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!role" class="autocomplete-field">
+    <app-chips-autocomplete-field
+      [allOptions]="users$ | async"
+      formControlName="users"
+      label="Пользователи">
+    </app-chips-autocomplete-field>
+  </div>
+  <div class="role-form__actions">
+    <button
+      mat-raised-button
+      color="primary"
+      class="small-button "
+      (click)="saveChanges()">
+      Сохранить
+    </button>
+
+    <button
+      mat-stroked-button
+      color="primary"
+      class="small-button primary-color close-button"
+      (click)="routeBack()">
+      Отмена
+    </button>
+  </div>
+</div>

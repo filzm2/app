@@ -1,0 +1,524 @@
+<div class="log-container">
+  <div class="header">Список действий</div>
+
+  <div class="container">
+    <div class="filters-wrapper">
+      <div class="filters-header">
+        <div class="filters-title">Фильтры</div>
+
+        <button
+          [matMenuTriggerFor]="logsMenuID"
+          mat-stroked-button
+          color="primary"
+          class="small-button primary-color"
+        >
+          <mat-icon svgIcon="plus" style="stroke: #0400bf"></mat-icon>
+
+          Добавить фильтр
+        </button>
+
+        <mat-menu #logsMenuID="matMenu" class="filters-logs-menu">
+          <div *ngFor="let logMenu of logsMenu">
+            <button mat-menu-item (click)="filtersOptionsShow(logMenu.key)">
+              {{ logMenu.title }}
+            </button>
+          </div>
+        </mat-menu>
+      </div>
+
+      <!-- USER -->
+      <div *ngIf="filtersOptionsModel.user.length > 0" class="filters-container">
+        <div *ngFor="let _ of filtersOptionsModel.user; let i = index">
+          <div class="filters-main">
+            <div class="filters-key">Пользователь</div>
+
+            <img
+              src="/assets/icons/close_24px.png"
+              alt="icon_close_blue"
+              class="filters-close"
+              (click)="filtersOptionsHide('user', i)"
+            />
+          </div>
+
+          <div class="filters-inputs">
+            <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+              <mat-select
+                placeholder="Правило"
+                (selectionChange)="filtersOptionsChanged('user', i, $event.value)"
+              >
+                <mat-option *ngFor="let option of filtersOptions.user" [value]="option.variant">
+                  {{ option.value }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+              <mat-select
+                placeholder="Пользователь"
+                (selectionChange)="filtersValueChanged('user', i, $event.value)"
+              >
+                <mat-option *ngFor="let option of filtersOptionsData.user" [value]="option.id">
+                  {{ option.text }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="horizontal-line"></div>
+      </div>
+
+      <!-- ACTION -->
+      <div *ngIf="filtersOptionsModel.action.length > 0" class="filters-container">
+        <div *ngFor="let _ of filtersOptionsModel.action; let i = index">
+          <div class="filters-main">
+            <div class="filters-key">Действие</div>
+
+            <img
+              src="/assets/icons/close_24px.png"
+              alt="icon_close_blue"
+              class="filters-close"
+              (click)="filtersOptionsHide('action', i)"
+            />
+          </div>
+
+          <div class="filters-inputs">
+            <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+              <mat-select
+                placeholder="Правило"
+                (selectionChange)="filtersOptionsChanged('action', i, $event.value)"
+              >
+                <mat-option *ngFor="let option of filtersOptions.action" [value]="option.variant">
+                  {{ option.value }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+              <input
+                matInput
+                placeholder="Действие"
+                (change)="filtersValueChanged('action', i, $event.target.value.trim())"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="horizontal-line"></div>
+      </div>
+
+      <!-- DASHBOARD -->
+      <div *ngIf="filtersOptionsModel.dashboard.length > 0" class="filters-container">
+        <div *ngFor="let _ of filtersOptionsModel.dashboard; let i = index">
+          <div class="filters-main">
+            <div class="filters-key">ID Аналитической панели</div>
+
+            <img
+              src="/assets/icons/close_24px.png"
+              alt="icon_close_blue"
+              class="filters-close"
+              (click)="filtersOptionsHide('dashboard', i)"
+            />
+          </div>
+
+          <div class="filters-inputs">
+            <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+              <mat-select
+                placeholder="Правило"
+                (selectionChange)="filtersOptionsChanged('dashboard', i, $event.value)"
+              >
+                <mat-option
+                  *ngFor="let option of filtersOptions.dashboard"
+                  [value]="option.variant"
+                >
+                  {{ option.value }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+              <input
+                matInput
+                placeholder="ID"
+                (change)="filtersValueChanged('dashboard', i, $event.target.value.trim())"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="horizontal-line"></div>
+      </div>
+
+      <!-- WIDGET -->
+      <div *ngIf="filtersOptionsModel.widget.length > 0" class="filters-container">
+        <div *ngFor="let _ of filtersOptionsModel.widget; let i = index">
+          <div class="filters-main">
+            <div class="filters-key">ID Виджета</div>
+
+            <img
+              src="/assets/icons/close_24px.png"
+              alt="icon_close_blue"
+              class="filters-close"
+              (click)="filtersOptionsHide('widget', i)"
+            />
+          </div>
+
+          <div class="filters-inputs">
+            <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+              <mat-select
+                placeholder="Правило"
+                (selectionChange)="filtersOptionsChanged('widget', i, $event.value)"
+              >
+                <mat-option *ngFor="let option of filtersOptions.widget" [value]="option.variant">
+                  {{ option.value }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+              <input
+                matInput
+                placeholder="ID"
+                (change)="filtersValueChanged('widget', i, $event.target.value.trim())"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="horizontal-line"></div>
+      </div>
+
+      <!-- JSON -->
+      <div
+        *ngIf="filtersOptionsModel.json.length > 0"
+        class="filters-container filters-container-json"
+      >
+        <div *ngFor="let _ of filtersOptionsModel.json; let i = index">
+          <div class="filters-main">
+            <div class="filters-key">JSON</div>
+
+            <img
+              src="/assets/icons/close_24px.png"
+              alt="icon_close_blue"
+              class="filters-close"
+              (click)="filtersOptionsHide('json', i)"
+            />
+          </div>
+
+          <div class="filters-inputs">
+            <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+              <mat-select
+                placeholder="Правило"
+                (selectionChange)="filtersOptionsChanged('json', i, $event.value)"
+              >
+                <mat-option *ngFor="let option of filtersOptions.json" [value]="option.variant">
+                  {{ option.value }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <textarea
+              matInput
+              rows="4"
+              placeholder="JSON"
+              class="filters-input filters-textarea"
+              (change)="filtersValueChanged('json', i, $event.target.value.trim())"
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="horizontal-line"></div>
+      </div>
+
+      <!-- DATE -->
+      <div *ngIf="filtersOptionsModel.date.length > 0" class="filters-container">
+        <div *ngFor="let _ of filtersOptionsModel.date; let i = index">
+          <div class="filters-main">
+            <div class="filters-key">Дата</div>
+
+            <img
+              src="/assets/icons/close_24px.png"
+              alt="icon_close_blue"
+              class="filters-close"
+              (click)="filtersOptionsHide('date', i)"
+            />
+          </div>
+
+          <div class="filters-inputs">
+            <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+              <mat-select
+                placeholder="Правило"
+                class="filters-inputs-dates"
+                (selectionChange)="filtersOptionsChanged('date', i, $event.value)"
+              >
+                <mat-option *ngFor="let option of filtersOptions.date" [value]="option.variant">
+                  {{ option.value }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Дата</mat-label>
+
+              <input
+                #dateSelected
+                [matDatepicker]="picker"
+                matInput
+                (dateChange)="dateChanged(dateSelected, i)"
+              />
+
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <!--
+            <mat-form-field
+              appearance="outline"
+              class="filters-inputs-dates"
+            >
+              <mat-label>Диапазон дат</mat-label>
+
+              <mat-date-range-input
+                [rangePicker]="picker"
+              >
+                <input
+                  #dateRangeStart
+                  matStartDate
+                  formControlName="start"
+                  placeholder="С"
+                >
+
+                <input
+                  #dateRangeEnd
+                  matEndDate
+                  formControlName="end"
+                  placeholder="По"
+                  (dateChange)="dateRangeChange(dateRangeStart, dateRangeEnd)"
+                >
+              </mat-date-range-input>
+
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
+            -->
+          </div>
+        </div>
+
+        <div class="horizontal-line"></div>
+      </div>
+
+      <!-- DURATION -->
+      <div *ngIf="filtersOptionsModel.duration.length > 0" class="filters-container">
+        <div *ngFor="let _ of filtersOptionsModel.duration; let i = index">
+          <div class="filters-main">
+            <div class="filters-key">Продолжительность</div>
+
+            <img
+              src="/assets/icons/close_24px.png"
+              alt="icon_close_blue"
+              class="filters-close"
+              (click)="filtersOptionsHide('duration', i)"
+            />
+          </div>
+
+          <div class="filters-inputs">
+            <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+              <mat-select
+                placeholder="Правило"
+                (selectionChange)="filtersOptionsChanged('duration', i, $event.value)"
+              >
+                <mat-option *ngFor="let option of filtersOptions.duration" [value]="option.variant">
+                  {{ option.value }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+              <input
+                matInput
+                placeholder="м.сек"
+                (change)="filtersValueChanged('duration', i, $event.target.value.trim())"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="horizontal-line"></div>
+      </div>
+
+      <!-- LINK -->
+      <div *ngIf="filtersOptionsModel.link.length > 0" class="filters-container">
+        <div *ngFor="let _ of filtersOptionsModel.link; let i = index">
+          <div class="filters-main">
+            <div class="filters-key">Ссылка</div>
+
+            <img
+              src="/assets/icons/close_24px.png"
+              alt="icon_close_blue"
+              class="filters-close"
+              (click)="filtersOptionsHide('link', i)"
+            />
+          </div>
+
+          <div class="filters-inputs">
+            <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+              <mat-select
+                placeholder="Правило"
+                (selectionChange)="filtersOptionsChanged('link', i, $event.value)"
+              >
+                <mat-option *ngFor="let option of filtersOptions.link" [value]="option.variant">
+                  {{ option.value }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+              <input
+                matInput
+                placeholder="Ссылка"
+                (change)="filtersValueChanged('link', i, $event.target.value.trim())"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="horizontal-line"></div>
+      </div>
+      <!-- /// -->
+
+      <div class="update-list-container">
+        <button
+          [disabled]="isLoading || !isPossibleUpdateList"
+          mat-raised-button
+          color="primary"
+          class="update-list-button small-button"
+          (click)="getSortedLog()"
+        >
+          {{ isLoading ? 'Загрузка...' : 'Применить' }}
+        </button>
+      </div>
+    </div>
+
+    <div class="table">
+      <table [dataSource]="logList" mat-table matSort class="table">
+        <ng-container matColumnDef="select">
+          <th *matHeaderCellDef mat-header-cell>
+            <mat-checkbox
+              *ngIf="allCheckboxesSelected === 0"
+              [checked]="false"
+              (change)="toggleAllCheckboxes($event)"
+            ></mat-checkbox>
+
+            <mat-checkbox
+              *ngIf="allCheckboxesSelected === paginator.pageSize"
+              [checked]="true"
+              (change)="toggleAllCheckboxes($event)"
+            ></mat-checkbox>
+
+            <mat-checkbox
+              *ngIf="allCheckboxesSelected > 0 && allCheckboxesSelected < paginator.pageSize"
+              [checked]="true"
+              (change)="toggleAllCheckboxes($event, true)"
+              class="app-checkbox-minus"
+            ></mat-checkbox>
+          </th>
+
+          <td *matCellDef="let i = index" mat-cell (click)="$event.stopPropagation()">
+            <mat-checkbox
+              [checked]="checkboxesSelected[i]"
+              (change)="toggleCheckboxes($event, i)"
+            ></mat-checkbox>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th *matHeaderCellDef mat-header-cell class="column" (click)="getSortedList('action')">
+            <span class="column-content">
+              Действие
+
+              <mat-icon
+                class="icon"
+                [ngClass]="{ desc: sortOrder === 'desc', active: sortColumn === 'action' }"
+                svgIcon="arrow_sort_down"
+              ></mat-icon>
+            </span>
+          </th>
+
+          <td *matCellDef="let log" mat-cell>
+            {{ log.action }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="username">
+          <th *matHeaderCellDef mat-header-cell>Пользователь</th>
+
+          <td *matCellDef="let log" mat-cell>
+            {{ log.username }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="timestamp">
+          <th *matHeaderCellDef mat-header-cell class="column" (click)="getSortedList('dttm')">
+            <span class="column-content">
+              Дата
+
+              <mat-icon
+                class="icon"
+                [ngClass]="{ desc: sortOrder === 'desc', active: sortColumn === 'dttm' }"
+                svgIcon="arrow_sort_down"
+              ></mat-icon>
+            </span>
+          </th>
+
+          <td *matCellDef="let log" mat-cell>
+            {{ log.timestamp }}
+          </td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+
+        <tr
+          *matRowDef="let i = index; let row; columns: displayedColumns"
+          mat-row
+          (click)="openDialog(i)"
+        ></tr>
+      </table>
+
+      <div class="paginator-container">
+        <div class="action-footer-container">
+          <button
+            *ngIf="allCheckboxesSelected > 0"
+            mat-raised-button
+            color="primary"
+            class="reset-button small-button"
+            (click)="toggleAllCheckboxes({ checked: false }, true)"
+          >
+            <img src="/assets/icons/close_white_24px.svg" alt="close_white" class="filters-close" />
+
+            <span class="reset-button-text">
+              {{ allCheckboxesSelectedWithText }}
+            </span>
+          </button>
+
+          <button
+            *ngIf="allCheckboxesSelected > 0"
+            mat-raised-button
+            class="export-to-csv"
+            (click)="exportToCSV()"
+          >
+            <img src="/assets/icons/export_green.svg" alt="" class="" />
+          </button>
+        </div>
+
+        <mat-paginator
+          [length]="paginator.count"
+          [pageSize]="paginator.pageSize"
+          [pageSizeOptions]="paginator.pageSizeOptions"
+          [pageIndex]="paginator.currentPage"
+          (page)="onPageChange($event)"
+        ></mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>

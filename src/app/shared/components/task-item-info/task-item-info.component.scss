@@ -1,0 +1,136 @@
+.mat-card {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 16px;
+
+  .mat-card-content {
+    .about_user_content {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #E3E3E3;
+      padding-bottom: 16px;
+      padding-left: 15px;
+    }
+
+    .about_user {
+    }
+
+    .timers {
+      display: flex;
+      align-self: flex-end;
+    }
+
+    .mc-user-block_card_type {
+      font-weight: bold;
+      font-size: 22px;
+      line-height: 140%;
+      margin-bottom: 15px;
+    }
+
+    .user_task_description {
+      display: flex;
+      margin-top: 20px;
+      padding-left: 15px;
+
+      .about_user_task_icon {
+        align-items: center;
+        display: flex;
+        font-size: 50px;
+        color: #FF6C00;
+      }
+
+      .about_user_task_caption {
+        margin-left: 29px;
+      }
+    }
+
+    .task__item {
+      color: #3D50B7;
+      flex: none;
+      order: 0;
+      align-self: center;
+      margin: 15px 0px;
+    }
+
+    .task__userAvatar {
+      min-width: 46px;
+      height: 46px;
+      border-radius: 25px;
+    }
+
+    .task__item_clock {
+      color: #3D50B7;
+      height: 21px;
+      min-width: 19px;
+      background-size: cover;
+      margin-right: 4px;
+      margin-left: 4px;
+      margin-top: 20px;
+    }
+
+    .task__item_play {
+      cursor: pointer;
+      height: 32px;
+      width: 32px;
+      background-image: url('/assets/play.png');
+      background-size: cover;
+      margin-right: 4px;
+      margin-left: 20px;
+      margin-top: 7px;
+    }
+
+    .task__item_pause {
+      cursor: pointer;
+      height: 32px;
+      width: 32px;
+      background-image: url('/assets/pause.png');
+      background-size: cover;
+      margin-right: 4px;
+      margin-left: 20px;
+      margin-top: 7px;
+    }
+
+    .task__info_caption {
+      white-space: nowrap;
+      Font-Size: 12px;
+      color: #C1C1C1;
+    }
+
+    .task__item_to_end {
+      margin-top: 5px;
+      Font-Size: 16px;
+      color: #000000;
+    }
+
+    .task__author {
+      display: flex;
+    }
+
+    .task__userRole {
+      color: rgba(0, 0, 0, 0.5);
+      Font-Size: 12px;
+    }
+
+    .task__userName {
+      Font-Size: 16px;
+    }
+
+    .task__createdDT {
+      text-align: center;
+      height: 20px;
+      border-radius: 4px;
+      background: #F0F4FF;
+      border: 1px solid #D3DCF3;
+      padding: 3px 15px;
+      white-space: nowrap;
+    }
+
+    .timeCreated {
+      font-size: 14px;
+    }
+
+    .dateCreated {
+      font-size: 14px;
+    }
+  }
+}

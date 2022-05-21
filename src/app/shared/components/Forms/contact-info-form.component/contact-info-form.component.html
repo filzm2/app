@@ -1,0 +1,84 @@
+<section>
+  <form
+    [formGroup]="form"
+    (ngSubmit)="submitHandler()"
+    class="fields-group"
+  >
+
+    <div class="flex-row">
+      <mat-form-field class="half" appearance="fill">
+        <mat-label>Ответственный сотрудник по работе с банком</mat-label>
+        <input formControlName="manager" matInput>
+      </mat-form-field>
+
+      <mat-form-field class="half" appearance="fill">
+        <mat-label>ФИО</mat-label>
+        <input formControlName="fullName" matInput>
+      </mat-form-field>
+    </div>
+
+    <div class="flex-row">
+      <mat-form-field class="half" appearance="fill">
+        <mat-label>Контактный телефон</mat-label>
+        <input formControlName="phone" matInput>
+      </mat-form-field>
+
+      <mat-form-field class="half" appearance="fill">
+        <mat-label>Электронный адрес</mat-label>
+        <input formControlName="email" matInput>
+      </mat-form-field>
+    </div>
+
+    <div class="flex-row">
+      <mat-form-field class="full" appearance="fill">
+        <mat-label>WEB Сайт</mat-label>
+        <input formControlName="website" matInput>
+      </mat-form-field>
+    </div>
+
+    <app-ui-button type="submit" title="Добавить" color="orange" ></app-ui-button>
+  </form>
+
+  <div *ngIf="userList.length">
+    <ul>
+      <li *ngFor="let user of userList; let idx = index" class="badge-container">
+        <hr>
+        <div class="badges">
+          <div class="badge badge__content"
+          >{{idx + 1}}</div>
+          <mat-icon (click)="badgeDeleteHandler(user.fullName)" class="badge badge__delete" >delete</mat-icon>
+        </div>
+        <div class="container__info">
+          <div class="info__col">
+            <div class="col__item">
+              <div class="item__label">Ответственный сотрудник оп работе с банком</div>
+              <div class="item__text">{{user.manager}}</div>
+            </div>
+            <div class="col__item">
+              <div class="item__label">Электронный адрес</div>
+              <div class="item__text">{{user.email}}</div>
+            </div>
+          </div>
+          <div class="info__col">
+            <div class="col__item">
+              <div class="item__label">ФИО</div>
+              <div class="item__text">{{user.fullName}}</div>
+            </div>
+            <div class="col__item">
+              <div class="item__label">WEB сайт</div>
+              <div class="item__text">{{user.website}}</div>
+            </div>
+          </div>
+          <div class="info__col">
+            <div class="col__item">
+              <div class="item__label">Контактный телефон</div>
+              <div class="item__text">{{user.phone}}</div>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+
+  </div>
+</section>
+

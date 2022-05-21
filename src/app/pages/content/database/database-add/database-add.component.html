@@ -1,0 +1,75 @@
+<div class="database-add">
+  <div class="database-add-title">Добавить базу данных</div>
+  <div class="database-add-description">
+    <span class="database-add-description-secondary">Шаг {{ currentStep }} из {{ totalStep }}</span>
+    <span>{{ currentDescription }}</span>
+  </div>
+  <div *ngIf="currentStep === 1" class="database-add-step-1">
+    <div
+      *ngFor="let database of availableData"
+      (click)="selectDatabase(database)"
+      class="database-add-step-1-item"
+    >
+      <div class="database-add-step-1-icon-wrapper" matRipple>
+        <mat-icon [svgIcon]="getDatabaseLogo(database.name)"></mat-icon>
+      </div>
+      <div class="database-add-step-1-name">{{ database.name }}</div>
+    </div>
+    <div (click)="getInstruction()" class="database-add-step-1-item disabled">
+      <div matRipple class="database-add-step-1-icon-wrapper">
+        <mat-icon svgIcon="database-info"></mat-icon>
+      </div>
+      <div class="database-add-step-1-name">Как добавить базу данных?</div>
+    </div>
+  </div>
+  <div *ngIf="connectMode === 'form' && currentStep === 2" class="database-add-step-2-form">
+    <app-database-parameters-form
+      (validForm)="validFormHandler($event)"
+      [properties]="properties"
+      [database]="selectedDatabase"
+    >
+    </app-database-parameters-form>
+  </div>
+  <div *ngIf="connectMode === 'sql' && currentStep === 2" class="database-add-step-2-sql">
+    <app-database-sql-alchemy-form [data]="cacheSqlFormValue"> </app-database-sql-alchemy-form>
+  </div>
+  <div *ngIf="connectMode === 'form' && currentStep === 3" class="database-add-step-2-sql">
+    <app-database-sql-alchemy-form [databaseId]="databaseId" [data]="data" [withConnection]="false">
+    </app-database-sql-alchemy-form>
+  </div>
+  <div class="database-add-actions">
+    <button
+      *ngIf="currentStep !== 1"
+      [disabled]="!isValidForm"
+      mat-raised-button
+      color="primary"
+      class="small-button"
+      (click)="nextStep()"
+    >
+      Соединение
+    </button>
+
+    <button
+      mat-stroked-button
+      color="primary"
+      class="small-button primary-color close-button"
+      (click)="routeBack()"
+    >
+      Закрыть
+    </button>
+
+    <button
+      *ngIf="needToggleConnectModeButton()"
+      mat-raised-button
+      color="accent"
+      class="small-button primary-color"
+      (click)="toggleConnectMode()"
+    >
+      {{
+        connectMode === 'sql'
+          ? 'Присоеденить через учётную запись'
+          : 'Присоеденить через SQLALCHEMY URI'
+      }}
+    </button>
+  </div>
+</div>

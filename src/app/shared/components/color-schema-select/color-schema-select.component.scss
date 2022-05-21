@@ -1,0 +1,15 @@
+.color-schema-select {
+  &__color {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 4px;
+    display: inline-block;
+  }
+  &__option {
+    .mat-option-text {
+      display: flex;
+      align-items: center;
+    }
+  }
+}

@@ -1,0 +1,101 @@
+<form class="example-form">
+  <mat-form-field class="example-full-width">
+    <input type="text"
+           placeholder="Полное наименование, ИНН или КПП"
+           aria-label="Number"
+           matInput
+           [formControl]="myControl"
+           [matAutocomplete]="auto">
+    <mat-autocomplete
+      (optionSelected)="selectedOption()" #auto="matAutocomplete">
+      <mat-option
+        class="mat-option-custom"
+        *ngFor="let option of filteredOptions$ | async"
+        [value]="option.title"
+        (click)="setItemId(option.id)"
+      >
+        <!--        отображение компании внутри ГК с отображением ГК-->
+        <div *ngIf="option.type === 'gk'">
+          <div>
+            <span>"</span>
+            <ng-container *ngIf="option.specTitle">
+              <ng-container *ngFor="let titlePart of option.specTitle; let i = index">
+                <span *ngIf="titlePart.type === 'blue'" class="blue_part">{{titlePart.val}}</span>
+                <span *ngIf="titlePart.type === 'default'" class="usual_part">{{titlePart.val}}</span>
+              </ng-container>
+            </ng-container>
+            <ng-container *ngIf="!option.specTitle">{{ option.title }}</ng-container>
+            <span>"</span>
+            <span class="option_type option_type-gc">ГК</span>
+          </div>
+          <ng-container *ngIf="!!option.companies.length">
+            <div *ngFor="let company of option.companies" class="entity-from-group-container">
+              <div class="log-download-file-vector"></div>
+              <div class="dod">
+                <span>{{company.opf}} </span>
+                <span>"</span>
+                <ng-container *ngIf="company.specTitle">
+                  <ng-container *ngFor="let titlePart of company.specTitle; let i = index">
+                    <span *ngIf="titlePart.type === 'blue'" class="blue_part">{{titlePart.val}}</span>
+                    <span *ngIf="titlePart.type === 'default'" class="usual_part">{{titlePart.val}}</span>
+                  </ng-container>
+                </ng-container>
+                <ng-container *ngIf="!company.specTitle">{{ company.title }}</ng-container>
+                <span>"</span>
+                &nbsp;ИНН&nbsp;
+                <ng-container *ngIf="company.specINN">
+                  <ng-container *ngFor="let innPart of company.specINN; let i = index">
+                    <span *ngIf="innPart.type === 'blue'" class="blue_part">{{innPart.val}}</span>
+                    <span *ngIf="innPart.type === 'default'" class="usual_part">{{innPart.val}}</span>
+                  </ng-container>
+                </ng-container>
+                <ng-container *ngIf="!company.specINN">{{company.inn}}</ng-container>
+                &nbsp;КПП&nbsp;
+                <ng-container *ngIf="company.specKPP">
+                  <ng-container *ngFor="let kppPart of company.specKPP; let i = index">
+                    <span *ngIf="kppPart.type === 'blue'" class="blue_part">{{kppPart.val}}</span>
+                    <span *ngIf="kppPart.type === 'default'" class="usual_part">{{kppPart.val}}</span>
+                  </ng-container>
+                </ng-container>
+                <ng-container *ngIf="!company.specKPP">{{company.kpp}}</ng-container>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+        <!--        отображение просто компании-->
+        <div *ngIf="option.type === 'entity'" class="entity-container">
+          <span>{{option.opf}} </span>
+          <span>"</span>
+          <ng-container *ngIf="option.specTitle">
+            <ng-container *ngFor="let titlePart of option.specTitle; let i = index">
+              <span *ngIf="titlePart.type === 'blue'" class="blue_part">{{titlePart.val}}</span>
+              <span *ngIf="titlePart.type === 'default'" class="usual_part">{{titlePart.val}}</span>
+            </ng-container>
+          </ng-container>
+          <ng-container *ngIf="!option.specTitle">{{ option.title }}</ng-container>
+          <span>"</span>
+          &nbsp;ИНН&nbsp;
+          <ng-container *ngIf="option.specINN">
+            <ng-container *ngFor="let innPart of option.specINN; let i = index">
+              <span *ngIf="innPart.type === 'blue'" class="blue_part">{{innPart.val}}</span>
+              <span *ngIf="innPart.type === 'default'" class="usual_part">{{innPart.val}}</span>
+            </ng-container>
+          </ng-container>
+          <ng-container *ngIf="!option.specINN">{{option.inn}}</ng-container>
+          &nbsp;КПП&nbsp;
+          <ng-container *ngIf="option.specKPP">
+            <ng-container *ngFor="let kppPart of option.specKPP; let i = index">
+              <span *ngIf="kppPart.type === 'blue'" class="blue_part">{{kppPart.val}}</span>
+              <span *ngIf="kppPart.type === 'default'" class="usual_part">{{kppPart.val}}</span>
+            </ng-container>
+          </ng-container>
+          <ng-container *ngIf="!option.specKPP">{{option.kpp}}</ng-container>
+          <span class="option_type option_type-company">ЮЛ</span>
+        </div>
+
+      </mat-option>
+      <mat-option disabled="true" *ngIf="isEmptyList">Совпадений нет</mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>

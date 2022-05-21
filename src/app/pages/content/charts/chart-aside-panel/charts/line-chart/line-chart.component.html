@@ -1,0 +1,368 @@
+<div *ngIf="formGroup" [formGroup]="formGroup">
+  <div class="chart-form" *ngIf="currentTab === 'data'">
+
+    <div (click)="toggleExpandedState('time')" class="chart-aside-panel__title top-line">
+      Время
+      <div class="chart-aside-panel__dropdown-icon ">
+        <mat-icon [@turn180]="stateExpandedAnimation.time">keyboard_arrow_down</mat-icon>
+      </div>
+    </div>
+    <div class="chart-aside-panel__top-bar_expand vertical" [@verticalHide]="stateExpandedAnimation.time">
+
+      <mat-form-field appearance="outline"
+                      color="primary"
+                      class="mat-form-field small-input form-input">
+        <mat-label>Столбец времени</mat-label>
+
+        <mat-select formControlName="granularity_sqla">
+          <mat-option *ngFor="let column of dateColumns" [value]="column.column_name">{{column.column_name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline"
+                      color="primary"
+                      class="mat-form-field small-input form-input">
+        <mat-label>Единица времени</mat-label>
+
+        <mat-select formControlName="time_grain_sqla">
+          <mat-option *ngFor="let grain of timeGrains" [value]="grain.value">{{grain.label}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <app-multi-select-panel [availableAdd]="false"
+                              label="Диапазон времени"
+                              [availableDeleteItem]="false"
+                              (addClick)="itemClick($event, 'time_range')"
+                              (itemClick)="itemClick($event, 'time_range')"
+                              [selected]="this.multipleOptionsFieldsState.time_range">
+      </app-multi-select-panel>
+    </div>
+    <div (click)="toggleExpandedState('fetch')" class="chart-aside-panel__title top-line">
+      Запрос
+      <div class="chart-aside-panel__dropdown-icon">
+        <mat-icon [@turn180]="stateExpandedAnimation.time">keyboard_arrow_down</mat-icon>
+      </div>
+    </div>
+    <div class="chart-aside-panel__top-bar_expand vertical" [@verticalHide]="stateExpandedAnimation.fetch">
+
+
+      <div class="chart-form__aggregate flex-gap">
+
+
+        <app-multi-select-panel [availableAdd]="true"
+                                label="Метрики"
+                                (addClick)="itemClick($event, 'metrics')"
+                                (itemClick)="itemClick($event, 'metrics')"
+                                [selected]="multipleOptionsFieldsState.metrics">
+
+        </app-multi-select-panel>
+
+        <app-multi-select-panel [availableAdd]="true"
+                                label="Фильтры"
+                                (addClick)="itemClick($event, 'adhoc_filters')"
+                                (itemClick)="itemClick($event, 'adhoc_filters')"
+                                [selected]="multipleOptionsFieldsState.adhoc_filters">
+        </app-multi-select-panel>
+
+        <app-chips-autocomplete-field label="Сгруппировать по"
+                                      [allOptions]="groupByOptions"
+                                      [formControl]="getFormControl('groupby')">
+        </app-chips-autocomplete-field>
+
+        <mat-form-field appearance="outline"
+                        color="primary"
+                        class="mat-form-field small-input form-input">
+          <mat-label>Лимит временных рядов</mat-label>
+
+          <mat-select formControlName="limit">
+            <mat-option *ngFor="let limit of seriesLimits" [value]="limit">{{limit}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <app-multi-select-panel [availableAdd]="false"
+                                label="Отсортировано по"
+                                (itemClick)="itemClick($event, 'timeseries_limit_metric')"
+                                [selected]="multipleOptionsFieldsState.timeseries_limit_metric">
+
+        </app-multi-select-panel>
+
+        <div class="chart-form__checkbox-group">
+          <mat-checkbox formControlName="contribution">Контрибуция
+          </mat-checkbox>
+          <mat-checkbox formControlName="order_desc">Сортировка
+          </mat-checkbox>
+        </div>
+
+        <mat-form-field appearance="outline"
+                        color="primary"
+                        class="mat-form-field small-input form-input">
+          <mat-label>Лимит строк</mat-label>
+
+          <mat-select formControlName="row_limit">
+            <mat-option *ngFor="let limit of rowLimits" [value]="limit">{{limit}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div (click)="toggleExpandedState('analytics')" class="chart-aside-panel__title top-line">
+      Расширенная аналитика
+      <div class="chart-aside-panel__dropdown-icon">
+        <mat-icon [@turn180]="stateExpandedAnimation.analytics">keyboard_arrow_down</mat-icon>
+      </div>
+    </div>
+    <div class="chart-aside-panel__top-bar_expand vertical" [@verticalHide]="stateExpandedAnimation.analytics">
+
+      <div class="chart-form__aggregate flex-gap">
+        <div class="subtitle">Подвижное окно</div>
+        <mat-form-field appearance="outline"
+                        color="primary"
+                        class="mat-form-field small-input form-input">
+          <mat-label>Функция прокатки</mat-label>
+
+          <mat-select formControlName="rolling_type">
+            <mat-option *ngFor="let type of rollingTypes" [value]="type.value">{{type.label}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline"
+                        color="primary"
+                        class="mat-form-field small-input form-input">
+          <mat-label>Периоды</mat-label>
+          <input matInput formControlName="rolling_periods">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline"
+                        color="primary"
+                        class="mat-form-field small-input form-input">
+          <mat-label>Минимальные периоды</mat-label>
+          <input matInput formControlName="min_periods">
+        </mat-form-field>
+
+        <div class="subtitle">Сравнение времени</div>
+
+<!--        <app-multi-select-panel [availableAdd]="true"-->
+<!--                                label="Сдвиг времени"-->
+<!--                                (addClick)="itemClick($event, 'time_compare')"-->
+<!--                                (itemClick)="itemClick($event, 'time_compare')"-->
+<!--                                [selected]="multipleOptionsFieldsState.time_compare">-->
+
+<!--        </app-multi-select-panel>-->
+
+
+        <app-chips-autocomplete-field label="Сдвиг времени"
+                                      [allOptions]="timeCompares"
+                                      [formControl]="getFormControl('time_compare')">
+        </app-chips-autocomplete-field>
+
+
+        <mat-form-field appearance="outline"
+                        color="primary"
+                        class="mat-form-field small-input form-input">
+          <mat-label>Вид расчёта</mat-label>
+
+          <mat-select formControlName="comparison_type">
+            <mat-option *ngFor="let limit of compareTypes" [value]="limit.value">{{limit.label}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="subtitle">Функции Питона</div>
+
+        <mat-form-field appearance="outline"
+                        color="primary"
+                        class="mat-form-field small-input form-input">
+          <mat-label>Правило</mat-label>
+
+          <mat-select formControlName="resample_rule">
+            <mat-option *ngFor="let rule of rules" [value]="rule">{{rule}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline"
+                        color="primary"
+                        class="mat-form-field small-input form-input">
+          <mat-label>Метод</mat-label>
+
+          <mat-select formControlName="resample_method">
+            <mat-option *ngFor="let method of methods" [value]="method">{{method}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div (click)="toggleExpandedState('annotationLayer')" class="chart-aside-panel__title top-line">
+      Аннотации и слои
+      <div class="chart-aside-panel__dropdown-icon">
+        <mat-icon [@turn180]="stateExpandedAnimation.annotationLayer">keyboard_arrow_down</mat-icon>
+      </div>
+    </div>
+    <div class="chart-aside-panel__top-bar_expand vertical" [@verticalHide]="stateExpandedAnimation.annotationLayer">
+      <div class="chart-form__aggregate flex-gap">
+
+        <app-multi-select-panel [availableAdd]="true"
+                                label="Аннотационный слой"
+                                (addClick)="itemClick($event, 'annotation_layers')"
+                                (itemClick)="itemClick($event, 'annotation_layers')"
+                                [selected]="multipleOptionsFieldsState.annotation_layers">
+
+        </app-multi-select-panel>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-form" *ngIf="currentTab === 'customize'">
+
+    <div (click)="toggleExpandedState('settings')" class="chart-aside-panel__title">
+      Настройки
+      <div class="chart-aside-panel__dropdown-icon">
+        <mat-icon [@turn180]="stateExpandedAnimation.settings">keyboard_arrow_down</mat-icon>
+      </div>
+    </div>
+    <div class="chart-aside-panel__top-bar_expand vertical" [@verticalHide]="stateExpandedAnimation.settings">
+
+      <app-color-schema-select [control]="getFormControl('color_scheme')">
+
+      </app-color-schema-select>
+
+      <mat-form-field appearance="outline"
+                      color="primary"
+                      class="mat-form-field small-input form-input">
+        <mat-label>Показывать диапазонный фильтр</mat-label>
+
+        <mat-select formControlName="show_brush">
+          <mat-option *ngFor="let range of rangeFilters" [value]="range.value">{{range.label}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="chart-form__checkbox-group">
+        <mat-checkbox formControlName="show_legend">Легенда
+        </mat-checkbox>
+        <mat-checkbox formControlName="rich_tooltip">Подсказки
+        </mat-checkbox>
+        <mat-checkbox formControlName="show_markers">Показывать точки
+        </mat-checkbox>
+      </div>
+
+      <mat-form-field appearance="outline"
+                      color="primary"
+                      class="mat-form-field small-input form-input">
+        <mat-label>Стиль линий</mat-label>
+
+        <mat-select formControlName="line_interpolation">
+          <mat-option *ngFor="let style of lineStyles" [value]="style.value">{{style.label}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div (click)="toggleExpandedState('axisX')" class="chart-aside-panel__title">
+      Ось X
+      <div class="chart-aside-panel__dropdown-icon">
+        <mat-icon [@turn180]="stateExpandedAnimation.axisX">keyboard_arrow_down</mat-icon>
+      </div>
+    </div>
+    <div class="chart-aside-panel__top-bar_expand vertical" [@verticalHide]="stateExpandedAnimation.axisX">
+      <mat-form-field appearance="outline"
+                      color="primary"
+                      class="mat-form-field small-input form-input">
+        <mat-label>Наименование оси X</mat-label>
+
+        <input matInput formControlName="x_axis_label">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline"
+                      color="primary"
+                      class="mat-form-field small-input form-input">
+        <mat-label>Отступ оси X</mat-label>
+
+        <mat-select formControlName="bottom_margin">
+          <mat-option *ngFor="let margin of margins" [value]="margin.value">{{margin.label}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline"
+                      color="primary"
+                      class="mat-form-field small-input form-input">
+        <mat-label>Вёрстка подписей</mat-label>
+
+        <mat-select formControlName="x_ticks_layout">
+          <mat-option *ngFor="let layout of layouts" [value]="layout.value">{{layout.label}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline"
+                      color="primary"
+                      class="mat-form-field small-input form-input">
+        <mat-label>Формат оси X</mat-label>
+
+        <mat-select formControlName="x_axis_format">
+          <mat-option *ngFor="let format of xAxisFormats" [value]="format.value">{{format.label}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="chart-form__checkbox-group">
+        <mat-checkbox formControlName="x_axis_showminmax">Крайнее значение
+        </mat-checkbox>
+      </div>
+    </div>
+
+    <div (click)="toggleExpandedState('axisY')" class="chart-aside-panel__title">
+      Ось Y
+      <div class="chart-aside-panel__dropdown-icon">
+        <mat-icon [@turn180]="stateExpandedAnimation.axisY">keyboard_arrow_down</mat-icon>
+      </div>
+    </div>
+    <div class="chart-aside-panel__top-bar_expand vertical" [@verticalHide]="stateExpandedAnimation.axisY">
+      <mat-form-field appearance="outline"
+                      color="primary"
+                      class="mat-form-field small-input form-input">
+        <mat-label>Наименование оси Y</mat-label>
+
+        <input matInput formControlName="y_axis_label">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline"
+                      color="primary"
+                      class="mat-form-field small-input form-input">
+        <mat-label>Отступ оси Y</mat-label>
+
+        <mat-select formControlName="left_margin">
+          <mat-option *ngFor="let margin of margins" [value]="margin.value">{{margin.label}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+      <div class="chart-form__checkbox-group">
+        <mat-checkbox formControlName="y_axis_showminmax">Крайние значения
+        </mat-checkbox>
+        <mat-checkbox formControlName="y_log_scale">Логи шкалы Y
+        </mat-checkbox>
+      </div>
+
+      <mat-form-field appearance="outline"
+                      color="primary"
+                      class="mat-form-field small-input form-input">
+        <mat-label>Формат оси Y</mat-label>
+
+        <mat-select formControlName="y_axis_format">
+          <mat-option *ngFor="let format of yAxisFormats" [value]="format.value">{{format.label}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+      <div class="chart-form__checkbox-group">
+        <div class="subtitle">Интервал по оси Y</div>
+        <mat-form-field appearance="outline"
+                        color="primary"
+                        class="mat-form-field small-input form-input">
+          <mat-label>Минимальное</mat-label>
+
+          <input matInput formControlName="y_axis_bounds_min" type="number">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline"
+                        color="primary"
+                        class="mat-form-field small-input form-input">
+          <mat-label>Максимальное</mat-label>
+
+          <input matInput formControlName="y_axis_bounds_max" type="number">
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</div>

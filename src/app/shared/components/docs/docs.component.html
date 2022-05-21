@@ -1,0 +1,28 @@
+<div class="docs-part" *ngFor="let part of parts; let idx = index">
+  <div class="docs-part__mainrow" (click)="showPartDocs(idx)">
+    <div class="docs-part__title">{{part.title}}</div>
+    <div class="docs-part__info">
+      <div class="docs-part__info-loader">
+        <div class="docs-part__info-loader__fill" [ngStyle]="{width: getWidthFill(part.limit, part.upload)}"></div>
+      </div>
+      <div class="docs-part__info-numbers">{{part.upload}}/{{part.limit}}</div>
+      <div class="docs-part__info-arrow">
+        <mat-icon>expand_more</mat-icon>
+      </div>
+    </div>
+  </div>
+  <div class="docs-part__docs" *ngIf="part.expand">
+    <div class="docs-part__docs-row" *ngFor="let doc of part.docs">
+      <div class="docs-part__docs-left">
+        <img src="assets/icons/{{doc.type}}_icon_24px.png">
+        <div class="docs-part__docs-title">{{doc.title}}</div>
+        <div class="docs-part__docs-icon"><mat-icon>help_outline</mat-icon></div>
+      </div>
+      <div class="docs-part__docs-right">
+        <div class="docs-part__docs-icon active"><mat-icon>save_alt</mat-icon></div>
+        <div class="docs-part__docs-icon"><mat-icon>check_circle_outline</mat-icon></div>
+        <div class="docs-part__docs-icon"><mat-icon>delete</mat-icon></div>
+      </div>
+    </div>
+  </div>
+</div>

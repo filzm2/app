@@ -1,0 +1,6 @@
+@mixin font($size: 12px, $w: 500, $lh: 150%, $style: inherit) {
+  font-size: $size;
+  font-weight: $w;
+  line-height: $lh;
+  font-style: $style;
+}

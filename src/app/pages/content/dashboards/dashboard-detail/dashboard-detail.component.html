@@ -1,0 +1,1590 @@
+<!-- <div *ngIf="dashboardChartsGraph.length">
+    <div *ngFor="let chart of dashboardChartsGraph">
+        <div echarts [options]="chart" class="demo-chart"></div>
+    </div>
+</div> -->
+<!-- <iframe
+  width="600"
+  height="800"
+  seamless
+  frameBorder="0"
+  scrolling="no"
+  src="http://172.31.32.254:8089/superset/explore/?r=6&standalone=1&height=800"
+>
+</iframe>
+<iframe
+  width="600"
+  height="800"
+  seamless
+  frameBorder="0"
+  scrolling="no"
+  src="http://172.31.32.254:8089/superset/explore/?r=9&standalone=1&height=800"
+>
+</iframe> -->
+<div class="dashboard-container__header" *ngIf="!editMode">
+  <div class="dashboard-container__header-row">
+    <div class="dashboard-container__header-row__headline">
+      <div *ngIf="dashboardId != '1'">
+        <h1
+          *ngIf="(cssGrid | keyvalue)?.length && this.dashboardType === 'old'"
+          class="mat-h1 exd-title-bold dashboard-name"
+        >
+          {{ cssGrid.HEADER_ID.meta.text }}
+        </h1>
+
+        <h1
+          *ngIf="!cssGrid || this.dashboardType === 'new'"
+          class="mat-h1 exd-title-bold dashboard-name"
+        >
+          {{ dashboardInfo.result.dashboard_title }}
+        </h1>
+      </div>
+
+      <div *ngIf="dashboardId === '1'">
+        <div class="mat-h1 exd-title-bold dashboard-name">
+          Портфель <span class="dashboard-name-orange">«ОПК и военнослужащие»</span>
+        </div>
+      </div>
+
+      <mat-icon
+        [ngClass]="{ checked: favoriteStatus }"
+        class="star-checkbox"
+        role="checkbox"
+        svgIcon="star"
+        (click)="setFavoriteStatus(); $event.stopPropagation()"
+      ></mat-icon>
+
+      <div
+        *ngIf="isPublished"
+        class="custom-badge custom-badge__primary-filled status-badge"
+        (click)="publishDashboard()"
+      >
+        Опубликовано
+      </div>
+
+      <div
+        *ngIf="!isPublished"
+        class="custom-badge custom-badge__primary status-badge"
+        (click)="publishDashboard()"
+      >
+        Черновик
+      </div>
+    </div>
+
+    <div class="dashboard-container__header-row__actions">
+      <div>
+        <button mat-icon-button (click)="toggleOpenFilters()">
+          <img
+            *ngIf="isFiltersShowed"
+            src="assets/icons/filter_list_active.svg"
+            width="36"
+            height="36"
+          />
+
+          <img *ngIf="!isFiltersShowed" width="36" height="36" src="assets/icons/filter_list.svg" />
+        </button>
+
+        <!-- (click)="filterApply()" -->
+      </div>
+
+      <div class="popup-card-dropdown">
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <img src="assets/icons/more_dots.svg" />
+        </button>
+
+        <mat-menu #menu="matMenu">
+          <button
+            mat-menu-item
+            class="dashboard-menu-button"
+            (click)="onEditClick()"
+            [disabled]="!dashboardPermissions.can_edit_dashboard"
+          >
+            <img
+              src="/assets/icons/ui-kit/base/create_24px.svg"
+              width="20"
+              height="20"
+              class="icon"
+            />
+            Редактировать
+          </button>
+
+          <!-- todo что это должно делать? -->
+          <button
+            mat-menu-item
+            class="dashboard-menu-button"
+            [disabled]="!dashboardPermissions.can_create_dashboard"
+          >
+            <img
+              src="/assets/icons/ui-kit/base/floppy_disk_24px.svg"
+              width="20"
+              height="20"
+              class="icon"
+            />
+            Сохранить как
+          </button>
+
+          <button
+            mat-menu-item
+            class="dashboard-menu-button"
+            (click)="onCopyLinkDashboardId(dashboardId)"
+          >
+            <img src="/assets/icons/ui-kit/base/link.svg" width="20" height="20" class="icon" />
+            Скопировать ссылку
+          </button>
+
+          <button
+            mat-menu-item
+            class="dashboard-menu-button"
+            (click)="onOpenDialogSendDashboardToEmail(dashboardId)"
+          >
+            <img
+              src="/assets/icons/ui-kit/base/email_24px.svg"
+              width="20"
+              height="20"
+              class="icon"
+            />
+            Отправить через email
+          </button>
+
+          <button
+            [disabled]="loading"
+            mat-menu-item
+            class="dashboard-menu-button"
+            (click)="reloadDashboard()"
+          >
+            <img
+              src="/assets/icons/ui-kit/base/refresh_24px.svg"
+              width="20"
+              height="20"
+              class="icon"
+            />
+            Обновить аналитическую панель
+          </button>
+
+          <button
+            [disabled]="loading"
+            mat-menu-item
+            class="dashboard-menu-button"
+            (click)="setAutoRefreshIntervalClick()"
+          >
+            <img
+              src="/assets/icons/ui-kit/base/refresh_24px.svg"
+              width="20"
+              height="20"
+              class="icon"
+            />
+            Интервал автообновления
+          </button>
+
+          <button
+            *ngIf="dashboardType !== 'new'"
+            [disabled]="loading"
+            mat-menu-item
+            class="dashboard-menu-button"
+            (click)="exportPDFAll(cssGrid.HEADER_ID?.meta?.text)"
+          >
+            <img
+              src="/assets/icons/ui-kit/base/file_download_24px.svg"
+              width="20"
+              height="20"
+              class="icon"
+            />
+            Экспорт PDF
+          </button>
+
+          <button
+            *ngIf="dashboardType === 'new'"
+            [disabled]="loading"
+            mat-menu-item
+            class="dashboard-menu-button"
+            (click)="exportPDFAll(dashboardInfo.result.dashboard_title)"
+          >
+            <img
+              src="/assets/icons/ui-kit/base/file_download_24px.svg"
+              width="20"
+              height="20"
+              class="icon"
+            />
+            Экспорт PDF
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+  </div>
+
+  <app-dashboard-filters
+    *ngIf="isFiltersShowed"
+    [dashboardFilters]="this.filters.list || []"
+    (chooseData)="processFilter($event)"
+  ></app-dashboard-filters>
+</div>
+
+<mat-divider></mat-divider>
+<div
+  *ngIf="(cssGrid | keyvalue)?.length && this.dashboardType === 'old' && !editMode"
+  style="display: flex"
+  class="dashboard-container"
+  id="dashboardContainer"
+>
+  <ng-container *ngTemplateOutlet="recursiveListTmpl; context: { list: cssGrid.GRID_ID.children }">
+  </ng-container>
+</div>
+
+<ng-template #recursiveListTmpl let-list="list">
+  <div
+    *ngFor="let item of list"
+    [id]="item"
+    [ngStyle]="{
+      'flex-direction': cssGrid[item].type,
+      'background-color': backgroundDict[cssGrid[item].meta.background],
+      'width.px': calcWidth(
+        cssGrid[item].meta.width,
+        cssGrid[cssGrid[item].parents[cssGrid[item].parents.length - 1]]
+      )
+    }"
+    [ngClass]="{ 'tabs-container': cssGrid[item].type === 'TABS' }"
+    class="charts-block"
+  >
+    <mat-tab-group *ngIf="cssGrid[item].type === 'TABS'">
+      <mat-tab *ngFor="let tab of cssGrid[item].children" label="{{ cssGrid[tab].meta.text }}">
+        <ng-container *ngIf="cssGrid[tab].children.length > 0">
+          <ng-container
+            *ngTemplateOutlet="recursiveListTmpl; context: { list: cssGrid[tab].children }"
+          ></ng-container>
+        </ng-container>
+      </mat-tab>
+    </mat-tab-group>
+
+    <mat-card
+      *ngIf="
+        cssGrid[item].type === 'CHART' &&
+        !isEmptyObject(dashboardChartsObject[cssGrid[item].meta.chartId])
+      "
+      [ngStyle]="{ 'height.px': cssGrid[item].meta.height * 8 }"
+      [ngClass]="{
+        'pie-gap': dashboardChartsObject[cssGrid[item].meta.chartId]?.chartType === 'pie',
+        'sunburst-padding':
+          dashboardChartsObject[cssGrid[item].meta.chartId]?.chartType === 'sunburst'
+      }"
+      class="chart-card"
+      id="chart-{{ cssGrid[item].meta.chartId }}"
+    >
+      <div
+        class="mat-body-2 chart-name"
+        *ngIf="
+          dashboardChartsObject[cssGrid[item].meta.chartId]?.chartType !== 'big_number_total' &&
+          dashboardChartsObject[cssGrid[item].meta.chartId]?.chartType !== 'big_number'
+        "
+      >
+        <div class="chart-title">{{ cssGrid[item].meta.sliceNameOverride }}</div>
+
+        <ng-template
+          cdkConnectedOverlay
+          [cdkConnectedOverlayPush]="true"
+          [cdkConnectedOverlayOrigin]="trigger"
+          [cdkConnectedOverlayHasBackdrop]="true"
+          (backdropClick)="openCommentIndex = -1"
+          [cdkConnectedOverlayOpen]="openCommentIndex === cssGrid[item].meta.chartId"
+        >
+          <app-dashboard-comment-block
+            [dashboardId]="dashboardId"
+            [chartId]="cssGrid[item].meta.chartId"
+            (changeCommentStateEvent)="onCommentStateChange()"
+          >
+          </app-dashboard-comment-block>
+        </ng-template>
+
+        <div class="popup-card-dropdown">
+          <div
+            #trigger="cdkOverlayOrigin"
+            [ngClass]="{
+              'hide-button':
+                !chartsCommentsForId[cssGrid[item].meta.chartId] ||
+                !dashboardPermissions?.can_comment
+            }"
+            cdkOverlayOrigin
+            class="custom-badge custom-badge__primary-filled button-show-comments"
+            (click)="openCommentPopup(cssGrid[item].meta.chartId)"
+          >
+            <mat-icon svgIcon="comments"></mat-icon>
+            {{ dashboardCommentsObject[cssGrid[item].meta.chartId] }}
+          </div>
+
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon style="font-size: 24px">more_vert</mat-icon>
+          </button>
+
+          <mat-menu #menu="matMenu">
+            <button
+              *ngIf="!chartsCommentsForId[cssGrid[item].meta.chartId]"
+              mat-menu-item
+              (click)="openCommentPopup(cssGrid[item].meta.chartId)"
+            >
+              Добавить комментарий
+            </button>
+
+            <button mat-menu-item (click)="onCopyLinkChart(item)">
+              Скопировать ссылку на график
+            </button>
+
+            <button mat-menu-item (click)="onOpenDialogSendToEmail(item)">
+              Отправить график через email
+            </button>
+
+            <button
+              mat-menu-item
+              (click)="
+                expandChartClick(
+                  cssGrid[item],
+                  dashboardChartsObject[cssGrid[item].meta.chartId],
+                  item
+                )
+              "
+            >
+              Полный экран
+            </button>
+
+            <button
+              mat-menu-item
+              (click)="
+                onExportCSV(cssGrid[item].meta.chartId, cssGrid[item].meta.sliceNameOverride)
+              "
+            >
+              Экспорт CSV
+            </button>
+
+            <button
+              mat-menu-item
+              (click)="exportPDF(cssGrid[item].meta.chartId, cssGrid[item].meta.sliceNameOverride)"
+            >
+              Экспорт PDF
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+
+      <div
+        *ngIf="cssGrid[item].meta.chartId === 228 || cssGrid[item].meta.chartId === 230"
+        class="chart-name mat-h3 bignumber-name"
+      >
+        <div>{{ cssGrid[item].meta.sliceNameOverride }}</div>
+
+        <ng-template
+          cdkConnectedOverlay
+          [cdkConnectedOverlayPush]="true"
+          [cdkConnectedOverlayOrigin]="trigger"
+          [cdkConnectedOverlayHasBackdrop]="true"
+          (backdropClick)="openCommentIndex = -1"
+          [cdkConnectedOverlayOpen]="openCommentIndex === cssGrid[item].meta.chartId"
+        >
+          <app-dashboard-comment-block
+            [dashboardId]="dashboardId"
+            [chartId]="cssGrid[item].meta.chartId"
+            (changeCommentStateEvent)="onCommentStateChange()"
+          >
+          </app-dashboard-comment-block>
+        </ng-template>
+
+        <div class="popup-card-dropdown">
+          <div
+            #trigger="cdkOverlayOrigin"
+            [ngClass]="{
+              'hide-button':
+                !chartsCommentsForId[cssGrid[item].meta.chartId] ||
+                !dashboardPermissions?.can_comment
+            }"
+            cdkOverlayOrigin
+            class="custom-badge custom-badge__primary-filled button-show-comments"
+            (click)="openCommentPopup(cssGrid[item].meta.chartId)"
+          >
+            <mat-icon svgIcon="comments"></mat-icon>
+            {{ dashboardCommentsObject[cssGrid[item].meta.chartId] }}
+          </div>
+
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon style="font-size: 24px">more_vert</mat-icon>
+          </button>
+
+          <mat-menu #menu="matMenu">
+            <button
+              *ngIf="!chartsCommentsForId[cssGrid[item].meta.chartId]"
+              mat-menu-item
+              (click)="openCommentPopup(cssGrid[item].meta.chartId)"
+            >
+              Добавить комментарий
+            </button>
+
+            <button mat-menu-item (click)="onCopyLinkChart(item)">
+              Скопировать ссылку на график
+            </button>
+
+            <button mat-menu-item (click)="onOpenDialogSendToEmail(item)">
+              Отправить график через email
+            </button>
+
+            <button
+              mat-menu-item
+              (click)="
+                expandChartClick(
+                  cssGrid[item],
+                  dashboardChartsObject[cssGrid[item].meta.chartId],
+                  item
+                )
+              "
+            >
+              Полный экран
+            </button>
+
+            <button
+              mat-menu-item
+              (click)="
+                onExportCSV(cssGrid[item].meta.chartId, cssGrid[item].meta.sliceNameOverride)
+              "
+            >
+              Экспорт CSV
+            </button>
+
+            <button
+              mat-menu-item
+              (click)="exportPDF(cssGrid[item].meta.chartId, cssGrid[item].meta.sliceNameOverride)"
+            >
+              Экспорт PDF
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+      <div
+        *ngIf="
+          (dashboardChartsObject[cssGrid[item].meta.chartId]?.chartType === 'big_number_total' ||
+            dashboardChartsObject[cssGrid[item].meta.chartId]?.chartType === 'big_number') &&
+          cssGrid[item].meta.chartId !== 228 &&
+          cssGrid[item].meta.chartId !== 230
+        "
+        class="chart-name mat-h4 bignumber-name"
+      >
+        <div>{{ cssGrid[item].meta.sliceNameOverride }}</div>
+
+        <ng-template
+          cdkConnectedOverlay
+          [cdkConnectedOverlayPush]="true"
+          [cdkConnectedOverlayOrigin]="trigger"
+          [cdkConnectedOverlayHasBackdrop]="true"
+          (backdropClick)="openCommentIndex = -1"
+          [cdkConnectedOverlayOpen]="openCommentIndex === cssGrid[item].meta.chartId"
+        >
+          <app-dashboard-comment-block
+            [dashboardId]="dashboardId"
+            [chartId]="cssGrid[item].meta.chartId"
+            (changeCommentStateEvent)="onCommentStateChange()"
+          >
+          </app-dashboard-comment-block>
+        </ng-template>
+
+        <div class="popup-card-dropdown">
+          <div
+            #trigger="cdkOverlayOrigin"
+            [ngClass]="{
+              'hide-button':
+                !chartsCommentsForId[cssGrid[item].meta.chartId] ||
+                !dashboardPermissions?.can_comment
+            }"
+            cdkOverlayOrigin
+            class="custom-badge custom-badge__primary-filled button-show-comments"
+            (click)="openCommentPopup(cssGrid[item].meta.chartId)"
+          >
+            <mat-icon svgIcon="comments"></mat-icon>
+            {{ dashboardCommentsObject[cssGrid[item].meta.chartId] }}
+          </div>
+
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon style="font-size: 24px">more_vert</mat-icon>
+          </button>
+
+          <mat-menu #menu="matMenu">
+            <button
+              *ngIf="!chartsCommentsForId[cssGrid[item].meta.chartId]"
+              mat-menu-item
+              (click)="openCommentPopup(cssGrid[item].meta.chartId)"
+            >
+              Добавить комментарий
+            </button>
+
+            <button mat-menu-item (click)="onCopyLinkChart(item)">
+              Скопировать ссылку на график
+            </button>
+
+            <button mat-menu-item (click)="onOpenDialogSendToEmail(item)">
+              Отправить график через email
+            </button>
+
+            <button
+              mat-menu-item
+              (click)="
+                expandChartClick(
+                  cssGrid[item],
+                  dashboardChartsObject[cssGrid[item].meta.chartId],
+                  item
+                )
+              "
+            >
+              Полный экран
+            </button>
+
+            <button
+              mat-menu-item
+              (click)="
+                onExportCSV(cssGrid[item].meta.chartId, cssGrid[item].meta.sliceNameOverride)
+              "
+            >
+              Экспорт CSV
+            </button>
+
+            <button
+              mat-menu-item
+              (click)="exportPDF(cssGrid[item].meta.chartId, cssGrid[item].meta.sliceNameOverride)"
+            >
+              Экспорт PDF
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+      <div
+        *ngIf="
+          dashboardChartsObject[cssGrid[item].meta.chartId]?.chartType !== 'big_number_total' &&
+          dashboardChartsObject[cssGrid[item].meta.chartId]?.chartType !== 'big_number' &&
+          dashboardChartsObject[cssGrid[item].meta.chartId]?.chartType !== 'sunburst'
+        "
+        echarts
+        [options]="dashboardChartsObject[cssGrid[item].meta.chartId]?.graph"
+        (chartInit)="onChartInit($event, cssGrid[item].meta.chartId)"
+        (chartClick)="onChartEvent($event, 'chartClick', cssGrid[item].meta.chartId)"
+        (chartDblClick)="onChartEvent($event, 'chartDblClick', cssGrid[item].meta.chartId)"
+      ></div>
+
+      <div
+        class="chart-bignumber"
+        *ngIf="
+          !isEmptyObject(dashboardChartsObject[cssGrid[item].meta.chartId]) &&
+          (dashboardChartsObject[cssGrid[item].meta.chartId]?.chartType === 'big_number_total' ||
+            dashboardChartsObject[cssGrid[item].meta.chartId]?.chartType === 'big_number')
+        "
+        [ngClass]="{
+          'positive-percent':
+            dashboardChartsObject[cssGrid[item].meta.chartId].chartSubheader === '%'
+        }"
+      >
+        <!-- [ngClass]="{'negative-value': isNegativeNumber(dashboardChartsObject[cssGrid[item].meta.chartId].graph.data) < 0,
+          'positive-percent': dashboardChartsObject[cssGrid[item].meta.chartId].chartSubheader === '%' && dashboardChartsObject[cssGrid[item].meta.chartId].graph.data > 0}" -->
+        <div
+          *ngIf="dashboardChartsObject[cssGrid[item].meta.chartId].chartSubheader === '₽'"
+          class="bignumber-text"
+        >
+          {{ dashboardChartsObject[cssGrid[item].meta.chartId].graph.data | shortNumber }}
+        </div>
+
+        <div
+          *ngIf="dashboardChartsObject[cssGrid[item].meta.chartId].chartSubheader !== '₽'"
+          class="bignumber-text"
+        >
+          {{
+            (dashboardChartsObject[cssGrid[item].meta.chartId].graph.data >= 0
+              ? dashboardChartsObject[cssGrid[item].meta.chartId].graph.data
+              : -dashboardChartsObject[cssGrid[item].meta.chartId].graph.data
+            ) | number: '1.2-2'
+          }}
+        </div>
+
+        <div class="bignumber-text" style="padding-left: 10px">
+          {{ dashboardChartsObject[cssGrid[item].meta.chartId].chartSubheader }}
+        </div>
+      </div>
+
+      <div *ngIf="dashboardChartsObject[cssGrid[item].meta.chartId]?.chartType === 'sunburst'">
+        <!-- {{ dashboardChartsObject[cssGrid[item].meta.chartId].graph.value}} -->
+        <!-- <mat-progress-bar mode="determinate" value="{{dashboardChartsObject[cssGrid[item].meta.chartId].graph.value}}"></mat-progress-bar> -->
+        <!-- <section class="progress-section">
+          <mat-progress-bar
+            mode="determinate"
+            [value]="dashboardChartsObject[cssGrid[item].meta.chartId].graph.value"
+          >
+          </mat-progress-bar>
+          <div style="position: absolute; bottom: 4px; padding-left: 10px; color: white;">
+            {{dashboardChartsObject[cssGrid[item].meta.chartId].graph.value}}% </div>
+        </section> -->
+        <div
+          style="height: 40px; width: 100%"
+          echarts
+          [options]="dashboardChartsObject[cssGrid[item].meta.chartId]?.graph"
+          (chartInit)="onChartInit($event, cssGrid[item].meta.chartId)"
+          (chartClick)="onChartEvent($event, 'chartClick', cssGrid[item].meta.chartId)"
+          (chartDblClick)="onChartEvent($event, 'chartDblClick', cssGrid[item].meta.chartId)"
+        ></div>
+      </div>
+    </mat-card>
+
+    <ng-container *ngIf="cssGrid[item].children.length > 0 && cssGrid[item].type !== 'TABS'">
+      <ng-container
+        *ngTemplateOutlet="recursiveListTmpl; context: { list: cssGrid[item].children }"
+      >
+      </ng-container>
+    </ng-container>
+  </div>
+</ng-template>
+
+<div
+  class="expand-container"
+  [ngClass]="{ 'expand-container__hidden': !expandChart }"
+  (click)="closeExpand()"
+>
+  <!-- <button mat-icon-button color="primary" class="expand-container__button" matTooltip="Полный экран" (click)="expandChartClick()">
+    <mat-icon>edit</mat-icon>
+</button> -->
+  <!-- {{ expandChartObject | json}} -->
+  <!-- {{ expandCssGrid | json}} -->
+  <div
+    *ngIf="
+      dashboardType !== 'new' && !isEmptyObject(expandChartObject) && !isEmptyObject(expandCssGrid)
+    "
+    class="chart-card expand-card"
+    (click)="$event.stopPropagation()"
+  >
+    <div class="expand-card__header">
+      <div
+        *ngIf="
+          expandChartObject?.chartType !== 'big_number_total' &&
+          expandChartObject?.chartType !== 'big_number'
+        "
+        class="mat-body-2 chart-name"
+      >
+        {{ expandCssGrid.meta.sliceNameOverride }}
+      </div>
+
+      <div
+        *ngIf="expandCssGrid.meta.chartId === 228 || expandCssGrid.meta.chartId === 230"
+        class="chart-name mat-h3 exd-subheading-2-bold bignumber-name"
+      >
+        <span>{{ expandCssGrid.meta.sliceNameOverride }} </span>
+      </div>
+
+      <div
+        *ngIf="
+          (expandChartObject?.chartType === 'big_number_total' ||
+            expandChartObject?.chartType === 'big_number') &&
+          expandCssGrid.meta.chartId !== 228 &&
+          expandCssGrid.meta.chartId !== 230
+        "
+        class="chart-name mat-h4 bignumber-name"
+      >
+        <span> {{ expandCssGrid.meta.sliceNameOverride }}</span>
+      </div>
+
+      <div class="expand-card__header-actions">
+        <button
+          mat-icon-button
+          color="primary"
+          class="expand-container__button"
+          matTooltip="Закрыть"
+          (click)="closeExpand()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+
+        <div>
+          <button
+            mat-icon-button
+            [matMenuTriggerFor]="menu"
+            aria-label="Example icon-button with a menu"
+          >
+            <mat-icon>more_vert</mat-icon>
+          </button>
+
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="onCopyLinkChart(expandItem)">
+              <span>Скопировать ссылку на график</span>
+            </button>
+
+            <button mat-menu-item (click)="onOpenDialogSendToEmail(expandItem)">
+              <span>Отправить график через email</span>
+            </button>
+
+            <button mat-menu-item (click)="onExportCSV(expandCssGrid.meta.chartId, expandItem)">
+              Экспорт CSV
+            </button>
+
+            <button
+              mat-menu-item
+              (click)="exportPDF(expandCssGrid.meta.chartId, expandCssGrid.meta.sliceNameOverride)"
+            >
+              Экспорт PDF
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="
+        expandChartObject?.chartType !== 'big_number_total' &&
+        expandChartObject?.chartType !== 'big_number' &&
+        expandChartObject?.chartType !== 'sunburst'
+      "
+      echarts
+      [options]="expandChartObject?.graph"
+      class="expand-card__chart"
+      (chartInit)="onChartInit($event, expandCssGrid.meta.chartId)"
+      (chartClick)="onChartEvent($event, 'chartClick', expandCssGrid.meta.chartId)"
+      (chartDblClick)="onChartEvent($event, 'chartDblClick', expandCssGrid.meta.chartId)"
+    ></div>
+
+    <div
+      *ngIf="
+        !isEmptyObject(expandChartObject) &&
+        (expandChartObject?.chartType === 'big_number_total' ||
+          expandChartObject?.chartType === 'big_number')
+      "
+      class="chart-bignumber"
+      [ngClass]="{ 'positive-percent': expandChartObject.chartSubheader === '%' }"
+    >
+      <!-- [ngClass]="{'negative-value': isNegativeNumber(dashboardChartsObject[cssGrid[item].meta.chartId].graph.data) < 0,
+        'positive-percent': dashboardChartsObject[cssGrid[item].meta.chartId].chartSubheader === '%' && dashboardChartsObject[cssGrid[item].meta.chartId].graph.data > 0}" -->
+      <div class="bignumber-text" *ngIf="expandChartObject.chartSubheader === '₽'">
+        {{ expandChartObject.graph.data | shortNumber }}
+      </div>
+
+      <div class="bignumber-text" *ngIf="expandChartObject.chartSubheader !== '₽'">
+        {{
+          (expandChartObject.graph.data >= 0
+            ? expandChartObject.graph.data
+            : -expandChartObject.graph.data
+          ) | number: '1.2-2'
+        }}
+      </div>
+
+      <div class="bignumber-text" style="padding-left: 10px">
+        {{ expandChartObject.chartSubheader }}
+      </div>
+    </div>
+
+    <div *ngIf="expandChartObject?.chartType === 'sunburst'">
+      <!-- {{ dashboardChartsObject[cssGrid[item].meta.chartId].graph.value}} -->
+      <!-- <mat-progress-bar mode="determinate" value="{{dashboardChartsObject[cssGrid[item].meta.chartId].graph.value}}"></mat-progress-bar> -->
+      <!-- <section class="progress-section">
+        <mat-progress-bar
+          mode="determinate"
+          [value]="expandChartObject.graph.value"
+        >
+        </mat-progress-bar>
+        <div style="position: absolute; bottom: 15px; padding-left: 10px; color: white;">
+          {{expandChartObject.graph.value}}% </div>
+      </section> -->
+      <div
+        style="height: 40px; width: 100%"
+        echarts
+        [options]="dashboardChartsObject[expandCssGrid.meta.chartId]?.graph"
+        (chartInit)="onChartInit($event, expandCssGrid.meta.chartId)"
+        (chartClick)="onChartEvent($event, 'chartClick', expandCssGrid.meta.chartId)"
+        (chartDblClick)="onChartEvent($event, 'chartDblClick', expandCssGrid.meta.chartId)"
+      ></div>
+    </div>
+  </div>
+</div>
+
+<!-- NEW DASHBOARD -->
+
+<div
+  *ngIf="this.dashboardType === 'new' && !editMode"
+  class="dashboard-container-new"
+  id="dashboardContainer"
+>
+  <!-- <ng-container *ngTemplateOutlet="elementsListTmpl; context:{ list: cssGrid.position }">
+  </ng-container>
+  <ng-template #elementsListTmpl let-list="list"> -->
+  <!--
+          [ngStyle]="{
+      'height.px': element.rows * 14 * 2,
+      'width.px': calcNewWidth(element.cols),
+      'top.px': element.y * 14 * 2,
+      'left.px': calcNewWidth(element.x)
+    }"
+     -->
+  <div
+    *ngFor="let element of cssGrid.position"
+    [ngStyle]="{
+      'height.px': element.rows * 14 * 2,
+      'width.px': calcNewWidth(element.cols),
+      'grid-row-start': element.y ? element.y + 1 : 1,
+      'grid-row-end': element.y + element.rows + 1,
+      'grid-column-start': element.x ? element.x + 1 : 1,
+      'grid-column-end': element.x + element.cols + 1
+    }"
+    class="dashboard-container-new__element"
+    [class]="element.meta?.type"
+  >
+    <div *ngIf="element.component">
+      <div
+        *ngIf="element.meta.type === 'header'"
+        [ngStyle]="{
+          'font-size.px': element.meta.size,
+          'background-color': element.meta.background
+        }"
+        style="padding: 16px"
+      >
+        {{ element.meta.header }}
+      </div>
+
+      <mat-divider *ngIf="element.meta.type === 'delimeter'"></mat-divider>
+
+      <div *ngIf="element.meta.type === 'markdown'" class="dashboard-container__element-markdown">
+        <markdown [data]="element.meta.text"></markdown>
+      </div>
+
+      <mat-tab-group *ngIf="element.meta.type === 'tabs'" style="background-color: white">
+        <mat-tab *ngFor="let tab of element.meta.tabs" label="{{ tab.title }}">
+          <div
+            class="mat-tab-body-wrapper"
+            style="display: flex; justify-content: flex-start; flex-wrap: wrap"
+          >
+            <div
+              *ngFor="let item of tab.items"
+              [ngStyle]="{
+                'top.px': item.y * 14 * 2,
+                'left.px': calcNewWidth(item.x),
+                'width.px': calcNewWidth(item.cols),
+                'height.px': item.rows * 14 * 2
+              }"
+            >
+              <div
+                *ngIf="item.content.type === 'header'"
+                [ngStyle]="{
+                  'font-size.px': item.content.size,
+                  'background-color': item.content.background
+                }"
+                style="padding: 16px"
+              >
+                {{ item.content.header }}
+              </div>
+
+              <mat-divider *ngIf="item.content.type === 'delimeter'"></mat-divider>
+
+              <div
+                *ngIf="item.content.type === 'markdown'"
+                class="dashboard-container__element-markdown"
+              >
+                <markdown [data]="item.content.text"></markdown>
+              </div>
+
+              <mat-card
+                *ngIf="item.content?.chartId"
+                style="height: 800px"
+                [ngClass]="{ 'pie-gap': item.content?.chartType === 'pie' }"
+                [ngStyle]="{
+                  'height.px': item.rows * 14 * 2,
+                  'width.px': calcNewWidth(item.cols)
+                }"
+                class="chart-card chart-card-new"
+                id="chart-{{ item.id || item.content.chartId }}"
+              >
+                <div class="mat-body-2 chart-name">
+                  <div class="chart-title">
+                    {{ item.content.chartName }}
+                  </div>
+
+                  <ng-template
+                    cdkConnectedOverlay
+                    [cdkConnectedOverlayPush]="true"
+                    [cdkConnectedOverlayOrigin]="trigger"
+                    [cdkConnectedOverlayHasBackdrop]="true"
+                    (backdropClick)="openCommentIndex = -1"
+                    [cdkConnectedOverlayOpen]="openCommentIndex === item.content.chartId"
+                  >
+                    <app-dashboard-comment-block
+                      [dashboardId]="dashboardId"
+                      [chartId]="item.content.chartId"
+                      (changeCommentStateEvent)="onCommentStateChange()"
+                    >
+                    </app-dashboard-comment-block>
+                  </ng-template>
+
+                  <div class="popup-card-dropdown">
+                    <div
+                      #trigger="cdkOverlayOrigin"
+                      [ngClass]="{
+                        'hide-button':
+                          !chartsCommentsForId[item.content.chartId] ||
+                          !dashboardPermissions?.can_comment
+                      }"
+                      cdkOverlayOrigin
+                      class="custom-badge custom-badge__primary-filled button-show-comments"
+                      (click)="openCommentPopup(item.content.chartId)"
+                    >
+                      <mat-icon svgIcon="comments"></mat-icon>
+                      {{ dashboardCommentsObject[item.content.chartId] }}
+                    </div>
+
+                    <button mat-icon-button [matMenuTriggerFor]="menu">
+                      <mat-icon style="font-size: 24px">more_vert</mat-icon>
+                    </button>
+
+                    <mat-menu #menu="matMenu">
+                      <button
+                        *ngIf="!chartsCommentsForId[item.content.chartId]"
+                        mat-menu-item
+                        (click)="openCommentPopup(item.content.chartId)"
+                      >
+                        Добавить комментарий
+                      </button>
+
+                      <button mat-menu-item (click)="onCopyLinkChartNew(item.content.chartId)">
+                        Скопировать ссылку на график
+                      </button>
+
+                      <button
+                        mat-menu-item
+                        (click)="onOpenDialogSendToEmailNew(item.content.chartId, item)"
+                      >
+                        Отправить график через email
+                      </button>
+
+                      <button
+                        mat-menu-item
+                        (click)="
+                          expandChartClickNew(
+                            item,
+                            chartsDatasCompleteForTabs[item.content.chartId],
+                            item.content.chartId
+                          )
+                        "
+                      >
+                        Полный экран
+                      </button>
+
+                      <button
+                        mat-menu-item
+                        (click)="onExportCSVForTabs(item.content.chartId, item.content.chartName)"
+                      >
+                        Экспорт CSV
+                      </button>
+
+                      <button
+                        mat-menu-item
+                        (click)="exportPDF(item.content.chartId, item.content.chartName)"
+                      >
+                        Экспорт PDF
+                      </button>
+                    </mat-menu>
+                  </div>
+                </div>
+
+                <div
+                  *ngIf="item.id === 228 || item.id === 230"
+                  class="chart-name mat-h3 bignumber-name"
+                >
+                  <span>{{ item.content?.chartName }} </span>
+                </div>
+
+                <div
+                  *ngIf="
+                    (dashboardChartsObject[item.id]?.chartType === 'big_number_total' ||
+                      dashboardChartsObject[item.id]?.chartType === 'big_number') &&
+                    item.id !== 228 &&
+                    item.id !== 230
+                  "
+                  class="chart-name mat-h4 bignumber-name"
+                >
+                  <span> {{ item.content?.chartName }}</span>
+                </div>
+
+                <div
+                  *ngIf="
+                    item.content?.chartType !== 'big_number_total' &&
+                    item.content?.chartType !== 'big_number' &&
+                    item.content?.chartType !== 'sunburst'
+                  "
+                  echarts
+                  [options]="dashboardChartsObject[item.content.chartId]?.graph"
+                  style="height: 100%"
+                  (chartInit)="onChartInit($event, item.id ? item.id : item.content.chartId)"
+                  (chartClick)="
+                    onChartEvent($event, 'chartClick', item.id ? item.id : item.content.chartId)
+                  "
+                  (chartDblClick)="
+                    onChartEvent($event, 'chartDblClick', item.id ? item.id : item.content.chartId)
+                  "
+                ></div>
+
+                <div
+                  class="chart-bignumber"
+                  *ngIf="
+                    item.content?.chartType === 'big_number_total' ||
+                    item.content?.chartType === 'big_number'
+                  "
+                  [ngClass]="{ 'positive-percent': item.content.chartSubheader === '%' }"
+                >
+                  <div class="bignumber-text" *ngIf="item.content.chartSubheader === '₽'">
+                    {{ dashboardChartsObject[item.content.chartId]?.graph.data | shortNumber }}
+                  </div>
+                  <div class="bignumber-text" *ngIf="item.content.chartSubheader !== '₽'">
+                    {{
+                      (item.content.graph.data >= 0
+                        ? item.content.graph.data
+                        : -item.content.graph.data
+                      ) | number: '1.2-2'
+                    }}
+                  </div>
+
+                  <div class="bignumber-text" style="padding-left: 10px">
+                    {{ item.content.chartSubheader }}
+                  </div>
+                </div>
+
+                <div *ngIf="item.content?.chartType === 'sunburst'">
+                  <div
+                    style="height: 40px; width: 100%"
+                    echarts
+                    [options]="dashboardChartsObject[item.content.chartId]?.graph"
+                    (chartInit)="onChartInit($event, item.id)"
+                    (chartClick)="onChartEvent($event, 'chartClick', item.id)"
+                    (chartDblClick)="onChartEvent($event, 'chartDblClick', item.id)"
+                  ></div>
+                </div>
+              </mat-card>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+
+    <div
+      *ngIf="element.layer"
+      [ngStyle]="{
+        'height.px': element.rows * 14 * 2,
+        'width.px': calcNewWidth(element.cols),
+        'top.px': element.y * 14 * 2,
+        'left.px': calcNewWidth(element.x)
+      }"
+      style="background-color: white; z-index: -1"
+    ></div>
+    <!--
+          {
+      component: true,
+      title: 'Вкладки',
+      type: 'tabs',
+      selected: 0,
+      tabs: [{
+        title: 'Название',
+        items: []
+      }]
+    },
+     -->
+    <mat-card
+      *ngIf="!isEmptyObject(dashboardChartsObject[element.id]) && !element?.component"
+      [ngClass]="{ 'pie-gap': dashboardChartsObject[element.id]?.chartType === 'pie' }"
+      [ngClass]="{
+        'sunburst-padding': dashboardChartsObject[element.id]?.chartType === 'sunburst'
+      }"
+      class="chart-card chart-card-new"
+      id="chart-{{ element.id }}"
+      style="z-index: 999; height: 100%; width: 100%"
+    >
+      <div
+        *ngIf="
+          dashboardChartsObject[element.id]?.chartType !== 'big_number_total' &&
+          dashboardChartsObject[element.id]?.chartType !== 'big_number'
+        "
+        class="mat-body-2 chart-name"
+      >
+        <div *ngIf="element.name" class="chart-title">{{ element.name }}</div>
+
+        <div *ngIf="!element.name" class="chart-title">
+          {{ dashboardChartsObject[element.id]?.chartName }}
+        </div>
+
+        <ng-template
+          cdkConnectedOverlay
+          [cdkConnectedOverlayPush]="true"
+          [cdkConnectedOverlayOrigin]="trigger"
+          [cdkConnectedOverlayHasBackdrop]="true"
+          (backdropClick)="openCommentIndex = -1"
+          [cdkConnectedOverlayOpen]="openCommentIndex === element.id"
+        >
+          <app-dashboard-comment-block
+            [dashboardId]="dashboardId"
+            [chartId]="element.id"
+            (changeCommentStateEvent)="onCommentStateChange()"
+          >
+          </app-dashboard-comment-block>
+        </ng-template>
+
+        <div class="popup-card-dropdown">
+          <div
+            #trigger="cdkOverlayOrigin"
+            [ngClass]="{
+              'hide-button': !chartsCommentsForId[element.id] || !dashboardPermissions?.can_comment
+            }"
+            cdkOverlayOrigin
+            class="custom-badge custom-badge__primary-filled button-show-comments"
+            (click)="openCommentPopup(element.id)"
+          >
+            <mat-icon svgIcon="comments"></mat-icon>
+            {{ dashboardCommentsObject[element.id] }}
+          </div>
+
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon style="font-size: 24px">more_vert</mat-icon>
+          </button>
+
+          <mat-menu #menu="matMenu">
+            <button
+              *ngIf="!chartsCommentsForId[element.id]"
+              mat-menu-item
+              (click)="openCommentPopup(element.id)"
+            >
+              Добавить комментарий
+            </button>
+
+            <button mat-menu-item (click)="onCopyLinkChartNew(element.id)">
+              Скопировать ссылку на график
+            </button>
+
+            <button mat-menu-item (click)="onOpenDialogSendToEmailNew(element.id)">
+              Отправить график через email
+            </button>
+
+            <button
+              mat-menu-item
+              (click)="expandChartClickNew(element, dashboardChartsObject[element.id], element.id)"
+            >
+              Полный экран
+            </button>
+
+            <button mat-menu-item (click)="onExportCSVNew(element.id, element.name)">
+              Экспорт CSV
+            </button>
+
+            <!-- todo bug -->
+            <button mat-menu-item (click)="exportPDF(element.id, element.name)">Экспорт PDF</button>
+          </mat-menu>
+        </div>
+      </div>
+
+      <div
+        *ngIf="element.id === 228 || element.id === 230"
+        class="chart-name mat-h3 bignumber-name"
+      >
+        <div>{{ dashboardChartsObject[element.id]?.chartName }}</div>
+
+        <ng-template
+          cdkConnectedOverlay
+          [cdkConnectedOverlayPush]="true"
+          [cdkConnectedOverlayOrigin]="trigger"
+          [cdkConnectedOverlayHasBackdrop]="true"
+          (backdropClick)="openCommentIndex = -1"
+          [cdkConnectedOverlayOpen]="openCommentIndex === element.id"
+        >
+          <app-dashboard-comment-block
+            [dashboardId]="dashboardId"
+            [chartId]="element.id"
+            (changeCommentStateEvent)="onCommentStateChange()"
+          >
+          </app-dashboard-comment-block>
+        </ng-template>
+
+        <div class="popup-card-dropdown">
+          <div
+            #trigger="cdkOverlayOrigin"
+            [ngClass]="{
+              'hide-button': !chartsCommentsForId[element.id] || !dashboardPermissions?.can_comment
+            }"
+            cdkOverlayOrigin
+            class="custom-badge custom-badge__primary-filled button-show-comments"
+            (click)="openCommentPopup(element.id)"
+          >
+            <mat-icon svgIcon="comments"></mat-icon>
+            {{ dashboardCommentsObject[element.id] }}
+          </div>
+
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon style="font-size: 24px">more_vert</mat-icon>
+          </button>
+
+          <mat-menu #menu="matMenu">
+            <button
+              *ngIf="!chartsCommentsForId[element.id]"
+              mat-menu-item
+              (click)="openCommentPopup(element.id)"
+            >
+              Добавить комментарий
+            </button>
+
+            <button mat-menu-item (click)="onCopyLinkChartNew(element.id)">
+              Скопировать ссылку на график
+            </button>
+
+            <button mat-menu-item (click)="onOpenDialogSendToEmailNew(element.id)">
+              Отправить график через email
+            </button>
+
+            <button
+              mat-menu-item
+              (click)="expandChartClickNew(element, dashboardChartsObject[element.id], element.id)"
+            >
+              Полный экран
+            </button>
+
+            <button mat-menu-item (click)="onExportCSVNew(element.id, element.name)">
+              Экспорт CSV
+            </button>
+
+            <button mat-menu-item (click)="exportPDF(element.id, element.name)">Экспорт PDF</button>
+          </mat-menu>
+        </div>
+      </div>
+
+      <div
+        *ngIf="
+          (dashboardChartsObject[element.id]?.chartType === 'big_number_total' ||
+            dashboardChartsObject[element.id]?.chartType === 'big_number') &&
+          element.id !== 228 &&
+          element.id !== 230
+        "
+        class="chart-name mat-h4 bignumber-name"
+      >
+        <div>{{ element.name || dashboardChartsObject[element.id]?.chartName }}</div>
+
+        <ng-template
+          cdkConnectedOverlay
+          [cdkConnectedOverlayPush]="true"
+          [cdkConnectedOverlayOrigin]="trigger"
+          [cdkConnectedOverlayHasBackdrop]="true"
+          (backdropClick)="openCommentIndex = -1"
+          [cdkConnectedOverlayOpen]="openCommentIndex === element.id"
+        >
+          <app-dashboard-comment-block
+            [dashboardId]="dashboardId"
+            [chartId]="element.id"
+            (changeCommentStateEvent)="onCommentStateChange()"
+          >
+          </app-dashboard-comment-block>
+        </ng-template>
+
+        <div class="popup-card-dropdown">
+          <div
+            #trigger="cdkOverlayOrigin"
+            [ngClass]="{
+              'hide-button': !chartsCommentsForId[element.id] || !dashboardPermissions?.can_comment
+            }"
+            cdkOverlayOrigin
+            class="custom-badge custom-badge__primary-filled button-show-comments"
+            (click)="openCommentPopup(element.id)"
+          >
+            <mat-icon svgIcon="comments"></mat-icon>
+            {{ dashboardCommentsObject[element.id] }}
+          </div>
+
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon style="font-size: 24px">more_vert</mat-icon>
+          </button>
+
+          <mat-menu #menu="matMenu">
+            <button
+              *ngIf="!chartsCommentsForId[element.id]"
+              mat-menu-item
+              (click)="openCommentPopup(element.id)"
+            >
+              Добавить комментарий
+            </button>
+
+            <button mat-menu-item (click)="onCopyLinkChartNew(element.id)">
+              Скопировать ссылку на график
+            </button>
+
+            <button mat-menu-item (click)="onOpenDialogSendToEmailNew(element.id)">
+              Отправить график через email
+            </button>
+
+            <button
+              mat-menu-item
+              (click)="expandChartClickNew(element, dashboardChartsObject[element.id], element.id)"
+            >
+              Полный экран
+            </button>
+
+            <button mat-menu-item (click)="onExportCSVNew(element.id, element.name)">
+              Экспорт CSV
+            </button>
+
+            <button mat-menu-item (click)="exportPDF(element.id, element.name)">Экспорт PDF</button>
+          </mat-menu>
+        </div>
+      </div>
+
+      <div
+        *ngIf="
+          dashboardChartsObject[element.id]?.chartType !== 'big_number_total' &&
+          dashboardChartsObject[element.id]?.chartType !== 'big_number' &&
+          dashboardChartsObject[element.id]?.chartType !== 'sunburst'
+        "
+        echarts
+        [options]="dashboardChartsObject[element.id]?.graph"
+        style="height: 100%; width: 100%"
+        (chartInit)="onChartInit($event, element.id)"
+        (chartClick)="onChartEvent($event, 'chartClick', element.id)"
+        (chartDblClick)="onChartEvent($event, 'chartDblClick', element.id)"
+      ></div>
+
+      <div
+        *ngIf="
+          !isEmptyObject(dashboardChartsObject[element.id]) &&
+          (dashboardChartsObject[element.id]?.chartType === 'big_number_total' ||
+            dashboardChartsObject[element.id]?.chartType === 'big_number')
+        "
+        class="chart-bignumber"
+        [ngClass]="{ 'positive-percent': dashboardChartsObject[element.id].chartSubheader === '%' }"
+      >
+        <!-- [ngClass]="{'negative-value': isNegativeNumber(dashboardChartsObject[cssGrid[item].meta.chartId].graph.data) < 0,
+          'positive-percent': dashboardChartsObject[cssGrid[item].meta.chartId].chartSubheader === '%' && dashboardChartsObject[cssGrid[item].meta.chartId].graph.data > 0}" -->
+        <div
+          *ngIf="dashboardChartsObject[element.id].chartSubheader === '₽'"
+          class="bignumber-text"
+        >
+          {{ dashboardChartsObject[element.id].graph.data | shortNumber }}
+        </div>
+
+        <div
+          *ngIf="dashboardChartsObject[element.id].chartSubheader !== '₽'"
+          class="bignumber-text"
+        >
+          {{
+            (dashboardChartsObject[element.id].graph.data >= 0
+              ? dashboardChartsObject[element.id].graph.data
+              : -dashboardChartsObject[element.id].graph.data
+            ) | number: '1.2-2'
+          }}
+        </div>
+
+        <div class="bignumber-text" style="padding-left: 10px">
+          {{ dashboardChartsObject[element.id].chartSubheader }}
+        </div>
+      </div>
+
+      <div *ngIf="dashboardChartsObject[element.id]?.chartType === 'sunburst'">
+        <!-- {{ dashboardChartsObject[cssGrid[item].meta.chartId].graph.value}} -->
+        <!-- <mat-progress-bar mode="determinate" value="{{dashboardChartsObject[cssGrid[item].meta.chartId].graph.value}}"></mat-progress-bar> -->
+        <!-- <section class="progress-section">
+          <mat-progress-bar
+            mode="determinate"
+            [value]="dashboardChartsObject[cssGrid[item].meta.chartId].graph.value"
+          >
+          </mat-progress-bar>
+          <div style="position: absolute; bottom: 4px; padding-left: 10px; color: white;">
+            {{dashboardChartsObject[cssGrid[item].meta.chartId].graph.value}}% </div>
+        </section> -->
+        <div
+          style="height: 40px; width: 100%"
+          echarts
+          [options]="dashboardChartsObject[element.id]?.graph"
+          (chartInit)="onChartInit($event, element.id)"
+          (chartClick)="onChartEvent($event, 'chartClick', element.id)"
+          (chartDblClick)="onChartEvent($event, 'chartDblClick', element.id)"
+        ></div>
+      </div>
+    </mat-card>
+  </div>
+  <!-- </ng-template> -->
+</div>
+
+<div
+  class="expand-container"
+  [ngClass]="{ 'expand-container__hidden': !expandChartNew }"
+  (click)="closeExpandNew()"
+>
+  <div
+    *ngIf="
+      dashboardType === 'new' && !isEmptyObject(expandChartObject) && !isEmptyObject(expandCssGrid)
+    "
+    class="chart-card expand-card"
+    (click)="$event.stopPropagation()"
+  >
+    <div class="expand-card__header">
+      <div
+        *ngIf="
+          expandChartObject?.chartType !== 'big_number_total' &&
+          expandChartObject?.chartType !== 'big_number'
+        "
+        class="mat-body-2 chart-name"
+      >
+        {{ expandCssGrid.name }}
+      </div>
+
+      <div
+        *ngIf="expandCssGrid.id === 228 || expandCssGrid.id === 230"
+        class="chart-name mat-h3 exd-subheading-2-bold bignumber-name"
+      >
+        <span>
+          {{
+            expandCssGrid.name ? expandCssGrid.name : dashboardChartsObject[expandItem]?.chartName
+          }}
+        </span>
+      </div>
+
+      <div
+        *ngIf="
+          (expandChartObject?.chartType === 'big_number_total' ||
+            expandChartObject?.chartType === 'big_number') &&
+          expandCssGrid.meta.chartId !== 228 &&
+          expandCssGrid.meta.chartId !== 230
+        "
+        class="chart-name mat-h4 bignumber-name"
+      >
+        <span>
+          {{
+            expandCssGrid.name ? expandCssGrid.name : dashboardChartsObject[expandItem]?.chartName
+          }}
+        </span>
+      </div>
+
+      <div class="expand-card__header-actions">
+        <button
+          mat-icon-button
+          color="primary"
+          class="expand-container__button"
+          matTooltip="Закрыть"
+          (click)="closeExpandNew()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+
+        <div>
+          <button
+            mat-icon-button
+            [matMenuTriggerFor]="menu"
+            aria-label="Example icon-button with a menu"
+          >
+            <mat-icon>more_vert</mat-icon>
+          </button>
+
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="onCopyLinkChartNew(expandItem)">
+              Скопировать ссылку на график
+            </button>
+
+            <button
+              mat-menu-item
+              (click)="
+                onOpenDialogSendToEmailNew(expandItem, {
+                  content: {
+                    chartName: expandCssGrid.name
+                      ? expandCssGrid.name
+                      : expandCssGrid.content?.chartName
+                  }
+                })
+              "
+            >
+              Отправить график через email
+            </button>
+
+            <button
+              mat-menu-item
+              (click)="
+                onExportCSVNew(
+                  expandItem,
+                  expandCssGrid.name ? expandCssGrid.name : expandCssGrid.content?.chartName
+                )
+              "
+            >
+              Экспорт CSV
+            </button>
+
+            <button
+              mat-menu-item
+              (click)="
+                exportPDF(
+                  expandItem,
+                  expandCssGrid.name ? expandCssGrid.name : expandCssGrid.content?.chartName
+                )
+              "
+            >
+              Экспорт PDF
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="
+        expandChartObject?.chartType !== 'big_number_total' &&
+        expandChartObject?.chartType !== 'big_number' &&
+        expandChartObject?.chartType !== 'sunburst'
+      "
+      echarts
+      [options]="expandChartObject?.graph"
+      class="expand-card__chart"
+      (chartInit)="onChartInit($event, expandItem)"
+      (chartClick)="onChartEvent($event, 'chartClick', expandItem)"
+      (chartDblClick)="onChartEvent($event, 'chartDblClick', expandItem)"
+    ></div>
+
+    <div
+      *ngIf="
+        !isEmptyObject(expandChartObject) &&
+        (expandChartObject?.chartType === 'big_number_total' ||
+          expandChartObject?.chartType === 'big_number')
+      "
+      class="chart-bignumber"
+      [ngClass]="{ 'positive-percent': expandChartObject.chartSubheader === '%' }"
+    >
+      <!-- [ngClass]="{'negative-value': isNegativeNumber(dashboardChartsObject[cssGrid[item].meta.chartId].graph.data) < 0,
+      'positive-percent': dashboardChartsObject[cssGrid[item].meta.chartId].chartSubheader === '%' && dashboardChartsObject[cssGrid[item].meta.chartId].graph.data > 0}" -->
+      <div class="bignumber-text" *ngIf="expandChartObject.chartSubheader === '₽'">
+        {{ expandChartObject.graph.data | shortNumber }}
+      </div>
+
+      <div *ngIf="expandChartObject.chartSubheader !== '₽'" class="bignumber-text">
+        {{
+          (expandChartObject.graph.data >= 0
+            ? expandChartObject.graph.data
+            : -expandChartObject.graph.data
+          ) | number: '1.2-2'
+        }}
+      </div>
+
+      <div class="bignumber-text" style="padding-left: 10px">
+        {{ expandChartObject.chartSubheader }}
+      </div>
+    </div>
+
+    <div *ngIf="expandChartObject?.chartType === 'sunburst'">
+      <!-- {{ dashboardChartsObject[cssGrid[item].meta.chartId].graph.value}} -->
+      <!-- <mat-progress-bar mode="determinate" value="{{dashboardChartsObject[cssGrid[item].meta.chartId].graph.value}}"></mat-progress-bar> -->
+      <!-- <section class="progress-section">
+      <mat-progress-bar
+        mode="determinate"
+        [value]="expandChartObject.graph.value"
+      >
+      </mat-progress-bar>
+      <div style="position: absolute; bottom: 15px; padding-left: 10px; color: white;">
+        {{expandChartObject.graph.value}}% </div>
+    </section> -->
+      <div
+        style="height: 40px; width: 100%"
+        echarts
+        [options]="dashboardChartsObject[expandCssGrid.meta.chartId]?.graph"
+        (chartInit)="onChartInit($event, expandCssGrid.meta.chartId)"
+        (chartClick)="onChartEvent($event, 'chartClick', expandCssGrid.meta.chartId)"
+        (chartDblClick)="onChartEvent($event, 'chartDblClick', expandCssGrid.meta.chartId)"
+      ></div>
+    </div>
+  </div>
+</div>
+<!--
+<div *ngIf="editMode && dashboardInfo">
+  <app-dashboard-create
+    [dashboardInfo]="dashboardInfo"
+    [chartIds]="chartIds"
+    [dashboardId]="dashboardId"
+    [dashboardCharts]="dashboardChartsObject"
+    (cancelEdit)="processCancelEdit($event)"
+  ></app-dashboard-create>
+</div>
+-->

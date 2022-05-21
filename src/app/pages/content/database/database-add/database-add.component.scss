@@ -1,0 +1,78 @@
+@import "../../../../../styles/exd-colors.scss";
+@import "../../../../../styles/mixins.scss";
+@import "../../../../../styles/variables.scss";
+
+.database-add {
+  margin: 78px auto 0;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 900px;
+  min-height: 424px;
+  border-radius: 8px;
+  padding: 20px 0 40px;
+  background-color: map-get($exd-primary, 1);
+  * {
+    box-sizing: border-box;
+  }
+  &-title {
+    padding: 0 32px 20px;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 24px;
+    color: map-get($exd-primary, 0);
+  }
+  &-description {
+    padding: 0 32px;
+    @include font(14px, 500);
+    &-secondary {
+      color: map-get($exd-grayscale, 300);
+      padding-right: 14px;
+    }
+  }
+  &-step-1 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    padding: 20px 22px;
+    &-item {
+      max-width: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      margin: 0 10px 20px 10px;
+      &.disabled {
+        .database-add-step-1-name {
+          color: map-get($exd-grayscale, 300);
+        }
+      }
+    }
+    &-name {
+      @include font(14px, 500);
+      padding-top: 16px;
+      text-align: center;
+      height: 56px;
+    }
+    &-icon-wrapper {
+      width: 120px;
+      height: 120px;
+      background: map-get($exd-grayscale, 50);
+      border-radius: $main-radius;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      mat-icon {
+        width: 60px;
+        height: 60px;
+      }
+    }
+  }
+  &-actions {
+    margin: 32px 32px 0;
+    display: flex;
+    gap: 16px;
+    .close-button {
+      margin-right: auto;
+    }
+  }
+}

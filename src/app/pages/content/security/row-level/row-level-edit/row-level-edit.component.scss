@@ -1,0 +1,59 @@
+@import "../../../../../../styles/exd-colors.scss";
+
+.row-level-edit {
+  margin: 40px auto 0;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 900px;
+  min-height: 424px;
+  border-radius: 8px;
+  padding: 20px 0 40px;
+  background-color: map-get($exd-primary, 1);
+
+  &__title {
+    padding: 0 32px 24px 32px;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 24px;
+    color: map-get($exd-primary, 0);
+  }
+
+  &__body {
+    padding: 0 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    app-chips-autocomplete-field .mat-form-field {
+      .mat-form-field-infix {
+        margin-top: 0;
+      }
+    }
+    .mat-form-field {
+      width: 100%;
+
+      .mat-form-field-outline {
+        height: 48px;
+      }
+
+      .mat-form-field-infix {
+        margin-top: 7px;
+      }
+
+      .mat-form-field-label .ng-star-inserted {
+        font-size: 16px !important;
+      }
+    }
+    mat-hint {
+      margin-top: 20px !important;
+    }
+  }
+
+  &__actions {
+    margin: 32px 32px 0;
+    display: flex;
+    gap: 16px;
+    .close-button {
+      margin-right: auto;
+    }
+  }
+}

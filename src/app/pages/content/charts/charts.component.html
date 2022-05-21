@@ -1,0 +1,503 @@
+<div class="chart-list-container">
+  <div class="chart-list-header">
+    <h1>Графики</h1>
+  </div>
+
+  <div class="chart-list-actions-wrapper">
+    <div class="chart-list-actions-icon-buttons">
+      <app-icon-button
+        [ngClass]="{ active: viewMode === 'list' }"
+        (click)="changeViewMode('list')"
+        name="list"
+      ></app-icon-button>
+
+      <app-icon-button
+        [ngClass]="{ active: viewMode === 'tile' }"
+        (click)="changeViewMode('tile')"
+        name="tile"
+      ></app-icon-button>
+
+      <div class="chart-list-actions-title">Графики</div>
+    </div>
+    <div class="chart-list-actions">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Поиск</mat-label>
+
+        <input
+          matInput
+          [formControl]="searchFormControl"
+          placeholder="Введите фразу"
+          (change)="onSearch(search)"
+          #search
+        />
+
+        <mat-icon class="search-logo" svgIcon="search"></mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="outline-blue-select-field">
+        <mat-label>Сортировка</mat-label>
+        <mat-select #sort [ngModel]="sortColumn">
+          <mat-option (click)="getSortList(sort.value)" value="slice_name">
+            По названию
+          </mat-option>
+          <mat-option (click)="getSortList(sort.value)" value="changed_on_delta_humanized">
+            По дате изменений
+          </mat-option>
+          <mat-option (click)="getSortList(sort.value)" value="last_saved_by.first_name">
+            По автору изменений
+          </mat-option>
+          <mat-option (click)="getSortList(sort.value)" value="viz_type">
+            По типу визуализации
+          </mat-option>
+        </mat-select>
+
+        <mat-icon class="blue-logo" svgIcon="sort"></mat-icon>
+      </mat-form-field>
+
+      <button
+        class="filters-mobile"
+        [class]="isMobileFiltersShowed ? 'open' : 'close'"
+        (click)="isMobileFiltersShowed = !isMobileFiltersShowed"
+      >
+        <img
+          src="assets/icons/table_filters.svg"
+          width="36"
+          height="36"
+          alt="table_filters"
+          class="table-filters-default"
+        />
+
+        <img
+          src="assets/icons/table_filters_rotate.svg"
+          width="36"
+          height="36"
+          alt="table_filters"
+          class="table-filters-rotate"
+        />
+      </button>
+    </div>
+  </div>
+
+  <div
+    [class]="isMobileFiltersShowed ? 'opened' : 'closed'"
+    class="chart-list-filters-mobile-wrapper"
+  >
+    <div class="chart-list-filters" [formGroup]="filterFormGroup">
+      <!--      <mat-button-toggle-group [multiple]="true" formControlName="published_or_favorite">-->
+      <!--        <mat-button-toggle value="draft">Черновик</mat-button-toggle>-->
+      <!--        <mat-button-toggle value="published">Опубликовано</mat-button-toggle>-->
+      <!--        <mat-button-toggle value="favorite">Избранное</mat-button-toggle>-->
+      <!--      </mat-button-toggle-group>-->
+
+      <div class="selects-container">
+        <!--        <mat-form-field-->
+        <!--          appearance="outline"-->
+        <!--          class="filters-input mat-form-field small-input">-->
+        <!--          <mat-label>Выбрать автора</mat-label>-->
+
+        <!--          <mat-select formControlName="created_by">-->
+        <!--            <mat-option [value]="null">Все</mat-option>-->
+
+        <!--            <mat-option-->
+        <!--              *ngFor="let creator of creators"-->
+        <!--              [value]="creator.value">-->
+        <!--              {{ creator.text }}-->
+        <!--            </mat-option>-->
+        <!--          </mat-select>-->
+        <!--        </mat-form-field>-->
+
+        <!--        <mat-form-field-->
+        <!--          appearance="outline"-->
+        <!--          class="filters-input mat-form-field small-input">-->
+        <!--          <mat-label>Выбрать владельца</mat-label>-->
+
+        <!--          <mat-select formControlName="owners">-->
+        <!--            <mat-option [value]="null">Все</mat-option>-->
+
+        <!--            <mat-option-->
+        <!--              *ngFor="let owner of owners"-->
+        <!--              [value]="owner.value">-->
+        <!--              {{ owner.text }}-->
+        <!--            </mat-option>-->
+        <!--          </mat-select>-->
+        <!--        </mat-form-field>-->
+        <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+          <mat-label>Избранные графики</mat-label>
+
+          <mat-select formControlName="favorite">
+            <mat-option [value]="null">Все</mat-option>
+            <mat-option [value]="true">Да</mat-option>
+            <mat-option [value]="false">Нет</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+          <mat-label>Автор</mat-label>
+
+          <mat-select formControlName="created_by">
+            <mat-option [value]="null">Все</mat-option>
+            <mat-option *ngFor="let creator of creators" [value]="creator.value">
+              {{ creator.text }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+          <mat-label>Владелец</mat-label>
+
+          <mat-select formControlName="owners">
+            <mat-option [value]="null">Все</mat-option>
+            <mat-option *ngFor="let owner of owners" [value]="owner.value">
+              {{ owner.text }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+          <mat-label>Тип визуализации</mat-label>
+
+          <mat-select formControlName="viz_type">
+            <mat-option [value]="null">Все</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <app-select-infinite-scroll
+          class="filters-input"
+          [control]="filterFormGroup.get('dataset')"
+          [options]="datasets"
+          (updateList)="updateDatasetList()"
+          label="Набор данных"
+        >
+        </app-select-infinite-scroll>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-list-filters-wrapper">
+    <div class="chart-list-filters" [formGroup]="filterFormGroup">
+      <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+        <mat-label>Избранные графики</mat-label>
+
+        <mat-select formControlName="favorite">
+          <mat-option [value]="null">Все</mat-option>
+          <mat-option [value]="true">Да</mat-option>
+          <mat-option [value]="false">Нет</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+        <mat-label>Автор</mat-label>
+
+        <mat-select formControlName="created_by">
+          <mat-option [value]="null">Все</mat-option>
+          <mat-option *ngFor="let creator of creators" [value]="creator.value">
+            {{ creator.text }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+        <mat-label>Автор изменений</mat-label>
+
+        <mat-select formControlName="owners">
+          <mat-option [value]="null">Все</mat-option>
+          <mat-option *ngFor="let owner of owners" [value]="owner.value">
+            {{ owner.text }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+        <mat-label>Тип визуализации</mat-label>
+
+        <mat-select formControlName="viz_type">
+          <mat-option [value]="null">Все</mat-option>
+          <mat-option *ngFor="let vizType of vizTypes" [value]="vizType">
+            {{ vizType }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <app-select-infinite-scroll
+        [control]="filterFormGroup.get('dataset')"
+        [options]="datasets"
+        (updateList)="updateDatasetList()"
+        label="Набор данных"
+      >
+      </app-select-infinite-scroll>
+    </div>
+  </div>
+
+  <div class="chart-list-tile-wrapper" *ngIf="chartList && viewMode === 'tile'">
+    <div class="chart-list-tile">
+      <app-dashboard-card
+        [routerLink]="['/main/charts/detail', chart.id]"
+        [queryParams]="{
+          datasource: chart.datasource_id,
+          datasource_type: chart.datasource_type,
+          chart_type: chart.viz_type
+        }"
+        *ngFor="let chart of chartList"
+        [isChart]="true"
+        [dashboard]="chart"
+        [permissions]="permissions"
+        (export)="exportChart(chart)"
+        (delete)="deleteChart(chart.id)"
+        (setFavorite)="setFavoriteStatus(chart)"
+      >
+      </app-dashboard-card>
+    </div>
+
+    <mat-paginator
+      class="chart-list-paginator"
+      [length]="paginator.count"
+      [pageSize]="paginator.pageSize"
+      [pageSizeOptions]="[9, 12, 18]"
+      [pageIndex]="paginator.currentPage"
+      (page)="onPageChange($event)"
+    ></mat-paginator>
+  </div>
+
+  <div *ngIf="chartList && viewMode === 'list'" class="chart-list-list">
+    <table mat-table [dataSource]="chartList" *ngIf="chartList" class="chart-list-table">
+      <ng-container matColumnDef="checkbox">
+        <th class="checkbox-column" mat-header-cell *matHeaderCellDef>
+          <mat-checkbox
+            class="example-margin"
+            [checked]="isCheckedAll()"
+            [indeterminate]="someButNotAtAllChecked()"
+            (change)="setAllCheckbox($event.checked)"
+          >
+          </mat-checkbox>
+        </th>
+
+        <td
+          class="checkbox-column"
+          mat-cell
+          *matCellDef="let chart"
+          (click)="$event.stopPropagation()"
+        >
+          <mat-checkbox
+            class="example-margin"
+            (change)="changeSelect($event.checked, chart)"
+            [(ngModel)]="chart.select"
+          >
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="favorite">
+        <th class="star-radio-column" mat-header-cell *matHeaderCellDef>
+          <!--          <mat-icon [ngClass]="{'checked': allFavorite}" (click)="setFavoriteStatus(null, true); $event.stopPropagation();" class="star-checkbox" role="checkbox" svgIcon="star"></mat-icon>-->
+        </th>
+
+        <td class="star-radio-column" mat-cell *matCellDef="let chart">
+          <mat-icon
+            [ngClass]="{ checked: chart.favorite }"
+            class="star-checkbox"
+            role="checkbox"
+            svgIcon="star"
+            (click)="setFavoriteStatus(chart); $event.stopPropagation()"
+          ></mat-icon>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="chart">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          (click)="getSortList('slice_name')"
+          class="sortable-column-header"
+        >
+          <span>
+            Название графика
+            <mat-icon
+              [ngClass]="{ desc: sortOrder === 'desc', active: sortColumn === 'slice_name' }"
+              svgIcon="arrow_sort_down"
+            ></mat-icon>
+          </span>
+        </th>
+
+        <td
+          [routerLink]="['/main/charts/detail', chart.id]"
+          [queryParams]="{
+            datasource: chart.datasource_id,
+            datasource_type: chart.datasource_type,
+            chart_type: chart.viz_type
+          }"
+          mat-cell
+          *matCellDef="let chart"
+        >
+          {{ chart.slice_name }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="viz_type">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          (click)="getSortList('viz_type')"
+          class="sortable-column-header"
+        >
+          <span>
+            Тип визуализации
+            <mat-icon
+              [ngClass]="{ desc: sortOrder === 'desc', active: sortColumn === 'viz_type' }"
+              svgIcon="arrow_sort_down"
+            ></mat-icon>
+          </span>
+        </th>
+
+        <td mat-cell *matCellDef="let chart">
+          <div class="custom-badge custom-badge__primary-filled">
+            <mat-icon
+              [svgIcon]="
+                chartNameMap[chart.viz_type]
+                  ? chartNameMap[chart.viz_type].icon
+                  : chartNameMap.default.icon
+              "
+            ></mat-icon>
+            {{
+              chartNameMap[chart.viz_type]?.name
+                ? chartNameMap[chart.viz_type].name
+                : chart.viz_type
+            }}
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="dataset">
+        <th mat-header-cell *matHeaderCellDef>Набор данных</th>
+        <td mat-cell *matCellDef="let chart">{{ chart.datasource_name_text }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="changed_by">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          (click)="getSortList('changed_on_delta_humanized')"
+          class="sortable-column-header"
+        >
+          <span>
+            Изменено
+            <mat-icon
+              [ngClass]="{
+                desc: sortOrder === 'desc',
+                active: sortColumn === 'changed_on_delta_humanized'
+              }"
+              svgIcon="arrow_sort_down"
+            ></mat-icon>
+          </span>
+        </th>
+        <td mat-cell *matCellDef="let chart">{{ chart.changed_on }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="created_by">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          (click)="getSortList('last_saved_by.first_name')"
+          class="sortable-column-header"
+        >
+          <span>
+            Автор изменений
+            <mat-icon
+              [ngClass]="{
+                desc: sortOrder === 'desc',
+                active: sortColumn === 'last_saved_by.first_name'
+              }"
+              svgIcon="arrow_sort_down"
+            ></mat-icon>
+          </span>
+        </th>
+
+        <td mat-cell *matCellDef="let chart">
+          {{ chart?.last_saved_by_formatted }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td class="chart-list-table-actions" mat-cell *matCellDef="let chart">
+          <app-icon-button
+            [matMenuTriggerFor]="actions_menu"
+            (click)="$event.stopPropagation()"
+            class="chart-list-table-actions-button"
+            name="options"
+          >
+          </app-icon-button>
+
+          <mat-menu class="chart-list-table-actions-menu" #actions_menu="matMenu">
+            <button [disabled]="!permissions.canWrite" mat-menu-item (click)="editChart(chart)">
+              <mat-icon svgIcon="create"></mat-icon>
+              Редактировать
+            </button>
+
+            <button [disabled]="!permissions.canRead" mat-menu-item (click)="exportChart(chart)">
+              <mat-icon svgIcon="file_upload"></mat-icon>
+              Экспорт
+            </button>
+
+            <button
+              [disabled]="!permissions.canWrite"
+              mat-menu-item
+              (click)="deleteChart(chart.id)"
+            >
+              <mat-icon svgIcon="delete"></mat-icon>
+              Удалить
+            </button>
+          </mat-menu>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <div class="chart-list-table-footer">
+      <div class="chart-list-table-footer-actions-wrapper">
+        <div *ngIf="someCheckedAllPage()" class="chart-list-table-footer-actions">
+          <button
+            mat-flat-button
+            (click)="setAllCheckbox(false, true)"
+            class="primary-flat-button small-button"
+          >
+            <mat-icon class="font-icon">close</mat-icon>
+            {{ getGroupDeleteButtonText() }}
+          </button>
+
+          <button
+            mat-stroked-button
+            [disabled]="!permissions.canWrite"
+            (click)="deleteSelectedChart()"
+            class="primary-stroked-button chart-list-table-footer-group-delete"
+          >
+            <mat-icon svgIcon="delete"></mat-icon>
+          </button>
+        </div>
+
+        <div *ngIf="!someCheckedAllPage()" class="chart-list-table-footer-actions">
+          <button
+            disabled
+            mat-stroked-button
+            class="primary-stroked-button chart-list-table-footer-group-delete"
+          >
+            <mat-icon svgIcon="delete"></mat-icon>
+          </button>
+
+          <div class="custom-badge custom-badge__flat-gray">Выберите хотя бы один график</div>
+        </div>
+      </div>
+
+      <mat-paginator
+        class="chart-list-paginator"
+        [length]="paginator.count"
+        [pageSize]="paginator.pageSize"
+        [pageSizeOptions]="[10, 25]"
+        [pageIndex]="paginator.currentPage"
+        (page)="onPageChange($event)"
+      ></mat-paginator>
+    </div>
+  </div>
+  <a hidden href="" #downloadRef></a>
+</div>

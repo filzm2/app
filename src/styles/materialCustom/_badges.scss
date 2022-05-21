@@ -1,0 +1,111 @@
+@import "../../styles/exd-colors.scss";
+@import "../../styles/variables.scss";
+
+
+.custom-badge {
+  box-sizing: border-box;
+  display: inline;
+  flex-direction: row;
+  align-items: center;
+  padding: 2px 8px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  white-space: nowrap;
+
+  width: auto;
+  height: 24px;
+  border-radius: $main-radius;
+  mat-icon {
+    width: 12px;
+    height: 12px;
+    vertical-align: text-top;
+    margin-right: 8px;
+  }
+
+  &__primary {
+    color: map-get($exd-primary, 480);
+    background: map-get($exd-primary, 100);
+    border: 1px solid map-get($exd-primary, 300);
+    &-white {
+      color: map-get($exd-primary, 480);
+      background: white;
+      border: 1px solid map-get($exd-primary, 480);
+    }
+    &-filled {
+      color: white;
+      background: map-get($exd-primary, 480);
+      border: 1px solid map-get($exd-primary, 300);
+    }
+  }
+
+  &__secondary {
+    color: map-get($exd-tretiary, 500);
+    background: map-get($exd-tretiary, 100);
+    border: 1px solid map-get($exd-tretiary, 300);
+
+    &-filled {
+      color: white;
+      background: map-get($exd-tretiary, 400);
+    }
+  }
+
+  &__gray {
+    color: map-get($exd-grayscale, 400);
+    background: white;
+    border: 1px solid map-get($exd-grayscale, 400);
+  }
+
+  &__flat-gray {
+    color: white;
+    background: map-get($exd-grayscale, 400);
+    border: 1px solid map-get($exd-grayscale, 400);
+  }
+
+  &__flat-light-gray {
+    color: map-get($exd-grayscale, 400);
+    background: map-get($exd-grayscale, 100);
+    border: 1px solid map-get($exd-grayscale, 100);
+  }
+
+  &__green {
+    color: white;
+    background: map-get($exd-green, 400);
+    border: 1px solid map-get($exd-green, 400);
+  }
+
+  &__warning {
+    color: white;
+    background: map-get($exd-warning, 400);
+    border: 1px solid map-get($exd-warning, 400);
+  }
+
+  // &__alert {
+
+  // }
+
+  // &__success {
+
+  // }
+
+  // &__warning {
+
+  // }
+}
+
+.chart-type-chip svg {
+  width: 16px;
+  height: 16px;
+  // fill: white !important;
+
+  path {
+    // fill: map-get($exd-primary, 1);
+    stroke: map-get($exd-primary, 1);
+  }
+
+  circle {
+    // fill: map-get($exd-primary, 1);
+    stroke: map-get($exd-primary, 1);
+  }
+}
+

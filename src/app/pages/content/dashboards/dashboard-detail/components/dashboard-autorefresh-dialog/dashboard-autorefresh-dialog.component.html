@@ -1,0 +1,38 @@
+<div class="dashboard-autorefresh-dialog">
+    <div class="close"
+      (click)="close()">
+      <mat-icon>close</mat-icon>
+    </div>
+  
+    <h2 class="title">
+      Задать интервал автообновления
+    </h2>
+  
+    <div class="custom-form-field">
+        <mat-form-field appearance="outline" color="primary" class="small-input form-input">
+            <mat-label>Частота обновления</mat-label>
+      
+            <mat-select  [formControl]="control">
+              <mat-option *ngFor="let item of intervalTypes" [value]="item.value">{{ item.name }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+  
+    <div class="buttons">
+      <button
+        mat-stroked-button
+        color="primary"
+        class="mat-raised-button small-button mat-primary"
+        (click)="submit()">
+        Сохранить
+      </button>
+  
+      <button
+        mat-stroked-button
+        color="primary"
+        class="cancel-button small-button primary-color"
+        (click)="close()">
+        Отмена
+      </button>
+    </div>
+</div>

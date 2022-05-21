@@ -1,0 +1,8 @@
+<h1 mat-dialog-title class="suc__title">{{data.title}}</h1>
+<div mat-dialog-content>
+  <p class="suc__description">{{data.text | json}}</p>
+</div>
+<div mat-dialog-actions class="suc__buttons">
+  <button mat-flat-button color="primary" (click)="onConfirmClick()">{{data.btnSuccessTitle}}</button>
+  <button *ngIf="data.showBtnClose" mat-flat-button (click)="onCancelClick()">{{data.btnCloseTitle}}</button>
+</div>

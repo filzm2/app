@@ -1,0 +1,68 @@
+@import "../../../../../../styles/exd-colors.scss";
+@import "../../../../../../styles/variables.scss";
+
+.color-picker {
+  box-sizing: border-box;
+  padding: 16px;
+  max-width: 270px;
+  border: 1px solid map-get($exd-grayscale, 100);
+  border-radius: $main-radius;
+  position: relative;
+  * {
+    box-sizing: border-box;
+  }
+  &__label {
+    background: white;
+    padding: 0 4px;
+    position: absolute;
+    top: -10px;
+    left: 9px;
+    font-size: 12px;
+    line-height: 16px;
+    color: map-get($exd-grayscale, 400);
+  }
+  &__colors {
+    cursor: pointer;
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    padding-bottom: 12px;
+    &_item {
+      margin-bottom: 8px;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      line-height: 20px;
+    }
+  }
+  &__form {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    input {
+      border: none;
+      width: 60px;
+
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      &[type=number] {
+        -moz-appearance: textfield;
+        width: 26px;
+      }
+    }
+    .color-picker__colors_item {
+      margin-bottom: 0;
+      padding-left: 5px;
+      color: white;
+    }
+  }
+  &__reset-button {
+    width: 100%;
+    max-width: 270px;
+    margin: 16px 0;
+  }
+}

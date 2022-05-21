@@ -1,0 +1,46 @@
+.pledge-chips-card {
+  .chips {
+    display: flex;
+    .chip {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+      width: 126px;
+      height: 82px;
+      background: #FCFCFF;
+      border: 1px solid #C5C9E3;
+      box-sizing: border-box;
+      border-radius: 4px;
+      padding: 8px;
+      margin-right: 8px;
+      cursor: pointer;
+      &-active {
+        background: #F4F6FF;
+        color: #3D50B7;
+        border: 1px solid #3D50B7;
+        &-icon {
+          color: #3D50B7;
+        }
+      }
+      &:hover {
+        transition: all 0.1s;
+        color: rgba(61, 80, 183, 0.7);
+        border: 1px solid rgba(61, 80, 183, 0.7);
+        &-icon {
+          color: rgba(61, 80, 183, 0.7);
+        }
+      }
+      &-icon {
+        color: #DADADA;
+      }
+      &-caption {
+        font-size: 14px;
+        line-height: 120%;
+        color: #1C265E;
+        text-align: center;
+        margin-top: 4px;
+      }
+    }
+  }
+}

@@ -1,0 +1,395 @@
+@import '../../../../../styles/exd-colors.scss';
+
+.dashboard-container {
+  position: relative;
+  margin: 0 20px 20px;
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 40px);
+  gap: 10px;
+  border-radius: 8px;
+  padding: 0;
+
+  &__header {
+    margin: 20px;
+    padding: 0 6px;
+    border-radius: 8px;
+    background-color: map-get($exd-primary, 1);
+
+    @media (max-width: 900px) {
+      margin: 20px 8px 20px;
+    }
+
+    &-row {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    &-row__actions {
+      margin-right: 10px;
+      display: flex;
+      justify-content: center;
+    }
+
+    &-row__headline {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 15px 20px 15px 15px;
+
+      .dashboard-name {
+        padding: 0 !important;
+      }
+
+      .star-checkbox {
+        margin: 6px 0 0 12px;
+      }
+    }
+
+    .status-badge {
+      margin-left: 21px;
+    }
+
+    .status-badge:hover {
+      cursor: pointer;
+    }
+
+    .dashboard-menu-button {
+      // display: flex !important;
+      // align-items: center !important;
+    }
+  }
+
+  &__element {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: white;
+  }
+}
+
+.dashboard-container-new {
+  display: grid;
+  margin: 0 20px 20px;
+  width: calc(100% - 40px);
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(auto, 1fr);
+  grid-column-gap: 10px;
+  grid-row-gap: 14px;
+  grid-auto-rows: auto;
+  border-radius: 8px;
+  padding: 0;
+
+  .dashboard-container-new__element.markdown {
+    height: 100%;
+    overflow: auto;
+
+    .dashboard-container__element-markdown {
+      overflow: initial;
+    }
+  }
+
+  @media (max-width: 1000px) {
+    margin: 0 8px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    width: calc(100% - 10px);
+
+    .dashboard-container-new__element {
+      flex-basis: 100%;
+
+      &.tabs {
+        height: auto !important;
+      }
+
+      .mat-tab-body-wrapper {
+        .ng-star-inserted {
+          display: flex;
+          flex-wrap: wrap;
+        }
+
+        .ng-star-inserted,
+        .chart-card {
+          flex-basis: 100%;
+        }
+      }
+    }
+  }
+
+  &__header {
+    margin: 20px;
+    padding: 0 6px;
+    border-radius: 8px;
+    background-color: map-get($exd-primary, 1);
+
+    &-row {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    &-row__actions {
+      margin-right: 10px;
+      display: flex;
+      justify-content: center;
+    }
+
+    &-row__headline {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 15px 20px 15px 15px;
+
+      .dashboard-name {
+        padding: 0 !important;
+      }
+
+      .star-checkbox {
+        margin: 6px 0 0 12px;
+      }
+    }
+
+    .status-badge {
+      margin-left: 21px;
+    }
+
+    .status-badge:hover {
+      cursor: pointer;
+    }
+
+    .dashboard-menu-button {
+    }
+  }
+
+  &__element {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+  }
+}
+
+.tabs-container {
+  flex-direction: column;
+  background-color: white;
+}
+
+.bignumber-text {
+  font-size: 48px;
+  padding: 10px;
+}
+
+// .bignumber-name {
+//   height: 80px;
+//   line-height: 80px;
+
+//   span {
+//     display: inline-block;
+//     vertical-align: middle;
+//     line-height: normal;
+//   }
+// }
+
+.bignumber-subheader {
+  padding-left: 10px;
+}
+
+.charts-block {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  gap: 10px;
+
+  &.selected {
+    border-color: #f96300;
+  }
+}
+
+.chart-card {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 6px;
+  box-shadow: none;
+  border: 4px solid transparent;
+}
+
+.chart-name {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: map-get($exd-psb-blue, 500);
+
+  .chart-title {
+    padding-right: 10px;
+  }
+}
+
+.popup-card-dropdown {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 10px;
+  position: relative;
+
+  .button-show-comments {
+    cursor: pointer;
+  }
+}
+
+.dashboard-menu-button {
+  display: flex;
+  align-items: center;
+}
+
+.chart-bignumber {
+  height: 60%;
+  display: flex;
+  color: map-get($exd-psb-orange, 500);
+  font-weight: 600;
+}
+
+.dashboard-name {
+  padding: 24px 20px;
+  margin: 0;
+  color: map-get($exd-psb-blue, 500);
+}
+
+.dashboard-name-orange {
+  color: map-get($exd-psb-orange, 500);
+}
+
+.example-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 20px;
+}
+
+.negative-value {
+  color: map-get($exd-warning, 500);
+}
+
+.positive-percent {
+  color: map-get($exd-primary, 400);
+  position: relative;
+  margin-left: 20px;
+}
+
+.positive-percent::before {
+  content: '+';
+  font-size: 48px;
+  position: absolute;
+  top: 12px;
+  left: -20px;
+}
+
+.sunburst-padding {
+  padding-top: 0;
+}
+
+.pie-gap {
+  gap: 30px;
+}
+
+.progress-section {
+  position: relative;
+}
+
+.dashboard-container__element-markdown {
+  height: 100%;
+  overflow: auto;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  filter: opacity(0.5);
+}
+
+.exd-title-bold {
+  padding: 20px;
+}
+
+.chart-card-new {
+  // position: absolute;
+
+  &.selected {
+    border-color: #f96300;
+  }
+}
+
+.expand-container {
+  position: sticky;
+  z-index: 999;
+  width: 100%;
+  height: 100vh;
+  // min-height: 100vh;
+  // top: 0;
+  // left: 0;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  display: flex;
+  justify-content: center;
+  // background-color: map-get($exd-back, 500 );
+  background-color: rgba(0, 0, 0, 0.7);
+  transition: background-color 0.2s;
+
+  &__hidden {
+    width: 0%;
+    height: 0%;
+    background-color: transparent;
+    transition: background-color 0.2s;
+    color: transparent;
+  }
+
+  // &__button {
+  //     display: block;
+  //     position: absolute;
+  //     right: 0;
+  //     height: 60px;
+  //     width: 60px;
+  //     cursor: pointer;
+  //     padding: 10px 10px;
+  //     border: none;
+  //     background: none;
+  // }
+
+  .expand-card {
+    margin: 10px 0;
+    padding: 20px;
+    background-color: map-get($exd-back, 500);
+    width: 80%;
+    height: calc(100% - 10px);
+
+    &__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      &-actions {
+        display: flex;
+      }
+    }
+
+    &__chart {
+      width: 100%;
+      height: 100vh;
+    }
+  }
+}
+
+.hide-button {
+  visibility: hidden;
+}

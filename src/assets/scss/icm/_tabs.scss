@@ -1,0 +1,33 @@
+.icm-tabs {
+
+  ::ng-deep .mat-tab-label {
+    padding: 0;
+    min-width: 0;
+    height: 60px;
+
+    &:first-child { margin-left: 0; }
+    &:not(:last-child) { margin-right: 30px; }
+    &.mat-tab-label-active { opacity: 1; }
+  }
+
+
+
+  ::ng-deep .mat-tab-label-content {
+    font-family: Gilroy, serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: #A1A1A1;
+  }
+
+  ::ng-deep .mat-tab-label-active .mat-tab-label-content {
+    color: #1A1A1A !important;
+  }
+
+  ::ng-deep .mat-tab-label:hover {
+    .mat-tab-label-content {
+      color: #1A1A1A !important;
+    }
+  }
+}

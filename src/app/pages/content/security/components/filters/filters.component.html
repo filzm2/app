@@ -1,0 +1,164 @@
+<div class="settings-filters">
+  <div class="settings-filters__header">
+    <div class="settings-filters__title">
+      Фильтры
+    </div>
+    <div class="settings-filters__add">
+      <button
+        [matMenuTriggerFor]="menu"
+        mat-stroked-button
+        color="primary"
+        class="settings-filters__add_button small-button primary-color">
+        <mat-icon>add</mat-icon>
+        Добавить фильтр
+      </button>
+      <mat-menu
+        #menu="matMenu"
+        class="filters-logs-menu">
+        <div *ngFor="let filter of availableFilters">
+          <button
+            mat-menu-item
+            (click)="selectFilter(filter)">
+            {{ this.filterSettingsMap[filter].label }}
+          </button>
+        </div>
+      </mat-menu>
+    </div>
+  </div>
+  <div class="settings-filters__body">
+    <div *ngFor="let filter of selectedFilters; let i = index" [ngSwitch]="filterSettingsMap[filter].inputType"
+         class="settings-filters__item">
+      <div *ngSwitchCase="1" [formGroup]="getFormGroupFromArray(i)" class="settings-filters__item_content settings-filters__type1">
+        <div class="settings-filters__label">{{filterSettingsMap[filter].label}} <mat-icon (click)="deleteFilter(i)">close</mat-icon></div>
+        <app-chips-autocomplete-field
+          [allOptions]="filterSettingsMap[filter].selectOptions | async"
+          [formControl]="getFormControl(getFormGroupFromArray(i), 'value')">
+        </app-chips-autocomplete-field>
+      </div>
+      <div *ngSwitchCase="2" class="settings-filters__item_content settings-filters__type2">
+        <div class="settings-filters__label">{{filterSettingsMap[filter].label}} <mat-icon (click)="deleteFilter(i)">close</mat-icon></div>
+        <div class="settings-filters__group" [formGroup]="getFormGroupFromArray(i)">
+          <mat-form-field appearance="outline">
+            <mat-select [formControl]="getFormControl(getFormGroupFromArray(i), 'mode')">
+              <mat-option value="equal_to">Содержит</mat-option>
+              <mat-option value="not_equal_to">Не содержит</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>{{filterSettingsMap[filter].label}}</mat-label>
+            <mat-select [formControl]="getFormControl(getFormGroupFromArray(i), 'value')">
+              <mat-option [value]="filter.id || filter"
+                          *ngFor="let filter of (filterSettingsMap[filter].selectOptions | async)">{{filter.text || filter}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div *ngSwitchCase="3" class="settings-filters__item_content settings-filters__type3">
+        <div class="settings-filters__label">{{filterSettingsMap[filter].label}} <mat-icon (click)="deleteFilter(i)">close</mat-icon></div>
+        <div class="settings-filters__group" [formGroup]="getFormGroupFromArray(i)">
+          <mat-form-field appearance="outline">
+            <mat-select [formControl]="getFormControl(getFormGroupFromArray(i), 'mode')">
+              <mat-option value="start_with">Начинается с</mat-option>
+              <mat-option value="ends_with">Заканчивается на</mat-option>
+              <mat-option value="contain">Содержит</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <app-form-field [label]="filterSettingsMap[filter].label"
+                          [control]="getFormControl(getFormGroupFromArray(i), 'value')"></app-form-field>
+        </div>
+      </div>
+      <div *ngSwitchCase="4" class="settings-filters__item_content settings-filters__type4">
+        <div class="settings-filters__label">{{filterSettingsMap[filter].label}} <mat-icon (click)="deleteFilter(i)">close</mat-icon></div>
+        <div class="settings-filters__group" [formGroup]="getFormGroupFromArray(i)">
+          <mat-form-field appearance="outline">
+            <mat-select [formControl]="getFormControl(getFormGroupFromArray(i), 'mode')">
+              <mat-option value="equal_to">Соответствует</mat-option>
+              <mat-option value="not_equal_to">Не соответствует</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-checkbox formControlName="value">{{filterSettingsMap[filter].label}}</mat-checkbox>
+        </div>
+      </div>
+      <div *ngSwitchCase="5" class="settings-filters__item_content settings-filters__type5">
+        <div class="settings-filters__label">{{filterSettingsMap[filter].label}} <mat-icon (click)="deleteFilter(i)">close</mat-icon></div>
+        <div class="settings-filters__group" [formGroup]="getFormGroupFromArray(i)">
+          <mat-form-field appearance="outline">
+            <mat-select [formControl]="getFormControl(getFormGroupFromArray(i), 'mode')">
+              <mat-option value="greater_then">Больше чем</mat-option>
+              <mat-option value="smaller_then">Меньше чем</mat-option>
+              <mat-option value="equal_to">Соответствует</mat-option>
+              <mat-option value="not_equal_to">Не соответствует</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="mat-form-field-datepicker" appearance="outline">
+            <mat-label>{{filterSettingsMap[filter].label}}</mat-label>
+            <input formControlName="value" matInput [matDatepicker]="picker">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div *ngSwitchCase="6" class="settings-filters__item_content settings-filters__type6">
+        <div class="settings-filters__label">{{filterSettingsMap[filter].label}} <mat-icon (click)="deleteFilter(i)">close</mat-icon></div>
+        <div class="settings-filters__group" [formGroup]="getFormGroupFromArray(i)">
+          <mat-form-field appearance="outline">
+            <mat-select [formControl]="getFormControl(getFormGroupFromArray(i), 'mode')">
+              <mat-option value="greater_then">Больше чем</mat-option>
+              <mat-option value="smaller_then">Меньше чем</mat-option>
+              <mat-option value="equal_to">Соответствует</mat-option>
+              <mat-option value="not_equal_to">Не соответствует</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <app-form-field [label]="filterSettingsMap[filter].label"
+                          inputMode="numeric"
+                          [control]="getFormControl(getFormGroupFromArray(i), 'value')"></app-form-field>
+        </div>
+      </div>
+      <div *ngSwitchCase="7"  [formGroup]="getFormGroupFromArray(i)" class="settings-filters__item_content settings-filters__type7">
+        <div class="settings-filters__label">{{filterSettingsMap[filter].label}} <mat-icon (click)="deleteFilter(i)">close</mat-icon></div>
+        <mat-form-field appearance="outline">
+          <mat-select [formControl]="getFormControl(getFormGroupFromArray(i), 'value')">
+            <mat-option [value]="filter"
+                        *ngFor="let filter of (filterSettingsMap[filter].selectOptions | async)">{{filter}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div *ngSwitchCase="8" class="settings-filters__item_content settings-filters__type8">
+        <div class="settings-filters__label">{{filterSettingsMap[filter].label}} <mat-icon (click)="deleteFilter(i)">close</mat-icon></div>
+        <div class="settings-filters__group" [formGroup]="getFormGroupFromArray(i)">
+          <mat-form-field appearance="outline">
+            <mat-select [formControl]="getFormControl(getFormGroupFromArray(i), 'mode')">
+              <mat-option value="equal_to">Содержит</mat-option>
+              <mat-option value="not_equal_to">Не содержит</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <app-form-field [label]="filterSettingsMap[filter].label"
+                          [control]="getFormControl(getFormGroupFromArray(i), 'value')"></app-form-field>
+        </div>
+      </div>
+      <div *ngSwitchCase="9" class="settings-filters__item_content settings-filters__type9">
+        <div class="settings-filters__label">{{filterSettingsMap[filter].label}} <mat-icon (click)="deleteFilter(i)">close</mat-icon></div>
+        <div class="settings-filters__column" [formGroup]="getFormGroupFromArray(i)">
+          <mat-form-field appearance="outline">
+            <mat-select [formControl]="getFormControl(getFormGroupFromArray(i), 'mode')">
+              <mat-option value="equal_to">Содержит</mat-option>
+              <mat-option value="not_equal_to">Не содержит</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="mat-textarea relative-hint-field">
+            <mat-label>{{filterSettingsMap[filter].label}}</mat-label>
+            <textarea [formControl]="getFormControl(getFormGroupFromArray(i), 'value')" matInput></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="settings-filters__actions">
+    <!--      [disabled]="!selectedFilters.length"-->
+    <button (click)="getFilteredList()"
+            class="primary-light-flat-button"
+            mat-flat-button>
+      Применить
+    </button>
+  </div>
+</div>

@@ -1,0 +1,80 @@
+.icm-datalist {
+  &-item {
+    &:not(:first-child) {
+      box-shadow: inset 0 1px 0 #E4E4E4;
+    }
+    &:not(:last-child) {
+      margin-bottom: 24px;
+    }
+    &-header {
+      display: flex;
+      align-items: center;
+      height: 56px;
+      justify-content: space-between;
+      .order {
+        display: flex;
+        font-family: Gilroy-SemiBold, serif;
+        font-style: normal;
+        font-weight: 600;
+        color: #2C5DE5;
+        background: #FFFFFF;
+        border: 1px solid #BFD0FD;
+        box-sizing: border-box;
+        border-radius: 4px;
+        height: 28px;
+        min-width: 28px;
+        padding: 2px 0;
+        align-items: center;
+        justify-content: center;
+      }
+      .clientName {
+        display: flex;
+        align-items: center;
+        font-family: Gilroy-Bold, serif;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 20px;
+        color: #1A1A1A;
+        margin-left: 16px;
+        &-medium {
+          font-family: Gilroy-SemiBold, serif;
+          font-weight: 600;
+          font-size: 16px;
+        }
+        &-small {
+          font-family: Gilroy, serif;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 16px;
+        }
+      }
+      .status {
+        display: flex;
+        align-items: center;
+        margin-left: 16px;
+      }
+      .actions {
+        display: flex;
+        align-items: center;
+        .edit {
+          margin-right: 16px;
+          height: 24px;
+          width: 24px;
+        }
+        .delete {
+          height: 24px;
+          width: 24px;
+        }
+      }
+    }
+    &-body {
+      display: flex;
+      margin-top: 24px;
+      .column {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+      }
+    }
+  }
+}

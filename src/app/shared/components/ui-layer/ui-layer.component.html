@@ -1,0 +1,2181 @@
+<p class="text--header">UI layer</p>
+
+<!-- Топ Бар -->
+<app-detail-header></app-detail-header>
+
+<!-- Аватар -->
+<div class="card margin-bottom">
+  <p class="text--header">Аватар</p>
+  <div class="simple-flex">
+    <div class="userpick-block">
+      <div class="userpick-block_item"><app-ui-userpick [onlyPhoto]="true" [data]="dataForUserpick" [size]="5"></app-ui-userpick></div>
+      <div class="userpick-block_item"><app-ui-userpick [onlyPhoto]="true" [data]="dataForUserpick" [size]="4"></app-ui-userpick></div>
+      <div class="userpick-block_item"><app-ui-userpick [onlyPhoto]="true" [data]="dataForUserpick" [size]="3"></app-ui-userpick></div>
+      <div class="userpick-block_item"><app-ui-userpick [onlyPhoto]="true" [data]="dataForUserpick" [size]="2"></app-ui-userpick></div>
+      <div class="userpick-block_item"><app-ui-userpick [onlyPhoto]="true" [data]="dataForUserpick" [size]="1"></app-ui-userpick></div>
+    </div>
+    <div class="userpick-block">
+      <div class="userpick-block_item"><app-ui-userpick [isOnline]="true" [onlyPhoto]="false" [data]="dataForUserpick" [size]="5"></app-ui-userpick></div>
+      <div class="userpick-block_item"><app-ui-userpick [isOnline]="true" [onlyPhoto]="false" [data]="dataForUserpick" [size]="4"></app-ui-userpick></div>
+      <div class="userpick-block_item"><app-ui-userpick [isOnline]="true" [onlyPhoto]="false" [data]="dataForUserpick" [size]="3"></app-ui-userpick></div>
+      <div class="userpick-block_item"><app-ui-userpick [isOnline]="true" [onlyPhoto]="false" [data]="dataForUserpick" [size]="2"></app-ui-userpick></div>
+      <div class="userpick-block_item"><app-ui-userpick [isOnline]="true" [onlyPhoto]="false" [data]="dataForUserpick" [size]="1"></app-ui-userpick></div>
+    </div>
+    <div class="userpick-block">
+      <div class="userpick-block_item"><app-ui-userpick [isOnline]="true" [onlyPhoto]="false" [data]="dataForUserpickSecond" [size]="5"></app-ui-userpick></div>
+      <div class="userpick-block_item"><app-ui-userpick [isOnline]="true" [onlyPhoto]="false" [data]="dataForUserpickSecond" [size]="4"></app-ui-userpick></div>
+      <div class="userpick-block_item"><app-ui-userpick [isOnline]="true" [onlyPhoto]="false" [data]="dataForUserpickSecond" [size]="3"></app-ui-userpick></div>
+      <div class="userpick-block_item"><app-ui-userpick [isOnline]="true" [onlyPhoto]="false" [data]="dataForUserpickSecond" [size]="2"></app-ui-userpick></div>
+      <div class="userpick-block_item"><app-ui-userpick [isOnline]="true" [onlyPhoto]="false" [data]="dataForUserpickSecond" [size]="1"></app-ui-userpick></div>
+    </div>
+  </div>
+</div>
+
+<!-- Чипсы -->
+<div class="card margin-bottom">
+  <p class="text--header">Чипсы / теги</p>
+  <div class="simple-flex">
+    <app-ui-chip [primary]="true" [prefixIcon]="'cancel'">ООО “Рога и Копыта”</app-ui-chip>
+    <app-ui-chip [postfixIcon]="'delete'">ООО “Теплоконтроль”</app-ui-chip>
+    <app-ui-chip [active]="true" [prefixIcon]="'cancel'">ООО “Энергосбыттехсервис”</app-ui-chip>
+    <app-ui-chip [prefixIcon]="'error_outline'">ООО “Строймаш”</app-ui-chip>
+    <app-ui-chip [prefixIcon]="'check_circle'">ООО “Рога и Копыта”</app-ui-chip>
+  </div>
+</div>
+
+<!-- Таблицы -->
+<div class="card margin-bottom">
+  <p class="text--header">Таблицы</p>
+  <div class="kit-table_wrap">
+    <table mat-table [dataSource]="dataSource" class="kk-table kit-table">
+
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef [ngStyle]="{'padding-right': '24px'}"> Наименование статьи </th>
+        <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="code">
+        <th mat-header-cell *matHeaderCellDef> Код </th>
+        <td mat-cell *matCellDef="let element"> {{element.code}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="date01">
+        <th mat-header-cell *matHeaderCellDef> 23.02.2020 </th>
+        <td mat-cell *matCellDef="let element"> {{element.date01}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="date02">
+        <th mat-header-cell *matHeaderCellDef> 23.02.2019 </th>
+        <td mat-cell *matCellDef="let element"> {{element.date02}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="date03">
+        <th mat-header-cell *matHeaderCellDef> 23.02.2018 </th>
+        <td mat-cell *matCellDef="let element"> {{element.date03}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="date04">
+        <th mat-header-cell *matHeaderCellDef> 23.02.2017 </th>
+        <td mat-cell *matCellDef="let element"> {{element.date04}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
+  <div class="kit-table_wrap">
+    <table mat-table [dataSource]="dataSourceSelect" class="kk-table kit-table">
+
+      <!-- Checkbox Column -->
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()"
+                        [aria-label]="checkboxLabel()">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()"
+                        (change)="$event ? selection.toggle(row) : null"
+                        [checked]="selection.isSelected(row)"
+                        [aria-label]="checkboxLabel(row)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="weight">
+        <th mat-header-cell *matHeaderCellDef> Weight </th>
+        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="symbol">
+        <th mat-header-cell *matHeaderCellDef> Symbol </th>
+        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumnsSelect"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumnsSelect;"
+          (click)="selection.toggle(row)">
+      </tr>
+
+    </table>
+  </div>
+</div>
+
+<div class="card" [formGroup]="testForm" #testFormDir="ngForm">
+  <p class="icm-text--header">Компоненты</p>
+
+<!--  Большие формы-->
+  <div>
+    <h2>Большие формы</h2>
+    <div>
+
+      <hr>
+      <!--  инпуты 76-->
+      <div class="icm-flex">
+
+        <div [ngStyle]="{'margin-right': '32px', 'width': '33%'}">
+          <h5>76 (обычный)</h5>
+          <div [ngStyle]="{'width': '176px'}" class="icm-outline-big-field">
+            <mat-form-field hintLabel="Helper text" appearance="outline" [hideRequiredMarker]="true">
+              <mat-label>Место хранения в каталоге</mat-label>
+              <input #input type="email" formControlName="input76" matInput placeholder="input 76" maxlength="10" minlength="10" required>
+              <!--        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>-->
+              <mat-hint align="end">
+                <div class="validation-hint">
+                  {{input.value?.length || 0}}/10
+                </div>
+              </mat-hint>
+              <mat-error *ngIf="testForm.controls.input76.invalid">{{getErrorMessage('input76')}}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div [ngStyle]="{'margin-right': '32px', 'width': '33%'}">
+          <h5>76 (disabled filled)</h5>
+          <div [ngStyle]="{'width': '176px'}" class="icm-outline-big-field">
+            <mat-form-field hintLabel="Helper text" appearance="outline" [hideRequiredMarker]="true">
+              <mat-label>Label</mat-label>
+              <input type="email" formControlName="input76disabledFilled" matInput placeholder="input 76" maxlength="10" minlength="10" required>
+              <!--        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>-->
+              <mat-hint align="end">
+                <div class="validation-hint">
+                  {{input.value?.length || 0}}/10
+                </div>
+              </mat-hint>
+              <mat-error *ngIf="testForm.controls.input76disabledFilled.invalid">{{getErrorMessage('input76disabledFilled')}}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div [ngStyle]="{'margin-right': '32px', 'width': '33%'}">
+          <h5>76 (disabled empty)</h5>
+          <div [ngStyle]="{'width': '176px'}" class="icm-outline-big-field">
+            <mat-form-field hintLabel="Helper text" appearance="outline" [hideRequiredMarker]="true">
+              <mat-label>Label</mat-label>
+              <input type="text"  formControlName="input76disabled" matInput placeholder="input 76" maxlength="10" minlength="10" required>
+              <!--        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>-->
+              <mat-hint align="end">
+                <div class="validation-hint">
+                  {{input.value?.length || 0}}/10
+                </div>
+              </mat-hint>
+              <mat-error *ngIf="testForm.controls.input76disabledFilled.invalid">{{getErrorMessage('input76disabled')}}</mat-error>
+
+            </mat-form-field>
+          </div>
+        </div>
+
+      </div>
+
+      <hr>
+
+      <!--  инпуты 76 с иконкой-->
+      <div class="icm-flex">
+
+        <div [ngStyle]="{'margin-right': '32px', 'width': '33%'}">
+          <h5>76 с иконкой (обычный)</h5>
+          <div [ngStyle]="{'width': '176px'}" class="icm-outline-big-field">
+            <mat-form-field hintLabel="Helper text" appearance="outline" [hideRequiredMarker]="true">
+              <mat-label>Label</mat-label>
+              <input type="email" formControlName="input76" matInput placeholder="input 76" maxlength="10" minlength="10" required>
+              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+              <mat-hint align="end">
+                <div class="validation-hint">
+                  {{input.value?.length || 0}}/10
+                </div>
+              </mat-hint>
+              <mat-error *ngIf="testForm.controls.input76.invalid">{{getErrorMessage('input76')}}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div [ngStyle]="{'margin-right': '32px', 'width': '33%'}">
+          <h5>76 с иконкой (disabled filled)</h5>
+          <div [ngStyle]="{'width': '176px'}" class="icm-outline-big-field">
+            <mat-form-field hintLabel="Helper text" appearance="outline" [hideRequiredMarker]="true">
+              <mat-label>Label</mat-label>
+              <input type="email"  formControlName="input76disabledFilled" matInput placeholder="input 76" maxlength="10" minlength="10" required>
+              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+              <mat-hint align="end">
+                <div class="validation-hint">
+                  {{input.value?.length || 0}}/10
+                </div>
+              </mat-hint>
+              <mat-error *ngIf="testForm.controls.input76disabledFilled.invalid">{{getErrorMessage('input76disabledFilled')}}</mat-error>
+
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div [ngStyle]="{'margin-right': '32px', 'width': '33%'}">
+          <h5>76 с иконкой (disabled empty)</h5>
+          <div [ngStyle]="{'width': '176px'}" class="icm-outline-big-field">
+            <mat-form-field hintLabel="Helper text" appearance="outline" [hideRequiredMarker]="true">
+              <mat-label>Label</mat-label>
+              <input type="text"  formControlName="input76disabled" matInput placeholder="input 76" maxlength="10" minlength="10" required>
+              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+              <mat-hint align="end">
+                <div class="validation-hint">
+                  {{input.value?.length || 0}}/10
+                </div>
+              </mat-hint>
+              <mat-error *ngIf="testForm.controls.input76disabledFilled.invalid">{{getErrorMessage('input76disabled')}}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <!--  селекты 76-->
+      <div class="icm-flex">
+
+        <div [ngStyle]="{'margin-right': '32px', 'width': '33%'}">
+          <h5>селект 76 (обычный)</h5>
+          <div [ngStyle]="{'width': '176px'}" class="icm-outline-big-field icm-outline-big-field-select" >
+            <mat-form-field hintLabel="Helper text" appearance="outline" [hideRequiredMarker]="true">
+              <mat-label>Label</mat-label>
+              <mat-select formControlName="select76" maxlength="10" minlength="10" required>
+                <mat-option value="option">
+                  <div class="icm-outline-big-field-select-option">Option</div>
+                </mat-option>
+              </mat-select>
+              <mat-hint align="end">
+                <div class="validation-hint">
+                  {{input.value?.length || 0}}/10
+                </div>
+              </mat-hint>
+              <mat-error *ngIf="testForm.controls.input76disabledFilled.invalid">{{getErrorMessage('select76')}}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div [ngStyle]="{'margin-right': '32px', 'width': '33%'}">
+          <h5>селект 76 (disabled filled)</h5>
+          <div [ngStyle]="{'width': '176px'}" class="icm-outline-big-field icm-outline-big-field-select">
+            <mat-form-field hintLabel="Helper text" appearance="outline" [hideRequiredMarker]="true">
+              <mat-label>Label</mat-label>
+              <mat-select [disabled]="true" [value]="'filled'" maxlength="10" minlength="10" required>
+                <mat-option value="filled">Filled</mat-option>
+              </mat-select>
+              <mat-hint align="end">
+                <div class="validation-hint">
+                  {{input.value?.length || 0}}/10
+                </div>
+              </mat-hint>
+              <mat-error>{{getErrorMessage('input76')}}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div [ngStyle]="{'margin-right': '32px', 'width': '33%'}">
+          <h5>селект 76 (disabled empty)</h5>
+          <div [ngStyle]="{'width': '176px'}" class="icm-outline-big-field icm-outline-big-field-select">
+            <mat-form-field hintLabel="Helper text" appearance="outline" [hideRequiredMarker]="true">
+              <mat-label>Label</mat-label>
+              <mat-select [disabled]="true" maxlength="10" minlength="10" required>
+                <mat-option value="option">Option</mat-option>
+              </mat-select>
+              <mat-hint align="end">
+                <div class="validation-hint">
+                  {{input.value?.length || 0}}/10
+                </div>
+              </mat-hint>
+              <mat-error>{{getErrorMessage('input76')}}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </div>
+
+      <hr>
+
+<!--      большой инпут бех хинтов-->
+      <div class="icm-flex">
+
+        <div [ngStyle]="{'margin-right': '32px', 'width': '33%'}">
+          <h5>76 (обычный без хинтов)</h5>
+          <div [ngStyle]="{'width': '176px'}" class="icm-outline-big-field icm-outline-big-field-without-hint">
+            <mat-form-field appearance="outline" [hideRequiredMarker]="true">
+              <mat-label>label</mat-label>
+              <input #input matInput placeholder="input 76" maxlength="10" minlength="10" required>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </div>
+
+      <hr>
+
+      <div class="icm-flex">
+        <div [ngStyle]="{'margin-right': '32px', 'width': '33%'}">
+          <h5>поисковый 76 (обычный без хинтов)</h5>
+          <div [ngStyle]="{'width': '176px'}" class="icm-outline-big-field icm-outline-big-field-without-hint">
+            <mat-form-field appearance="outline" [hideRequiredMarker]="true">
+              <mat-label>Поиск по документам</mat-label>
+              <input #searchInput [formControl]="docSearchControl" matInput required>
+              <mat-icon *ngIf="searchInput.value.length === 0" matSuffix>search</mat-icon>
+              <mat-icon *ngIf="searchInput.value.length > 0" matSuffix (click)="docSearchControl.reset()" [ngStyle]="{'cursor': 'pointer'}">close</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </div>
+
+      <hr>
+
+      <!--  текстареа биг-->
+      <div class="icm-flex">
+
+        <div [ngStyle]="{'margin-right': '32px', 'width': '33%', 'height': '185px'}">
+          <h5>textarea big (обычный)</h5>
+          <div class="icm-outline-big-textarea">
+            <mat-form-field appearance="outline" hintLabel="Helper text" [hideRequiredMarker]="true">
+              <mat-label>Label</mat-label>
+              <textarea matInput
+                        cdkTextareaAutosize
+                        #outline76
+                        #autosize="cdkTextareaAutosize"
+                        formControlName="outline76"
+                        maxlength="10" minlength="10"
+                        cdkAutosizeMinRows="5"
+                        cdkAutosizeMaxRows="25"></textarea>
+              <mat-hint align="end">
+                <div class="validation-hint">
+                  {{outline76.value?.length || 0}}/10
+                </div>
+              </mat-hint>
+              <mat-error>{{getErrorMessage('outline76')}}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div [ngStyle]="{'margin-right': '32px', 'width': '33%', 'height': '185px'}">
+          <h5>textarea big (disabled filled)</h5>
+          <div class="icm-outline-big-textarea">
+            <mat-form-field appearance="outline" hintLabel="Helper text" [hideRequiredMarker]="true">
+              <mat-label>Label</mat-label>
+              <textarea matInput
+                        cdkTextareaAutosize
+                        #outline76disabledFilled
+                        #autosize="cdkTextareaAutosize"
+                        formControlName="outline76disabledFilled"
+                        cdkAutosizeMinRows="5"
+                        cdkAutosizeMaxRows="5"></textarea>
+              <mat-hint align="end">
+                <div class="validation-hint">
+                  {{outline76disabledFilled.value?.length || 0}}/10
+                </div>
+              </mat-hint>
+              <mat-error>{{getErrorMessage('outline76disabledFilled')}}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div [ngStyle]="{'margin-right': '32px', 'width': '33%', 'height': '185px'}">
+          <h5>textarea big (disabled empty)</h5>
+          <div class="icm-outline-big-textarea">
+            <mat-form-field appearance="outline" hintLabel="Helper text" [hideRequiredMarker]="true">
+              <mat-label>Label</mat-label>
+              <textarea matInput
+                        cdkTextareaAutosize
+                        #outline76disabled
+                        #autosize="cdkTextareaAutosize"
+                        formControlName="outline76disabled"
+                        cdkAutosizeMinRows="5"
+                        cdkAutosizeMaxRows="5"></textarea>
+              <mat-hint align="end">
+                <div class="validation-hint">
+                  {{outline76disabled.value?.length || 0}}/10
+                </div>
+              </mat-hint>
+              <mat-error>{{getErrorMessage('outline76disabled')}}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </div>
+
+      <hr>
+
+    </div>
+  </div>
+<!--  Маленькие формы-->
+  <div>
+    <h2>Маленькие формы</h2>
+    <hr>
+    <div>
+      <!--  инпуты 64-->
+      <div class="icm-flex">
+        <div [ngStyle]="{'margin-right': '32px', 'width': '33%'}">
+          <h5>64 (обычный)</h5>
+          <div [ngStyle]="{'width': '176px'}" class="icm-outline-small-field">
+            <mat-form-field hintLabel="Helper text" appearance="outline" [hideRequiredMarker]="true">
+              <mat-label>Label</mat-label>
+              <input #input1 type="email" formControlName="input64" matInput placeholder="input 64" maxlength="10" minlength="10" required>
+              <!--        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>-->
+              <mat-hint align="end">
+                <div class="validation-hint">
+                  {{input1.value?.length || 0}}/10
+                </div>
+              </mat-hint>
+              <mat-error *ngIf="testForm.controls.input64.invalid">{{getErrorMessage('input64')}}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div [ngStyle]="{'margin-right': '32px', 'width': '33%'}">
+          <h5>64 (disabled filled)</h5>
+          <div [ngStyle]="{'width': '176px'}" class="icm-outline-small-field">
+            <mat-form-field hintLabel="Helper text" appearance="outline" [hideRequiredMarker]="true">
+              <mat-label>Label</mat-label>
+              <input #input2 type="email"  formControlName="input64disabledFilled" matInput placeholder="input 64" maxlength="10" minlength="10" required>
+              <!--        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>-->
+              <mat-hint align="end">
+                <div class="validation-hint">
+                  {{input2.value?.length || 0}}/10
+                </div>
+              </mat-hint>
+              <mat-error *ngIf="testForm.controls.input64disabledFilled.invalid">{{getErrorMessage('input64disabledFilled')}}</mat-error>
+
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div [ngStyle]="{'margin-right': '32px', 'width': '33%'}">
+          <h5>64 (disabled empty)</h5>
+          <div [ngStyle]="{'width': '176px'}" class="icm-outline-small-field">
+            <mat-form-field hintLabel="Helper text" appearance="outline" [hideRequiredMarker]="true">
+              <mat-label>Label</mat-label>
+              <input #input3 type="text"  formControlName="input64disabled" matInput placeholder="input 64" maxlength="10" minlength="10" required>
+              <!--        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>-->
+              <mat-hint align="end">
+                <div class="validation-hint">
+                  {{input3.value?.length || 0}}/10
+                </div>
+              </mat-hint>
+              <mat-error *ngIf="testForm.controls.input64disabled.invalid">{{getErrorMessage('input64disabled')}}</mat-error>
+
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <!--  инпуты 64 с иконкой-->
+      <div class="icm-flex">
+
+        <div [ngStyle]="{'margin-right': '32px', 'width': '33%'}">
+          <h5>64 с иконкой (обычный)</h5>
+          <div [ngStyle]="{'width': '176px'}" class="icm-outline-small-field">
+            <mat-form-field hintLabel="Helper text" appearance="outline" [hideRequiredMarker]="true">
+              <mat-label>Label</mat-label>
+              <input #input12 type="email" formControlName="input64" matInput placeholder="input 64" maxlength="10" minlength="10" required>
+              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+              <mat-hint align="end">
+                <div class="validation-hint">
+                  {{input12.value?.length || 0}}/10
+                </div>
+              </mat-hint>
+              <mat-error *ngIf="testForm.controls.input64.invalid">{{getErrorMessage('input64')}}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div [ngStyle]="{'margin-right': '32px', 'width': '33%'}">
+          <h5>64 с иконкой (disabled filled)</h5>
+          <div [ngStyle]="{'width': '176px'}" class="icm-outline-small-field">
+            <mat-form-field hintLabel="Helper text" appearance="outline" [hideRequiredMarker]="true">
+              <mat-label>Label</mat-label>
+              <input #input12r type="email" formControlName="input64disabledFilled" matInput placeholder="input 64" maxlength="10" minlength="10" required>
+              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+              <mat-hint align="end">
+                <div class="validation-hint">
+                  {{input12r.value?.length || 0}}/10
+                </div>
+              </mat-hint>
+              <mat-error *ngIf="testForm.controls.input64disabledFilled.invalid">{{getErrorMessage('input64disabledFilled')}}</mat-error>
+
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div [ngStyle]="{'margin-right': '32px', 'width': '33%'}">
+          <h5>64 с иконкой (disabled empty)</h5>
+          <div [ngStyle]="{'width': '176px'}" class="icm-outline-small-field-64">
+            <mat-form-field hintLabel="Helper text" appearance="outline" [hideRequiredMarker]="true">
+              <mat-label>Label</mat-label>
+              <input #input12re type="text" formControlName="input64disabled" matInput placeholder="input 64" maxlength="10" minlength="10" required>
+              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+              <mat-hint align="end">
+                <div class="validation-hint">
+                  {{input12re.value?.length || 0}}/10
+                </div>
+              </mat-hint>
+              <mat-error *ngIf="testForm.controls.input64disabled.invalid">{{getErrorMessage('input64disabled')}}</mat-error>
+
+            </mat-form-field>
+          </div>
+        </div>
+
+      </div>
+
+      <hr>
+
+      <!--  селекты 64-->
+      <div class="icm-flex">
+
+        <div [ngStyle]="{'margin-right': '32px', 'width': '33%'}">
+          <h5>селект 64 (обычный)</h5>
+          <div [ngStyle]="{'width': '176px'}" class="icm-outline-small-field icm-outline-small-field-select">
+            <mat-form-field hintLabel="Helper text" appearance="outline" [hideRequiredMarker]="true">
+              <mat-label>Label</mat-label>
+              <mat-select #input1select formControlName="select64" maxlength="10" minlength="10" required>
+                <mat-option value="option">
+                  <div class="icm-outline-small-field-select-option">Option</div>
+                </mat-option>
+              </mat-select>
+              <mat-hint align="end">
+                <div class="validation-hint">
+                  {{input1select.value?.length || 0}}/10
+                </div>
+              </mat-hint>
+              <mat-error *ngIf="testForm.controls.select64.invalid">{{getErrorMessage('select64')}}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div [ngStyle]="{'margin-right': '32px', 'width': '33%'}">
+          <h5>селект 64 (disabled filled)</h5>
+          <div [ngStyle]="{'width': '176px'}" class="icm-outline-small-field icm-outline-small-field-select">
+            <mat-form-field hintLabel="Helper text" appearance="outline" [hideRequiredMarker]="true">
+              <mat-label>Label</mat-label>
+              <mat-select #input1select2 [value]="'filled'" [disabled]="true" maxlength="10" minlength="10" required>
+                <mat-option value="filled">Filled</mat-option>
+              </mat-select>
+              <mat-hint align="end">
+                <div class="validation-hint">
+                  {{input1select2.value?.length || 0}}/10
+                </div>
+              </mat-hint>
+              <mat-error *ngIf="testForm.controls.select64.invalid">{{getErrorMessage('select64')}}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div [ngStyle]="{'margin-right': '32px', 'width': '33%'}">
+          <h5>селект 64 (disabled empty)</h5>
+          <div [ngStyle]="{'width': '176px'}" class="icm-outline-small-field icm-outline-small-field-select">
+            <mat-form-field hintLabel="Helper text" appearance="outline" [hideRequiredMarker]="true">
+              <mat-label>Label</mat-label>
+              <mat-select #input1select3 [disabled]="true" maxlength="10" minlength="10" required>
+                <mat-option value="option">Option</mat-option>
+              </mat-select>
+              <mat-hint align="end">
+                <div class="validation-hint">
+                  {{input1select3.value?.length || 0}}/10
+                </div>
+              </mat-hint>
+              <mat-error *ngIf="testForm.controls.select64.invalid">{{getErrorMessage('select64')}}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </div>
+
+      <hr>
+
+      <!--  текстареа small-->
+      <div class="icm-flex">
+
+        <div [ngStyle]="{'margin-right': '32px', 'width': '33%', 'height': '185px'}">
+          <h5>textarea big (обычный)</h5>
+          <div class="icm-outline-small-textarea">
+            <mat-form-field appearance="outline" hintLabel="Helper text" [hideRequiredMarker]="true">
+              <mat-label>Label</mat-label>
+              <textarea matInput
+                        cdkTextareaAutosize
+                        #outlineSmalltextArea
+                        #autosize="cdkTextareaAutosize"
+                        formControlName="outline64"
+                        maxlength="10" minlength="10"
+                        cdkAutosizeMinRows="5"
+                        cdkAutosizeMaxRows="5"></textarea>
+              <mat-hint align="end">
+                <div class="validation-hint">
+                  {{outlineSmalltextArea.value?.length || 0}}/10
+                </div>
+              </mat-hint>
+              <mat-error>{{getErrorMessage('outline64')}}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div [ngStyle]="{'margin-right': '32px', 'width': '33%', 'height': '185px'}">
+          <h5>textarea big (disabled filled)</h5>
+          <div class="icm-outline-small-textarea">
+            <mat-form-field appearance="outline" hintLabel="Helper text" [hideRequiredMarker]="true">
+              <mat-label>Label</mat-label>
+              <textarea matInput
+                        cdkTextareaAutosize
+                        #outlineSmalltextArea1
+                        #autosize="cdkTextareaAutosize"
+                        formControlName="outline76disabledFilled"
+                        maxlength="10" minlength="10"
+                        cdkAutosizeMinRows="5"
+                        cdkAutosizeMaxRows="5"></textarea>
+              <mat-hint align="end">
+                <div class="validation-hint">
+                  {{outlineSmalltextArea1.value?.length || 0}}/10
+                </div>
+              </mat-hint>
+              <mat-error>{{getErrorMessage('outline76disabledFilled')}}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div [ngStyle]="{'margin-right': '32px', 'width': '33%', 'height': '185px'}">
+          <h5>textarea big (disabled empty)</h5>
+          <div class="icm-outline-small-textarea">
+            <mat-form-field appearance="outline" hintLabel="Helper text" [hideRequiredMarker]="true">
+              <mat-label>Label</mat-label>
+              <textarea matInput
+                        cdkTextareaAutosize
+                        #outlineSmalltextArea2
+                        #autosize="cdkTextareaAutosize"
+                        formControlName="outline76disabled"
+                        maxlength="10" minlength="10"
+                        cdkAutosizeMinRows="5"
+                        cdkAutosizeMaxRows="5"></textarea>
+              <mat-hint align="end">
+                <div class="validation-hint">
+                  {{outlineSmalltextArea2.value?.length || 0}}/10
+                </div>
+              </mat-hint>
+              <mat-error>{{getErrorMessage('outline76disabled')}}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </div>
+
+      <hr>
+
+<!--      маленькие инпуты буз хинтов-->
+      <div class="icm-flex">
+        <div [ngStyle]="{'margin-right': '32px', 'width': '33%'}">
+          <h5>64 (обычный без хинтов)</h5>
+          <div [ngStyle]="{'width': '176px'}" class="icm-outline-small-field icm-outline-small-field-without-hint">
+            <mat-form-field appearance="outline" [hideRequiredMarker]="true">
+              <mat-label>Label</mat-label>
+              <input matInput placeholder="input 64" maxlength="10" minlength="10" required>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+    </div>
+  </div>
+<!--  Не редактируемые текстовые поля-->
+  <div>
+    <h2>Не редактируемые текстовые поля</h2>
+
+    <div class="icm-flex">
+      <div class="readOnly-field">
+        <div class="readOnly-field-label">Процесс</div>
+        <div class="readOnly-field-text">Экспертиза СЭБ</div>
+      </div>
+
+      <div [ngStyle]="{'margin-left': '32px'}" class="readOnly-radio">
+        <div class="readOnly-field-label">Label</div>
+        <mat-radio-group [disabled]="true">
+          <mat-radio-button value="1">
+            <div class="readOnly-field-text">Placeholder</div>
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div [ngStyle]="{'margin-left': '32px'}" class="readOnly-icon">
+        <div class="readOnly-field-label">Label</div>
+        <div class="readOnly-field-text">
+          <mat-icon [ngStyle]="{'color': '#2C5DE5'}">timer</mat-icon>
+          <span class="readOnly-field-text-with-icon">Placeholder</span>
+        </div>
+      </div>
+
+    </div>
+    <hr>
+  </div>
+<!--  Поле выбора-->
+  <div>
+    <h2>Поле выбора</h2>
+    <div class="icm-flex">
+      <div [ngStyle]="{'margin-right': '32px', 'width': '25%'}">
+        <h5>Form: on action</h5>
+        <div [ngStyle]="{'width': '176px'}" class="icm-outline-big-field icm-outline-big-field-select">
+          <mat-form-field hintLabel="Helper text" appearance="outline" [hideRequiredMarker]="true">
+            <mat-label>Label</mat-label>
+            <mat-select panelClass="icm-outline-big-field-select-mat" formControlName="select76selectHeh" required>
+              <mat-option value="">
+                <div class="icm-outline-big-field-select-option">- None -</div>
+              </mat-option>
+              <mat-option class="icm-outline-big-field-select-option" *ngFor="let sub of subtitlesForSelect" value="{{sub.val}}">
+                <div class="icm-outline-big-field-select-option">{{sub.caption}}</div>
+              </mat-option>
+            </mat-select>
+            <mat-hint align="end">
+              <div class="validation-hint">
+                {{input.value?.length || 0}}/10
+              </div>
+            </mat-hint>
+            <mat-error
+              *ngIf="testForm.controls.select76selectHeh.invalid">{{getErrorMessage('select76selectHeh')}}</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div [ngStyle]="{'margin-right': '32px', 'width': '25%'}">
+        <h5>Dropdown: select items</h5>
+        <div [ngStyle]="{'width': '176px'}" class="icm-outline-big-field icm-outline-big-field-select">
+          <mat-form-field hintLabel="Helper text" appearance="outline" [hideRequiredMarker]="true">
+            <mat-label>Label</mat-label>
+            <mat-select panelClass="icm-outline-big-field-select-mat" formControlName="select76selectHeh" required multiple>
+              <mat-option class="icm-outline-big-field-select-option" *ngFor="let sub of subtitlesForSelect" value="{{sub.val}}">
+                <div class="icm-outline-big-field-select-option">{{sub.caption}}</div>
+              </mat-option>
+            </mat-select>
+            <mat-hint align="end">
+              <div class="validation-hint">
+                {{input.value?.length || 0}}/10
+              </div>
+            </mat-hint>
+            <mat-error
+              *ngIf="testForm.controls.select76selectHeh.invalid">{{getErrorMessage('select76selectHeh')}}</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div [ngStyle]="{'margin-right': '32px', 'width': '25%'}">
+        <h5>Dropdown: loading</h5>
+        <div [ngStyle]="{'width': '176px'}" class="icm-outline-big-field icm-outline-big-field-select">
+          <mat-form-field hintLabel="Helper text" appearance="outline" [hideRequiredMarker]="true">
+            <mat-label>Label</mat-label>
+            <mat-select panelClass="icm-outline-big-field-select-mat" formControlName="select76selectHeh" required>
+              <div *ngIf="isSelectLoading">
+                <mat-option [disabled]="true" [ngStyle]="{'height':'255px'}">
+                  <div class="icm-flex icm-flex-middle icm-flex-center">
+                    <mat-spinner [diameter]="36"></mat-spinner>
+                  </div>
+                </mat-option>
+              </div>
+              <div *ngIf="isSelectLoadedError">
+                ОшибОчка
+              </div>
+              <div *ngIf="isSelectLoaded">
+                <mat-option [disabled]="true" value="">
+                  <div class="icm-outline-big-field-select-option">- None -</div>
+                </mat-option>
+                <mat-option [disabled]="true" class="icm-outline-big-field-select-option" *ngFor="let sub of subtitlesForSelect" value="{{sub.val}}">
+                  <div class="icm-outline-big-field-select-option">{{sub.caption}}</div>
+                </mat-option>
+              </div>
+            </mat-select>
+            <mat-hint align="end">
+              <div class="validation-hint">
+                {{input.value?.length || 0}}/10
+              </div>
+            </mat-hint>
+            <mat-error
+              *ngIf="testForm.controls.select76selectHeh.invalid">{{getErrorMessage('select76selectHeh')}}</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div [ngStyle]="{'margin-right': '32px', 'width': '25%'}">
+        <h5>Dropdown: loading error</h5>
+        <div [ngStyle]="{'width': '176px'}" class="icm-outline-big-field icm-outline-big-field-select">
+          <mat-form-field hintLabel="Helper text" appearance="outline" [hideRequiredMarker]="true">
+            <mat-label>Label</mat-label>
+            <mat-select disableRipple panelClass="icm-outline-big-field-select-mat" formControlName="select76selectHeh" required>
+              <div *ngIf="false">
+                <mat-option [ngStyle]="{'height':'255px'}">
+                  <div class="icm-flex icm-flex-middle icm-flex-center">
+                    <mat-spinner [diameter]="36"></mat-spinner>
+                  </div>
+                </mat-option>
+              </div>
+              <div *ngIf="true">
+                <mat-option [disabled]="true" [ngStyle]="{'height':'255px'}">
+                  <div class="select-loading-error">
+                    <div class="status">Не удалось загрузить</div>
+                    <div class="re">
+                      <button class="icm-btn icm-btn-primary-clear">
+                        <mat-icon>refresh</mat-icon>
+                        <span>Обновить</span>
+                      </button>
+                    </div>
+                  </div>
+                </mat-option>
+              </div>
+              <div *ngIf="isSelectLoaded">
+                <mat-option value="">
+                  <div class="icm-outline-big-field-select-option">- None -</div>
+                </mat-option>
+                <mat-option class="icm-outline-big-field-select-option" *ngFor="let sub of subtitlesForSelect" value="{{sub.val}}">
+                  <div class="icm-outline-big-field-select-option">{{sub.caption}}</div>
+                </mat-option>
+              </div>
+            </mat-select>
+            <mat-hint align="end">
+              <div class="validation-hint">
+                {{input.value?.length || 0}}/10
+              </div>
+            </mat-hint>
+            <mat-error
+              *ngIf="testForm.controls.select76selectHeh.invalid">{{getErrorMessage('select76selectHeh')}}</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <hr>
+  </div>
+<!--  Контролы-->
+  <div>
+    <h2>Поле выбора</h2>
+    <div>
+
+      <div [ngStyle]="{'margin-right': '32px', 'width': '100%'}">
+        <h5>Checkbox</h5>
+        <div class="icm-flex">
+          <div class="icm-checkbox">
+            <mat-checkbox >usual</mat-checkbox>
+          </div>
+          <div [ngStyle]="{'margin-left': '20px'}" class="icm-checkbox">
+            <mat-checkbox [disabled]="true">disabled</mat-checkbox>
+          </div>
+          <div [ngStyle]="{'margin-left': '20px'}" class="icm-checkbox">
+            <mat-checkbox [disabled]="true" [checked]="true" >disabled checked</mat-checkbox>
+          </div>
+          <div [ngStyle]="{'margin-left': '20px'}" class="icm-checkbox">
+            <mat-checkbox [checked]="allComplete"
+                          [indeterminate]="someComplete()"
+                          (change)="setAll($event.checked)">
+              indeterminate
+            </mat-checkbox>
+          </div>
+          <div [ngStyle]="{'margin-left': '20px'}" class="icm-checkbox">
+            <mat-checkbox [disabled]="true"
+                          [checked]="allComplete"
+                          [indeterminate]="someComplete()"
+                          (change)="setAll($event.checked)">
+              indeterminate
+            </mat-checkbox>
+          </div>
+          <div [ngStyle]="{'margin-left': '20px'}">
+            <div class="icm-checkbox">
+              <mat-checkbox [ngClass]="{'errorCheckbox': getCheckBoxError()}" formControlName="checkboxReq" [required]="true">alarm</mat-checkbox>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <div [ngStyle]="{'margin-right': '32px', 'width': '100%'}">
+        <h5>Radio button</h5>
+        <div class="icm-flex">
+
+          <div class="icm-radio">
+            <mat-radio-group aria-label="Select an option">
+              <mat-radio-button [disableRipple]="true" value="unchecked">unchecked</mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+          <div class="icm-radio" [ngStyle]="{'margin-left': '20px'}">
+<!--            для того чтобы ошибка не появлялась сразу, к проверке добавляем также testFormDir.submitted. здесь сдеано для покаха и примера.-->
+            <mat-radio-group aria-label="Select an option" [required]="true" formControlName="radioReq" [ngClass]="{'errorRadio': testForm.get('radioReq').invalid}">
+              <mat-radio-button [disableRipple]="true" value="unchecked" required>unchecked</mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+          <div class="icm-radio" [ngStyle]="{'margin-left': '20px'}">
+            <mat-radio-group aria-label="Select an option" [disabled]="true">
+              <mat-radio-button [disableRipple]="true" value="unchecked">disabled</mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+          <div class="icm-radio" [ngStyle]="{'margin-left': '20px'}">
+            <mat-radio-group aria-label="Select an option" [disabled]="true">
+              <mat-radio-button [disableRipple]="true" value="unchecked" [checked]="true">disabled cheched</mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+        </div>
+      </div>
+
+      <hr>
+
+      <div [ngStyle]="{'margin-right': '32px', 'width': '100%'}">
+        <h5>Switch</h5>
+        <div class="icm-flex">
+
+          <div class="icm-switch">
+            <mat-slide-toggle
+              [disableRipple]="true"
+              [checked]="true">
+              On
+            </mat-slide-toggle>
+          </div>
+
+          <div class="icm-switch" [ngStyle]="{'margin-left': '20px'}">
+            <mat-slide-toggle
+              [disableRipple]="true"
+              [disabled]="true"
+              [checked]="true">
+              On disabled
+            </mat-slide-toggle>
+          </div>
+
+          <div class="icm-switch" [ngStyle]="{'margin-left': '20px'}">
+            <mat-slide-toggle
+              [disableRipple]="true"
+              [disabled]="true"
+              [checked]="false">
+              Off disabled
+            </mat-slide-toggle>
+          </div>
+
+        </div>
+      </div>
+
+      <hr>
+
+      <div [ngStyle]="{'margin-right': '32px', 'width': '100%'}">
+        <h5>Time picker</h5>
+        <div class="icm-flex">
+
+          <div [ngStyle]="{'width': '176px'}" class="icm-outline-big-field icm-outline-big-field-timepicker">
+            <mat-form-field hintLabel="Helper text" appearance="outline" [hideRequiredMarker]="true">
+              <mat-label>Время</mat-label>
+              <input formControlName="input76timePicker" matInput required appTimeMask>
+              <mat-icon matSuffix>timer</mat-icon>
+              <mat-hint align="end">
+                <div class="validation-hint">
+                  {{input.value?.length || 0}}/10
+                </div>
+              </mat-hint>
+              <mat-error *ngIf="testForm.controls.input76.invalid">{{getErrorMessage('input76')}}</mat-error>
+            </mat-form-field>
+          </div>
+
+        </div>
+      </div>
+
+      <hr>
+
+      <div [ngStyle]="{'margin-right': '32px', 'width': '100%'}">
+        <h5>Datepickers</h5>
+        <div class="icm-flex">
+
+          <div class="icm-outline-big-field icm-datepicker">
+            <mat-form-field appearance="outline">
+              <mat-label>Enter a date range</mat-label>
+              <mat-date-range-input [rangePicker]="rangePicker">
+                <input matStartDate placeholder="Start date">
+                <input matEndDate placeholder="End date">
+              </mat-date-range-input>
+              <mat-datepicker-toggle matSuffix [for]="rangePicker"></mat-datepicker-toggle>
+              <mat-date-range-picker #rangePicker>
+<!--                <mat-date-range-picker-actions>-->
+<!--                  <button mat-button matDateRangePickerCancel>Cancel</button>-->
+<!--                  <button mat-raised-button color="primary" matDateRangePickerApply>Apply</button>-->
+<!--                </mat-date-range-picker-actions>-->
+              </mat-date-range-picker>
+            </mat-form-field>
+          </div>
+
+          <div class="icm-outline-big-field icm-datepicker" [ngStyle]="{'margin-left': '20px'}">
+            <mat-form-field appearance="outline">
+              <mat-label>Choose a date</mat-label>
+              <input matInput [matDatepicker]="picker">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+    <hr>
+  </div>
+<!--  кнопки-->
+  <div>
+    <h2>Кнопки</h2>
+    <div>
+
+      <div>
+        <h3>Дефолтные кнопки</h3>
+        <div class="icm-flex">
+          <button class="icm-btn icm-btn-primary">Large button</button>
+          <button class="icm-btn icm-btn-primary" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">Large button disabled</button>
+          <button class="icm-btn icm-btn-small icm-btn-primary" [ngStyle]="{'margin-left': '20px'}">Small button</button>
+          <button class="icm-btn icm-btn-small icm-btn-primary" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">Small button disabled</button>
+        </div>
+      </div>
+
+      <hr>
+
+      <div>
+        <h3>Дефолтные кнопки</h3>
+        <div class="icm-flex">
+          <button class="icm-btn icm-btn-accent">Large button</button>
+          <button class="icm-btn icm-btn-accent" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">Large button disabled</button>
+          <button class="icm-btn icm-btn-small icm-btn-accent" [ngStyle]="{'margin-left': '20px'}">Small button</button>
+          <button class="icm-btn icm-btn-small icm-btn-accent" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">Small button disabled</button>
+        </div>
+      </div>
+
+      <hr>
+
+      <div>
+        <h3>Дефолтные кнопки + иконка слева</h3>
+        <div class="icm-flex">
+          <button class="icm-btn icm-btn-primary icm-btn-icon icm-btn-icon-left">
+            <mat-icon>home</mat-icon>
+            <span>Large button</span>
+          </button>
+          <button class="icm-btn icm-btn-primary icm-btn-icon icm-btn-icon-left" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">
+            <mat-icon>home</mat-icon>
+            <span>Large button disabled</span>
+          </button>
+          <button class="icm-btn icm-btn-icon icm-btn-small icm-btn-primary icm-btn-small-icon-left" [ngStyle]="{'margin-left': '20px'}">
+            <mat-icon>home</mat-icon>
+            <span>Small button</span>
+          </button>
+          <button class="icm-btn icm-btn-icon icm-btn-small icm-btn-primary icm-btn-small-icon-left" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">
+            <mat-icon>home</mat-icon>
+            <span>Small button disabled</span>
+          </button>
+        </div>
+      </div>
+
+      <hr>
+
+      <div>
+        <h3>Дефолтные кнопки + иконка слева</h3>
+        <div class="icm-flex">
+          <button class="icm-btn icm-btn-icon icm-btn-accent icm-btn-icon-left">
+            <mat-icon>home</mat-icon>
+            <span>Large button</span>
+          </button>
+          <button class="icm-btn icm-btn-icon icm-btn-accent icm-btn-icon-left" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">
+            <mat-icon>home</mat-icon>
+            <span>Large button disabled</span>
+          </button>
+          <button class="icm-btn icm-btn-small icm-btn-accent icm-btn-small-icon-left" [ngStyle]="{'margin-left': '20px'}">
+            <mat-icon>home</mat-icon>
+            <span>Small button</span>
+          </button>
+          <button class="icm-btn icm-btn-small icm-btn-accent icm-btn-small-icon-left" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">
+            <mat-icon>home</mat-icon>
+            <span>Small button disabled</span>
+          </button>
+        </div>
+      </div>
+
+      <hr>
+
+      <div>
+        <h3>Дефолтные кнопки + иконка справа</h3>
+        <div class="icm-flex">
+          <button class="icm-btn icm-btn-icon icm-btn-primary icm-btn-icon-right">
+            <span>Large button</span>
+            <mat-icon>home</mat-icon>
+          </button>
+          <button class="icm-btn icm-btn-icon icm-btn-primary icm-btn-icon-right" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">
+            <span>Large button disabled</span>
+            <mat-icon>home</mat-icon>
+          </button>
+          <button class="icm-btn icm-btn-small icm-btn-primary icm-btn-small-icon-right" [ngStyle]="{'margin-left': '20px'}">
+            <span>Small button</span>
+            <mat-icon>home</mat-icon>
+          </button>
+          <button class="icm-btn icm-btn-small icm-btn-primary icm-btn-small-icon-right" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">
+            <span>Small button disabled</span>
+            <mat-icon>home</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <hr>
+
+      <div>
+        <h3>Дефолтные кнопки + иконка справа</h3>
+        <div class="icm-flex">
+          <button class="icm-btn icm-btn-icon icm-btn-accent icm-btn-icon-right">
+            <span>Large button</span>
+            <mat-icon>home</mat-icon>
+          </button>
+          <button class="icm-btn icm-btn-icon icm-btn-accent icm-btn-icon-right" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">
+            <span>Large button disabled</span>
+            <mat-icon>home</mat-icon>
+          </button>
+          <button class="icm-btn icm-btn-icon icm-btn-small icm-btn-accent icm-btn-small-icon-right" [ngStyle]="{'margin-left': '20px'}">
+            <span>Small button</span>
+            <mat-icon>home</mat-icon>
+          </button>
+          <button class="icm-btn icm-btn-icon icm-btn-small icm-btn-accent icm-btn-small-icon-right" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">
+            <span>Small button disabled</span>
+            <mat-icon>home</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <hr>
+
+      <hr>
+
+      <div>
+        <h3>Кнопки с обводкой</h3>
+        <div class="icm-flex">
+          <button class="icm-btn icm-btn-outlined icm-btn-outlined-primary">Large button</button>
+          <button class="icm-btn icm-btn-outlined icm-btn-outlined-primary" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">Large button disabled</button>
+          <button class="icm-btn icm-btn-outlined icm-btn-small icm-btn-outlined-primary" [ngStyle]="{'margin-left': '20px'}">Small button</button>
+          <button class="icm-btn icm-btn-outlined icm-btn-small icm-btn-outlined-primary" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">Small button disabled</button>
+          <button class="icm-btn icm-btn-outlined icm-btn-small icm-btn-outlined-alert" [ngStyle]="{'margin-left': '20px'}">alert</button>
+        </div>
+      </div>
+
+      <hr>
+
+      <div>
+        <h3>Кнопки с обводкой</h3>
+        <div class="icm-flex">
+          <button class="icm-btn icm-btn-outlined icm-btn-outlined-accent">Large button</button>
+          <button class="icm-btn icm-btn-outlined icm-btn-outlined-accent" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">Large button disabled</button>
+          <button class="icm-btn icm-btn-outlined icm-btn-small icm-btn-outlined-accent" [ngStyle]="{'margin-left': '20px'}">Small button</button>
+          <button class="icm-btn icm-btn-outlined icm-btn-small icm-btn-outlined-accent" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">Small button disabled</button>
+        </div>
+      </div>
+
+      <hr>
+
+      <div>
+        <h3>Кнопки с обводкой + иконка слева</h3>
+        <div class="icm-flex">
+          <button class="icm-btn icm-btn-outlined icm-btn-outlined-primary icm-btn-icon icm-btn-icon-left">
+            <mat-icon>home</mat-icon>
+            <span>Large button</span>
+          </button>
+          <button class="icm-btn icm-btn-outlined icm-btn-outlined-primary icm-btn-icon icm-btn-icon-left" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">
+            <mat-icon>home</mat-icon>
+            <span>Large button disabled</span>
+          </button>
+          <button class="icm-btn icm-btn-outlined icm-btn-icon icm-btn-small icm-btn-outlined-primary icm-btn-small-icon-left" [ngStyle]="{'margin-left': '20px'}">
+            <mat-icon>home</mat-icon>
+            <span>Small button</span>
+          </button>
+          <button class="icm-btn icm-btn-outlined icm-btn-icon icm-btn-small icm-btn-outlined-primary icm-btn-small-icon-left" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">
+            <mat-icon>home</mat-icon>
+            <span>Small button disabled</span>
+          </button>
+        </div>
+      </div>
+
+      <hr>
+
+      <div>
+        <h3>Кнопки с обводкой + иконка слева</h3>
+        <div class="icm-flex">
+          <button class="icm-btn icm-btn-outlined icm-btn-icon icm-btn-outlined-accent icm-btn-icon-left">
+            <mat-icon>home</mat-icon>
+            <span>Large button</span>
+          </button>
+          <button class="icm-btn icm-btn-outlined icm-btn-icon icm-btn-outlined-accent icm-btn-icon-left" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">
+            <mat-icon>home</mat-icon>
+            <span>Large button disabled</span>
+          </button>
+          <button class="icm-btn icm-btn-outlined icm-btn-small icm-btn-outlined-accent icm-btn-small-icon-left" [ngStyle]="{'margin-left': '20px'}">
+            <mat-icon>home</mat-icon>
+            <span>Small button</span>
+          </button>
+          <button class="icm-btn icm-btn-outlined icm-btn-small icm-btn-outlined-accent icm-btn-small-icon-left" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">
+            <mat-icon>home</mat-icon>
+            <span>Small button disabled</span>
+          </button>
+        </div>
+      </div>
+
+      <hr>
+
+      <div>
+        <h3>Кнопки с обводкой + иконка справа</h3>
+        <div class="icm-flex">
+          <button class="icm-btn icm-btn-outlined icm-btn-icon icm-btn-outlined-primary icm-btn-icon-right">
+            <span>Large button</span>
+            <mat-icon>home</mat-icon>
+          </button>
+          <button class="icm-btn icm-btn-outlined icm-btn-icon icm-btn-outlined-primary icm-btn-icon-right" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">
+            <span>Large button disabled</span>
+            <mat-icon>home</mat-icon>
+          </button>
+          <button class="icm-btn icm-btn-outlined icm-btn-small icm-btn-outlined-primary icm-btn-small-icon-right" [ngStyle]="{'margin-left': '20px'}">
+            <span>Small button</span>
+            <mat-icon>home</mat-icon>
+          </button>
+          <button class="icm-btn icm-btn-outlined icm-btn-small icm-btn-outlined-primary icm-btn-small-icon-right" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">
+            <span>Small button disabled</span>
+            <mat-icon>home</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <hr>
+
+      <div>
+        <h3>Кнопки с обводкой + иконка справа</h3>
+        <div class="icm-flex">
+          <button class="icm-btn icm-btn-outlined icm-btn-icon icm-btn-outlined-accent icm-btn-icon-right">
+            <span>Large button</span>
+            <mat-icon>home</mat-icon>
+          </button>
+          <button class="icm-btn icm-btn-outlined icm-btn-icon icm-btn-outlined-accent icm-btn-icon-right" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">
+            <span>Large button disabled</span>
+            <mat-icon>home</mat-icon>
+          </button>
+          <button class="icm-btn icm-btn-outlined icm-btn-icon icm-btn-small icm-btn-outlined-accent icm-btn-small-icon-right" [ngStyle]="{'margin-left': '20px'}">
+            <span>Small button</span>
+            <mat-icon>home</mat-icon>
+          </button>
+          <button class="icm-btn icm-btn-outlined icm-btn-icon icm-btn-small icm-btn-outlined-accent icm-btn-small-icon-right" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">
+            <span>Small button disabled</span>
+            <mat-icon>home</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <hr>
+
+      <div>
+        <h3>Текстовые кнопки</h3>
+        <div class="icm-flex">
+          <button class="icm-btn icm-btn-text icm-btn-text-primary">Large button</button>
+          <button class="icm-btn icm-btn-text icm-btn-text-primary" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">Large button disabled</button>
+          <button class="icm-btn icm-btn-text icm-btn-small icm-btn-text-primary" [ngStyle]="{'margin-left': '20px'}">Small button</button>
+          <button class="icm-btn icm-btn-text icm-btn-small icm-btn-text-primary" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">Small button disabled</button>
+        </div>
+      </div>
+
+      <hr>
+
+      <div>
+        <h5>Текстовые кнопки</h5>
+        <div class="icm-flex">
+          <button class="icm-btn icm-btn-text icm-btn-text-accent">Large button</button>
+          <button class="icm-btn icm-btn-text icm-btn-text-accent" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">Large button disabled</button>
+          <button class="icm-btn icm-btn-text icm-btn-small icm-btn-text-accent" [ngStyle]="{'margin-left': '20px'}">Small button</button>
+          <button class="icm-btn icm-btn-text icm-btn-small icm-btn-text-accent" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">Small button disabled</button>
+        </div>
+      </div>
+
+      <hr>
+
+      <div>
+        <h3>Текстовые кнопки + иконка слева</h3>
+        <div class="icm-flex">
+          <button class="icm-btn icm-btn-text icm-btn-text-primary icm-btn-icon icm-btn-text-icon-left">
+            <mat-icon>home</mat-icon>
+            <span>Large button</span>
+          </button>
+          <button class="icm-btn icm-btn-text icm-btn-text-primary icm-btn-icon icm-btn-text-icon-left" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">
+            <mat-icon>home</mat-icon>
+            <span>Large button disabled</span>
+          </button>
+          <button class="icm-btn icm-btn-text icm-btn-icon icm-btn-small icm-btn-text-primary icm-btn-text-icon-left" [ngStyle]="{'margin-left': '20px'}">
+            <mat-icon>home</mat-icon>
+            <span>Small button</span>
+          </button>
+          <button class="icm-btn icm-btn-text icm-btn-icon icm-btn-small icm-btn-text-primary icm-btn-text-icon-left" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">
+            <mat-icon>home</mat-icon>
+            <span>Small button disabled</span>
+          </button>
+        </div>
+      </div>
+
+      <hr>
+
+      <div>
+        <h3>Текстовые кнопки + иконка слева</h3>
+        <div class="icm-flex">
+          <button class="icm-btn icm-btn-text icm-btn-icon icm-btn-text-accent icm-btn-text-icon-left">
+            <mat-icon>home</mat-icon>
+            <span>Large button</span>
+          </button>
+          <button class="icm-btn icm-btn-text icm-btn-icon icm-btn-text-accent icm-btn-text-icon-left" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">
+            <mat-icon>home</mat-icon>
+            <span>Large button disabled</span>
+          </button>
+          <button class="icm-btn icm-btn-text icm-btn-small icm-btn-text-accent icm-btn-text-icon-left" [ngStyle]="{'margin-left': '20px'}">
+            <mat-icon>home</mat-icon>
+            <span>Small button</span>
+          </button>
+          <button class="icm-btn icm-btn-text icm-btn-small icm-btn-text-accent icm-btn-text-icon-left" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">
+            <mat-icon>home</mat-icon>
+            <span>Small button disabled</span>
+          </button>
+        </div>
+      </div>
+
+      <hr>
+
+      <div>
+        <h3>Текстовые кнопки + иконка справа</h3>
+        <div class="icm-flex">
+          <button class="icm-btn icm-btn-text icm-btn-icon icm-btn-text-primary icm-btn-text-icon-right">
+            <span>Large button</span>
+            <mat-icon>home</mat-icon>
+          </button>
+          <button class="icm-btn icm-btn-text icm-btn-icon icm-btn-text-primary icm-btn-text-icon-right" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">
+            <span>Large button disabled</span>
+            <mat-icon>home</mat-icon>
+          </button>
+          <button class="icm-btn icm-btn-text icm-btn-small icm-btn-text-primary icm-btn-text-icon-right" [ngStyle]="{'margin-left': '20px'}">
+            <span>Small button</span>
+            <mat-icon>home</mat-icon>
+          </button>
+          <button class="icm-btn icm-btn-text icm-btn-small icm-btn-text-primary icm-btn-text-icon-right" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">
+            <span>Small button disabled</span>
+            <mat-icon>home</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <hr>
+
+      <div>
+        <h3>Текстовые кнопки + иконка справа</h3>
+        <div class="icm-flex">
+          <button class="icm-btn icm-btn-text icm-btn-icon icm-btn-text-accent icm-btn-text-icon-right">
+            <span>Large button</span>
+            <mat-icon>home</mat-icon>
+          </button>
+          <button class="icm-btn icm-btn-text icm-btn-icon icm-btn-text-accent icm-btn-text-icon-right" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">
+            <span>Large button disabled</span>
+            <mat-icon>home</mat-icon>
+          </button>
+          <button class="icm-btn icm-btn-text icm-btn-icon icm-btn-small icm-btn-text-accent icm-btn-text-icon-right" [ngStyle]="{'margin-left': '20px'}">
+            <span>Small button</span>
+            <mat-icon>home</mat-icon>
+          </button>
+          <button class="icm-btn icm-btn-text icm-btn-icon icm-btn-small icm-btn-text-accent icm-btn-text-icon-right" [ngStyle]="{'margin-left': '20px'}" [disabled]="true">
+            <span>Small button disabled</span>
+            <mat-icon>home</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <hr>
+
+      <div>
+        <h3>Бейджи без иконки</h3>
+        <div class="icm-flex">
+          <div class="icm-badge icm-badge-primary">Placeholder</div>
+          <div [ngStyle]="{'margin-left': '20px'}" class="icm-badge icm-badge-accent">Placeholder</div>
+          <div [ngStyle]="{'margin-left': '20px'}" class="icm-badge icm-badge-grey">Placeholder</div>
+          <div [ngStyle]="{'margin-left': '20px'}" class="icm-badge icm-badge-alert">Placeholder</div>
+          <div [ngStyle]="{'margin-left': '20px'}" class="icm-badge icm-badge-success">Placeholder</div>
+          <div [ngStyle]="{'margin-left': '20px'}" class="icm-badge icm-badge-warning">Placeholder</div>
+          <div [ngStyle]="{'margin-left': '20px'}" class="icm-badge icm-badge-date">18:24 ǀ 23.01.2020</div>
+        </div>
+      </div>
+
+      <hr>
+
+      <div>
+        <h3>Бейджи с иконкой</h3>
+        <div class="icm-flex">
+          <div class="icm-badge icm-badge-icon icm-badge-primary">
+            <mat-icon>bolt</mat-icon>
+            <span>Placeholder</span>
+          </div>
+          <div [ngStyle]="{'margin-left': '20px'}" class="icm-badge icm-badge-icon icm-badge-alert"><mat-icon>close</mat-icon>Placeholder</div>
+          <div [ngStyle]="{'margin-left': '20px'}" class="icm-badge icm-badge-icon icm-badge-success"><mat-icon>check</mat-icon>Placeholder</div>
+          <div [ngStyle]="{'margin-left': '20px'}" class="icm-badge icm-badge-icon icm-badge-warning"><mat-icon>priority_high</mat-icon>Placeholder</div>
+        </div>
+      </div>
+
+      <hr>
+
+      <div>
+        <h3>иконки</h3>
+        <div class="icm-flex">
+
+          <!--<div class="icm-flex">
+            <p class="material-icons-outlined status-icon icm-icon-primary">offline_bolt</p>
+          </div>-->
+          <mat-icon class="icm-icon-primary" fontSet="icm-icon" fontIcon="i_bolt"></mat-icon>
+
+          <!--<div class="icm-flex">
+            <i class="material-icons status-icon icm-icon-alert">highlight_off</i>
+          </div>-->
+          <mat-icon class="icm-icon-alert" fontSet="icm-icon" fontIcon="i_cross"></mat-icon>
+
+
+        <!--  <div class="icm-flex">
+            <i class="material-icons status-icon icm-icon-success">check_circle_outline</i>
+          </div>-->
+          <mat-icon class="icm-icon-success" fontSet="icm-icon" fontIcon="i_check"></mat-icon>
+          <!--<div class="icm-flex">
+            <i class="material-icons status-icon icm-icon-warning">error_outline</i>
+          </div>-->
+          <mat-icon class="icm-icon-warning" fontSet="icm-icon" fontIcon="i_attention"></mat-icon>
+
+        </div>
+      </div>
+
+      <hr>
+
+      <div>
+        <h3>Зоны загрузки файлов (Horizontal Drop Zone)</h3>
+
+        <div class="icm-flex">
+          <div [ngStyle]="{'width': '280px'}">
+            <app-upload-file [type]="'small'" (change)="onUploadFile($event)"></app-upload-file>
+          </div>
+
+          <div [ngStyle]="{'width': '280px', 'margin-left': '20px'}">
+            <app-upload-file [type]="'small'"  class="icm-upload-error" (change)="onUploadFile($event)"></app-upload-file>
+          </div>
+
+          <div [ngStyle]="{'width': '280px', 'margin-left': '20px'}">
+            <app-upload-file [type]="'small'"  class="icm-upload-disable" [disabled]="true" (change)="onUploadFile($event)"></app-upload-file>
+          </div>
+        </div>
+
+      </div>
+
+      <hr>
+
+      <div>
+        <h3>Зоны загрузки файлов (Vertical Drop Zone)</h3>
+
+        <div class="icm-flex">
+
+          <div [ngStyle]="{'width': '280px'}">
+            <app-upload-file (change)="onUploadFile($event)"></app-upload-file>
+          </div>
+
+          <div [ngStyle]="{'width': '280px', 'margin-left': '20px'}">
+            <app-upload-file class="icm-upload-error" (change)="onUploadFile($event)"></app-upload-file>
+          </div>
+
+          <div [ngStyle]="{'width': '280px', 'margin-left': '20px'}">
+            <app-upload-file class="icm-upload-disable" [disabled]="true" (change)="onUploadFile($event)"></app-upload-file>
+          </div>
+
+        </div>
+
+      </div>
+
+      <hr>
+
+      <div>
+        <h3>Uploaded documents</h3>
+        <div class="icm-flex">
+
+          <div [ngStyle]="{'width': '568px'}">
+            <app-download-file-button [file]="{caption: currentFile.name, size: currentFile.size}"
+                                      (delete)="clearFileInput()"
+            ></app-download-file-button>
+          </div>
+
+          <div [ngStyle]="{'width': '568px', 'margin-left': '20px'}">
+            <app-download-file-button [file]="{caption: currentFile.name, size: currentFile.size}"
+                                      [budgeButton]="false"
+                                      [downloadButton]="false"
+                                      [uploadStatus]="80"
+                                      (delete)="clearFileInput()"
+            ></app-download-file-button>
+          </div>
+
+        </div>
+      </div>
+
+      <hr>
+
+      <div>
+        <h3>Tabs</h3>
+        <div class="icm-tabs">
+          <mat-tab-group mat-align-tabs="start"
+                         class="base-mat-tab icm-tabs">
+            <mat-tab label="Первый">Content 1</mat-tab>
+            <mat-tab label="Второй">Content 2</mat-tab>
+            <mat-tab label="Третий">Content 3</mat-tab>
+            <mat-tab label="Четвертый">Content 3</mat-tab>
+            <mat-tab label="Пятый">Content 3</mat-tab>
+            <mat-tab label="Шестой">Content 3</mat-tab>
+            <mat-tab label="Седьмой">Content 3</mat-tab>
+            <mat-tab label="Восьмой">Content 3</mat-tab>
+            <mat-tab label="Девятый">Content 3</mat-tab>
+            <mat-tab label="Десятый">Content 3</mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+
+      <hr>
+
+      <div>
+        <h3>DataList</h3>
+        <div class="icm-datalist">
+          <div class="icm-datalist-item">
+            <div class="icm-datalist-item-header">
+              <div class="icm-flex">
+                <div class="order">1</div>
+                <div class="clientName">ООО “Новый клиент”</div>
+                <div class="status"><div class="icm-badge icm-badge-success">Не выявлено</div></div>
+              </div>
+              <div class="actions">
+                <div class="edit">
+                  <div class="download_document_block-edit icm-color-grey-60">
+                    <span class="material-icons-outlined edit_icon">edit</span>
+                  </div>
+                </div>
+                <div class="delete">
+                  <div class="download_document_block-delete icm-color-grey-60">
+                    <span class="material-icons ddbd_icon">delete_outlined</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="icm-datalist-item-body">
+              <div class="column" [ngStyle]="{'width': '35%'}">
+                <div class="readOnly-field">
+                  <div class="readOnly-field-label">Label</div>
+                  <div class="readOnly-field-text">Short Text</div>
+                </div>
+                <div class="readOnly-field">
+                  <div class="readOnly-field-label">Label</div>
+                  <div class="readOnly-field-text">1 000 000 000 000 ₽</div>
+                </div>
+              </div>
+              <div class="column" [ngStyle]="{'margin-left': '20px'}">
+                <div class="readOnly-field">
+                  <div class="readOnly-field-label">Label</div>
+                  <div class="readOnly-field-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac diam ac velit viverra dolor sit amet, consectetur pellente. Morbi ac diam ac velit viverra dolor sit amet, consectetur pellente. Morbi ac diam ac velit viverra dolor sit amet, consectetur pellente</div>
+                </div>
+              </div>
+              <div class="column" [ngStyle]="{'width': '35%', 'margin-left': '20px'}">
+                <div class="readOnly-field">
+                  <div class="readOnly-field-label">Label</div>
+                  <div class="readOnly-field-text">Medium Text text</div>
+                </div>
+                <div class="readOnly-field">
+                  <div class="readOnly-field-label">Label</div>
+                  <div class="readOnly-field-text">Short Text</div>
+                </div>
+              </div>
+              <div class="column" [ngStyle]="{'width': '35%', 'margin-left': '20px'}">
+                <div class="readOnly-icon">
+                  <div class="readOnly-field-label">Label</div>
+                  <div class="readOnly-field-text">
+                    <mat-icon [ngStyle]="{'color': '#2C5DE5'}">timer</mat-icon>
+                    <span class="readOnly-field-text-with-icon">Placeholder</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="icm-datalist-item">
+            <div class="icm-datalist-item-header">
+              <div class="icm-flex">
+                <div class="order">2</div>
+                <div class="clientName clientName-medium">ООО “Новый клиент”</div>
+                <div class="status"><div class="icm-badge icm-badge-success">Не выявлено</div></div>
+              </div>
+              <div class="actions">
+                <div class="edit">
+                  <div class="download_document_block-edit icm-color-grey-60">
+                    <span class="material-icons-outlined edit_icon">edit</span>
+                  </div>
+                </div>
+                <div class="delete">
+                  <div class="download_document_block-delete icm-color-grey-60">
+                    <span class="material-icons ddbd_icon">delete_outlined</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="icm-datalist-item-body">
+              <div class="column" [ngStyle]="{'width': '35%'}">
+                <div class="readOnly-field">
+                  <div class="readOnly-field-label">Label</div>
+                  <div class="readOnly-field-text">Short Text</div>
+                </div>
+                <div class="readOnly-field">
+                  <div class="readOnly-field-label">Label</div>
+                  <div class="readOnly-field-text">1 000 000 000 000 ₽</div>
+                </div>
+              </div>
+              <div class="column" [ngStyle]="{'margin-left': '20px'}">
+                <div class="readOnly-field">
+                  <div class="readOnly-field-label">Label</div>
+                  <div class="readOnly-field-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac diam ac velit viverra dolor sit amet, consectetur pellente. Morbi ac diam ac velit viverra dolor sit amet, consectetur pellente. Morbi ac diam ac velit viverra dolor sit amet, consectetur pellente</div>
+                </div>
+              </div>
+              <div class="column" [ngStyle]="{'width': '35%', 'margin-left': '20px'}">
+                <div class="readOnly-field">
+                  <div class="readOnly-field-label">Label</div>
+                  <div class="readOnly-field-text">Medium Text text</div>
+                </div>
+                <div class="readOnly-field">
+                  <div class="readOnly-field-label">Label</div>
+                  <div class="readOnly-field-text">Short Text</div>
+                </div>
+              </div>
+              <div class="column" [ngStyle]="{'width': '35%', 'margin-left': '20px'}">
+                <div class="readOnly-icon">
+                  <div class="readOnly-field-label">Label</div>
+                  <div class="readOnly-field-text">
+                    <mat-icon [ngStyle]="{'color': '#2C5DE5'}">timer</mat-icon>
+                    <span class="readOnly-field-text-with-icon">Placeholder</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="icm-datalist-item">
+            <div class="icm-datalist-item-header">
+              <div class="icm-flex">
+                <div class="order">3</div>
+                <div class="clientName clientName-small">ООО “Новый клиент”</div>
+                <div class="status"><div class="icm-badge icm-badge-success">Не выявлено</div></div>
+              </div>
+              <div class="actions">
+                <div class="edit">
+                  <div class="download_document_block-edit icm-color-grey-60">
+                    <span class="material-icons-outlined edit_icon">edit</span>
+                  </div>
+                </div>
+                <div class="delete">
+                  <div class="download_document_block-delete icm-color-grey-60">
+                    <span class="material-icons ddbd_icon">delete_outlined</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="icm-datalist-item-body">
+              <div class="column" [ngStyle]="{'width': '35%'}">
+                <div class="readOnly-field">
+                  <div class="readOnly-field-label">Label</div>
+                  <div class="readOnly-field-text">Short Text</div>
+                </div>
+                <div class="readOnly-field">
+                  <div class="readOnly-field-label">Label</div>
+                  <div class="readOnly-field-text">1 000 000 000 000 ₽</div>
+                </div>
+              </div>
+              <div class="column" [ngStyle]="{'margin-left': '20px'}">
+                <div class="readOnly-field">
+                  <div class="readOnly-field-label">Label</div>
+                  <div class="readOnly-field-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac diam ac velit viverra dolor sit amet, consectetur pellente. Morbi ac diam ac velit viverra dolor sit amet, consectetur pellente. Morbi ac diam ac velit viverra dolor sit amet, consectetur pellente</div>
+                </div>
+              </div>
+              <div class="column" [ngStyle]="{'width': '35%', 'margin-left': '20px'}">
+                <div class="readOnly-field">
+                  <div class="readOnly-field-label">Label</div>
+                  <div class="readOnly-field-text">Medium Text text</div>
+                </div>
+                <div class="readOnly-field">
+                  <div class="readOnly-field-label">Label</div>
+                  <div class="readOnly-field-text">Short Text</div>
+                </div>
+              </div>
+              <div class="column" [ngStyle]="{'width': '35%', 'margin-left': '20px'}">
+                <div class="readOnly-icon">
+                  <div class="readOnly-field-label">Label</div>
+                  <div class="readOnly-field-text">
+                    <mat-icon [ngStyle]="{'color': '#2C5DE5'}">timer</mat-icon>
+                    <span class="readOnly-field-text-with-icon">Placeholder</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="icm-datalist-item">
+            <div class="icm-datalist-item-header">
+              <div class="icm-flex">
+                <div class="order">4</div>
+                <div class="status"><div class="icm-badge icm-badge-success">Не выявлено</div></div>
+              </div>
+              <div class="actions">
+                <div class="edit">
+                  <div class="download_document_block-edit icm-color-grey-60">
+                    <span class="material-icons-outlined edit_icon">edit</span>
+                  </div>
+                </div>
+                <div class="delete">
+                  <div class="download_document_block-delete icm-color-grey-60">
+                    <span class="material-icons ddbd_icon">delete_outlined</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="icm-datalist-item-body">
+              <div class="column" [ngStyle]="{'width': '35%'}">
+                <div class="readOnly-field">
+                  <div class="readOnly-field-label">Label</div>
+                  <div class="readOnly-field-text">Short Text</div>
+                </div>
+                <div class="readOnly-field">
+                  <div class="readOnly-field-label">Label</div>
+                  <div class="readOnly-field-text">1 000 000 000 000 ₽</div>
+                </div>
+              </div>
+              <div class="column" [ngStyle]="{'margin-left': '20px'}">
+                <div class="readOnly-field">
+                  <div class="readOnly-field-label">Label</div>
+                  <div class="readOnly-field-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac diam ac velit viverra dolor sit amet, consectetur pellente. Morbi ac diam ac velit viverra dolor sit amet, consectetur pellente. Morbi ac diam ac velit viverra dolor sit amet, consectetur pellente</div>
+                </div>
+              </div>
+              <div class="column" [ngStyle]="{'width': '35%', 'margin-left': '20px'}">
+                <div class="readOnly-field">
+                  <div class="readOnly-field-label">Label</div>
+                  <div class="readOnly-field-text">Medium Text text</div>
+                </div>
+                <div class="readOnly-field">
+                  <div class="readOnly-field-label">Label</div>
+                  <div class="readOnly-field-text">Short Text</div>
+                </div>
+              </div>
+              <div class="column" [ngStyle]="{'width': '35%', 'margin-left': '20px'}">
+                <div class="readOnly-icon">
+                  <div class="readOnly-field-label">Label</div>
+                  <div class="readOnly-field-text">
+                    <mat-icon [ngStyle]="{'color': '#2C5DE5'}">timer</mat-icon>
+                    <span class="readOnly-field-text-with-icon">Placeholder</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <div>
+        <h3>Типографика</h3>
+        <div>
+          <p class="icm-gilroy-H900">H900. Рублевые платежные поручения. Gilroy Bold - 72/108</p>
+          <p class="icm-gilroy-H800">H800. Gilroy Bold - 56 ❘ 84</p>
+          <p class="icm-gilroy-H700">H700. Gilroy Bold - 40 ❘ 60</p>
+          <p class="icm-gilroy-H600">H600. Gilroy Bold - 32 ❘ 48</p>
+          <p class="icm-gilroy-H500">H600. Gilroy Bold - 32 ❘ 48</p>
+          <p class="icm-gilroy-H400">H400. Gilroy Bold - 20 ❘ 32</p>
+          <p class="icm-gilroy-H300">H300. Gilroy SemiBold - 16 ❘ 24</p>
+          <p class="icm-gilroy-H200">H200. Gilroy SemiBold - 14 ❘ 20</p>
+          <p class="icm-gilroy-H100">H100. Gilroy SemiBold - 12 ❘ 16</p>
+          <p class="icm-subtitle">Subtitle. Рублевые платежные поручения - Gilroy Medium 20/32</p>
+          <p class="icm-body-large">Body Large. Рублевые платежные поручения - Giroy Medium 16/24</p>
+          <p class="icm-body-medium">Body Medium. Рублевые платежные поручения - Gilroy Medium 14/20</p>
+          <p class="icm-body-small">Body Small. Рублевые платежные поручения - Gilroy Medium 12/16</p>
+        </div>
+      </div>
+
+      <div>
+        <h3>Пагинация</h3>
+
+        <div>
+          <h5>Primitives</h5>
+          <div class="icm-flex">
+            <div>
+              <div class="icm-pg-item">1</div>
+            </div>
+            <div [ngStyle]="{'margin-left': '20px'}">
+              <div class="icm-pg-item icm-pg-item-active">2</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h5>Primitives</h5>
+        <div class="icm-flex">
+          <div>
+            <div class="icm-pg-item">1</div>
+          </div>
+          <div [ngStyle]="{'margin-left': '20px'}">
+            <div class="icm-pg-item icm-pg-item-active">2</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h5>Paginator</h5>
+        <div class="icm-paginator">
+          <div class="icm-pg-item icm-pg-item-inactive-icon">
+            <svg viewBox="0 0 24 24" focusable="false" class="mat-paginator-icon"><path d="M18.41 16.59L13.82 12l4.59-4.59L17 6l-6 6 6 6zM6 6h2v12H6z"></path></svg>
+          </div>
+          <div class="icm-pg-item">
+            <svg viewBox="0 0 24 24" focusable="false" class="mat-paginator-icon"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path></svg>
+          </div>
+          <div class="icm-pg-item">1</div>
+          <div class="icm-pg-item">2</div>
+          <div class="icm-pg-item">3</div>
+          <div class="icm-pg-item icm-pg-item-active">4</div>
+          <div class="icm-pg-item">5</div>
+          <div class="icm-pg-item">...</div>
+          <div class="icm-pg-item">10</div>
+          <div class="icm-pg-item">
+            <svg viewBox="0 0 24 24" focusable="false" class="mat-paginator-icon"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg>
+          </div>
+          <div class="icm-pg-item icm-pg-item-inactive-icon">
+            <svg viewBox="0 0 24 24" focusable="false" class="mat-paginator-icon"><path d="M5.59 7.41L10.18 12l-4.59 4.59L7 18l6-6-6-6zM16 6h2v12h-2z"></path></svg>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3>Colors</h3>
+
+        <div>
+          <h5>Grayscale</h5>
+          <div class="icm-flex">
+            <p class="icm-color-grey-100">Gray 100</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-grey-80">Grey 80</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-grey-60">Grey 60</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-grey-40">Grey 40</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-grey-10">Grey 10</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-grey-5">Grey 5</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-grey-0" >Grey 0</p>
+          </div>
+        </div>
+
+        <div>
+          <h5>Primary</h5>
+          <div class="icm-flex">
+            <p class="icm-color-primary-100">Primary 100</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-primary-50">Primary 50</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-primary-30">Primary 30</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-primary-20">Primary 20</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-primary-10">Primary 10</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-primary-5">Primary 05</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-primary-0" >Primary 0</p>
+          </div>
+        </div>
+
+        <div>
+          <h5>Secondary</h5>
+          <div class="icm-flex">
+            <p class="icm-color-secondary-100">secondary 100</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-secondary-50">secondary 50</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-secondary-30">secondary 30</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-secondary-20">secondary 20</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-secondary-10">secondary 10</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-secondary-5" >secondary 05</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-secondary-0" >secondary 0</p>
+          </div>
+        </div>
+
+        <div>
+          <h5>Success</h5>
+          <div class="icm-flex">
+            <p class="icm-color-success-100">Success 100</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-success-50">Success 50</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-success-5">Success 5</p>
+          </div>
+        </div>
+
+        <div>
+          <h5>warning</h5>
+          <div class="icm-flex">
+            <p class="icm-color-warning-100">warning 100</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-warning-50">warning 50</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-warning-5">warning 5</p>
+          </div>
+        </div>
+
+        <div>
+          <h5>alert</h5>
+          <div class="icm-flex">
+            <p class="icm-color-alert-100">alert 100</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-alert-50">alert 50</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-alert-5">alert 5</p>
+          </div>
+        </div>
+
+        <div>
+          <h5>violet</h5>
+          <div class="icm-flex">
+            <p class="icm-color-violet-100">violet 100</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-violet-50">violet 50</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-violet-5">violet 5</p>
+          </div>
+        </div>
+
+        <div>
+          <h5>brown</h5>
+          <div class="icm-flex">
+            <p class="icm-color-brown-100">brown 100</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-brown-50">brown 50</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-brown-5">brown 5</p>
+          </div>
+        </div>
+
+        <div>
+          <h5>teal</h5>
+          <div class="icm-flex">
+            <p class="icm-color-teal-100">teal 100</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-teal-50">teal 50</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-teal-5">teal 5</p>
+          </div>
+        </div>
+
+        <div>
+          <h5>LeafGreen</h5>
+          <div class="icm-flex">
+            <p class="icm-color-leafGreen-100">leafGreen 100</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-leafGreen-50">leafGreen 50</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-leafGreen-5">leafGreen 5</p>
+          </div>
+        </div>
+
+        <div>
+          <h5>yellow</h5>
+          <div class="icm-flex">
+            <p class="icm-color-yellow-100">yellow 100</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-yellow-50">yellow 50</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-yellow-5">yellow 5</p>
+          </div>
+        </div>
+
+        <div>
+          <h5>turquoise</h5>
+          <div class="icm-flex">
+            <p class="icm-color-turquoise-100">turquoise 100</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-turquoise-50">turquoise 50</p>
+            <p [ngStyle]="{'margin-left': '20px'}" class="icm-color-turquoise-5">turquoise 5</p>
+          </div>
+        </div>
+
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+<!--<div class="card icm-flex icm-flex-column texts margin-bottom">-->
+<!--  <p class="icm-text&#45;&#45;header">Экраны форм</p>-->
+<!--  <ul>-->
+<!--    <li>-->
+<!--      <p>Инициализация и первичные проверки</p>-->
+<!--      <ul>-->
+<!--        <li><a class="link" href="/#/dashboard/client/gc/525/928">Создание ГК/Новая заявка ГК</a></li>-->
+<!--        <li><a class="link" href="/#/dashboard/client/entity/526/929">Создание ЮЛ/Новая заявка ЮЛ</a></li>-->
+<!--        <li><a class="link" href="/#/dashboard/task/RequestCheck/d5dc2b2c-6a17-11eb-8427-0a580a830012">Результаты предварительных проверок</a></li>-->
+<!--        <li><a class="link" href="/#/dashboard/DocumentCheck/501/901">Минимальный пакет документов</a></li>-->
+<!--      </ul>-->
+<!--    </li>-->
+<!--    <li><a class="link" href="/#/dashboard/nda/490/886">NDA</a></li>-->
+<!--    <li><a class="link" href="/#/dashboard/ess-expertise/aboutClient/471/860">Экспертиза СЭБ</a></li>-->
+<!--    <li><a class="link" href="/#/dashboard/ps-expertise/490/886">Экспертиза PS</a></li>-->
+<!--    <li><a class="link" href="/#/dashboard/preliminary/490/886">Предварительный кредитный анализ</a></li>-->
+<!--    <li><a class="link" href="/#/dashboard/expertise-processing">Обработка результатов экспертиз</a></li>-->
+<!--    <li><a class="link" href="/#/dashboard/reconciliation">Согласование КП</a></li>-->
+<!--    <li><a class="link" href="/#/dashboard/expertise-lawyer">Юридическая экспертиза</a></li>-->
+<!--    <li>-->
+<!--      <p>Залоговая экспертиза</p>-->
+<!--      <ul>-->
+<!--        <li><a class="link" href="/#/dashboard/prepareReqPledge/490/886">Подготовка заявки к залоговой экспертизе</a></li>-->
+<!--        <li><a class="link" href="/#/dashboard/prepareAdvPledge/490/886">Подготовка заключения о целесообразности принятия имущества в залог</a></li>-->
+<!--      </ul>-->
+<!--    </li>-->
+<!--    <li><a class="link" href="/#/dashboard/construction-expertise">Строительная экспертиза</a></li>-->
+<!--    <li><a class="link" href="/#/dashboard/creditAnalysis/490/886">Кредитный анализ</a></li>-->
+<!--    <li>-->
+<!--      <p>Экспертиза рисков</p>-->
+<!--      <ul>-->
+<!--        <li><a class="link" href="/#/dashboard/expertise-risk-independent">Независимая экспертиза рисков</a></li>-->
+<!--        <li><a class="link" href="/#/dashboard/expertise-risk">Экспертиза рисков</a></li>-->
+<!--        <li><a class="link" href="/#/dashboard/expertise-risk-completion">Заключение экспертизы</a></li>-->
+<!--      </ul>-->
+<!--    </li>-->
+<!--    <li><a class="link" href="/#/dashboard/prepare-kod">Подготовка КОД</a></li>-->
+<!--    <li>-->
+<!--      <p>Обработка решения УО</p>-->
+<!--      <ul>-->
+<!--        <li><a class="link" href="/#/dashboard/uoConclusion/490/886">Вынесение вопроса на УО</a></li>-->
+<!--        <li><a class="link" href="/#/dashboard/uoSolutionProcessing/490/886">Обработка решения УО</a></li>-->
+<!--        <li><a class="link" href="/#/dashboard/RVPSVerification/490/886">Верификация расчета РВПС</a></li>-->
+<!--      </ul>-->
+<!--    </li>-->
+<!--  </ul>-->
+<!--</div>-->
+
+<!--<div class="card texts margin-bottom text&#45;&#45;header">-->
+<!--  <p>Links</p>-->
+<!--  <div class="uk-flex">-->
+<!--    <div>-->
+<!--      <p class="text&#45;&#45;paragraph">Modal link</p>-->
+<!--      <a  class="link-modal">Normal</a>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--      <p class="text&#45;&#45;paragraph">Link</p>-->
+<!--      <a  class="link">Normal</a>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--<div class="card margin-bottom">-->
+<!--  <p class="text&#45;&#45;header">Stepper</p>-->
+<!--  <app-ui-stepper></app-ui-stepper>-->
+<!--</div>-->
+
+<!--<div class="card texts margin-bottom">-->
+<!--  <p class="text&#45;&#45;header">Step progress</p>-->
+<!--  <app-ui-step-progress></app-ui-step-progress>-->
+<!--</div>-->
+
+<!--<div class="card texts margin-bottom">-->
+<!--  <p class="text&#45;&#45;header">Loader</p>-->
+<!--  <app-loader [placeholder]="'Дождитесь результатов проверки'" ></app-loader>-->
+<!--</div>-->
+
+<!--<div class="card upload margin-bottom">-->
+<!--  <p class="text&#45;&#45;header">Upload</p>-->
+<!--  <app-download-file-button></app-download-file-button>-->
+<!--  <app-upload-file (change)="onChange($event)"></app-upload-file>-->
+<!--</div>-->
+
+<!--<div class="card margin-bottom" >-->
+<!--  <p class="text&#45;&#45;header">Progress</p>-->
+<!--  <app-status-stepper></app-status-stepper>-->
+<!--</div>-->
+
+<!--<div class="card texts margin-bottom">-->
+<!--  <p class="text&#45;&#45;header">Checking</p>-->
+<!--  <app-checking-status [type]="'success'" [caption]="'Пройдена успешно'"></app-checking-status>-->
+<!--  <app-checking-status [type]="'alerted'" [caption]="'Условно положительная'"></app-checking-status>-->
+<!--  <app-checking-status [type]="'denied'"  [caption]="'Ошибка'"></app-checking-status>-->
+<!--</div>-->
+
+<!--<div class="card margin-bottom">-->
+<!--  <p class="text&#45;&#45;header">Hint</p>-->
+<!--  <app-hint [caption]="'Заполните все необходимые поля, чтобы продолжить'"></app-hint>-->
+<!--</div>-->
+
+<!--<div class="card margin-bottom">-->
+<!--  <p class="text&#45;&#45;header">DataList<span><mat-icon class="mat-18 roll-icon" appRoller [parentClass]="'parentToggleDataList'">horizontal_rule</mat-icon></span></p>-->
+<!--  <div class="parentToggleDataList">-->
+<!--    <div [ngStyle]="{width: '1080px', padding: '10px 10px 10px 24px', background: '#ffffff'}">-->
+<!--      <app-ui-data-list></app-ui-data-list>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--<div class="card margin-bottom">-->
+<!--  <p class="text&#45;&#45;header">Table</p>-->
+<!--  <div [ngStyle]="{width: '1080px', padding: '10px 10px 10px 24px', background: '#ffffff'}">-->
+<!--    <app-ui-accordion-list></app-ui-accordion-list>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--<div class="card margin-bottom" [ngStyle]="{width: '1275px'}">-->
+<!--  <p class="text&#45;&#45;header">Статусы первичных проверок<span><mat-icon class="mat-18 roll-icon" appRoller [parentClass]="'parentTogglePrimaryChecks'">horizontal_rule</mat-icon></span></p>-->
+<!--  <div class="parentTogglePrimaryChecks">-->
+<!--    <app-primary-checks-status></app-primary-checks-status>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--<div class="card margin-bottom" [ngStyle]="{width: '1275px'}">-->
+<!--  <p class="text&#45;&#45;header" (click)="openChat()">Открыть Чат</p>-->
+<!--  <p>Для теста вида собеседнияка добавить в сообщение "Нея"</p>-->
+<!--</div>-->
+
+<!--<div class="margin-bottom" [ngStyle]="{width: '1275px'}">-->
+<!--  <app-summary-company></app-summary-company>-->
+<!--</div>-->
+
+<!--<div class="margin-bottom" [ngStyle]="{width: '1275px'}">-->
+<!--  <app-pledge-chips></app-pledge-chips>-->
+<!--</div>-->
+
+<!--<div class="icm-card icm-padding-large margin-bottom">-->
+<!--  <p class="icm-text&#45;&#45;header">Доработка</p>-->
+<!--  <hr class="icm-hr">-->
+<!--  <app-risk ></app-risk>-->
+<!--  <hr class="icm-hr">-->
+<!--  <app-risk [itemData]="{type: 'Ответ'}"></app-risk>-->
+<!--</div>-->
+
+<!--<div class="icm-card icm-padding-large margin-bottom">-->
+<!--  <p class="icm-text&#45;&#45;header">Документы</p>-->
+<!--  <div class="icm-margin-small-bottom">-->
+<!--    <app-construction [itemData]="{test: 'Проверен'}" ></app-construction>-->
+<!--  </div>-->
+<!--  <div class="icm-margin-small-bottom">-->
+<!--    <app-construction ></app-construction>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <app-construction ></app-construction>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--<div class="margin-bottom" [ngStyle]="{width: '1275px'}">-->
+<!--  <app-calendar-activities></app-calendar-activities>-->
+<!--</div>-->
+
+<!--<div class="margin-bottom">-->
+<!--  <app-appointed-expertises></app-appointed-expertises>-->
+<!--</div>-->
+<!-- <div class="card margin-bottom" [ngStyle]="{'width':'584px'}">
+  <p class="text--header">Список компаний и контакты</p>
+  <app-about-company></app-about-company>
+</div> -->
+
+<!--<div class="card margin-bottom">-->
+<!--  <app-form-nda [formType]="'required'"></app-form-nda>-->
+<!--</div>-->
+
+<!--<div class="card margin-bottom">-->
+<!--  <app-form-nda [formType]="'sign'"></app-form-nda>-->
+<!--</div>-->

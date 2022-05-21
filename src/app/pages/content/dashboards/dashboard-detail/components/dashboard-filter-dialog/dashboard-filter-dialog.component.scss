@@ -1,0 +1,115 @@
+@import '../../../../../../../styles/exd-colors.scss';
+
+.filter-dialog {
+  width: 100%;
+  max-width: 1184px;
+  background-color: map-get($exd-primary, 1);
+
+  &__header {
+    padding: 24px 32px;
+    border-bottom: 1px solid map-get($exd-grayscale, 50);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__content {
+    display: flex;
+
+    &-list {
+      width: 392px;
+      border-right: 1px solid map-get($exd-grayscale, 50);
+
+      &-element {
+        padding: 18px 41px 18px 32px;
+        background-color: map-get($exd-grayscale, 0);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .list-element__selected {
+        padding: 8px 41px 8px 32px;
+        background-color: map-get($exd-grayscale, 50);
+      }
+    }
+
+    &-empty {
+      // padding: 8px 20px 20px 20px;
+      // width: 791px;
+      // height: 440px;
+      // box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    &-form {
+      padding: 8px 20px 20px 20px;
+
+      .form-input {
+        width: 360px;
+      }
+
+      .filter-name {
+        margin-left: 20px;
+      }
+
+      .filter-details-container {
+        width: 360px;
+        padding: 16px;
+        border: 1px solid map-get($exd-grayscale, 200);
+        box-sizing: border-box;
+        border-radius: 8px;
+        color: map-get($exd-grayscale, 400);
+
+        &__button {
+          width: 100%;
+          text-align: left;
+          margin-bottom: 8px;
+        }
+
+        &__item {
+          // width: 100%;
+          height: 36px;
+          padding-left: 12px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          border-radius: 8px;
+          background-color: map-get($exd-tretiary, 500);
+          color: map-get($exd-primary, 1);
+          font-size: 12px;
+          position: relative;
+          margin-bottom: 8px;
+        }
+
+        &__tooltip {
+          // display: none;
+          z-index: 999;
+          box-sizing: border-box;
+          width: 332px;
+          height: auto;
+          padding: 24px 48px 20px 16px;
+          background-color: map-get($exd-primary, 1);
+          position: absolute;
+          border-radius: 4px;
+          border: 1px solid map-get($exd-grayscale, 100);
+        }
+
+        &__item:hover &__tooltip {
+          display: block;
+        }
+
+        legend {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}
+
+.filter-actions {
+  margin-top: 125px;
+}
+.cancel-button {
+  margin-left: 16px;
+}

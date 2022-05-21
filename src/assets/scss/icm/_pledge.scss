@@ -1,0 +1,61 @@
+.icm-pledge {
+  padding:0 8px;
+  background: #FCFCFF;
+  border: 1px solid #C5C9E3;
+  box-sizing: border-box;
+  border-radius: 4px;
+  color: #3D50B7;
+  font-size: 14px;
+  font-weight: 500;
+  .icm-pledge-active {
+    background: #F4F6FF;
+    border: 2px solid #3D50B7;
+    box-sizing: border-box;
+    border-radius: 4px;
+    color: #1c265e;
+  }
+}
+
+.icm-pledge-mute {
+  padding:2px 4px;
+  background: #FCFCFF;
+  border: 1px solid #cccccc;
+  box-sizing: border-box;
+  border-radius: 4px;
+  color: #cccccc;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.icm-pledge-primary {
+  padding:2px 4px;
+  background: #FCFCFF;
+  border: 1px solid #C5C9E3;
+  box-sizing: border-box;
+  border-radius: 4px;
+  color: #3D50B7;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.icm-pledge-second {
+  padding:2px 4px;
+  background: #FCFCFF;
+  border: 1px solid #FF6C00;
+  box-sizing: border-box;
+  border-radius: 4px;
+  color: #FF6C00;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.icm-pledge-success {
+  padding:2px 4px;
+  background: #FCFCFF;
+  border: 1px solid #0A9F58;
+  box-sizing: border-box;
+  border-radius: 4px;
+  color: #0A9F58;
+  font-size: 16px;
+  font-weight: 500;
+}

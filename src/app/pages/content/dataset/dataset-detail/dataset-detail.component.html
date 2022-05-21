@@ -1,0 +1,75 @@
+<div class="dataset-detail">
+  <div class="dataset-detail-header">
+    <div class="dataset-detail-header-title">{{ datasetData?.table_name }}</div>
+    <div class="custom-badge custom-badge__green">{{ getCountRowLabel() }}</div>
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Поиск</mat-label>
+
+      <input
+        matInput
+        [formControl]="searchFormControl"
+        placeholder="Введите фразу"
+        (change)="onSearch(search)"
+        #search
+      />
+
+      <mat-icon class="search-logo" svgIcon="search"></mat-icon>
+    </mat-form-field>
+
+    <button class="primary-light-flat-button" (click)="createChart()" mat-flat-button>
+      Создать график
+    </button>
+  </div>
+
+  <div class="dataset-detail-container">
+    <app-dataset-aside-panel
+      [@toggleMenu]="asidePanelAnimationState$ | async"
+      [datasetData]="datasetData"
+      (openSql)="openSqlLab()"
+      (edit)="editDataset()"
+      (changeDataset)="changeDataset()"
+    >
+    </app-dataset-aside-panel>
+    <div class="dataset-detail-content-wrapper">
+      <div class="dataset-detail-content">
+        <div class="dataset-detail-content-spinner" *ngIf="!dataSource">
+          <mat-spinner color="primary"></mat-spinner>
+        </div>
+
+        <table [dataSource]="dataSource" mat-table matSort class="dataset-detail-content-table">
+          <ng-container *ngFor="let col of chartData?.colnames; let i = index" [matColumnDef]="col">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>
+              <span
+                *ngIf="isColumnIconByName(col)"
+                class="dataset-detail-content-table-item-type-icon"
+              >
+                <mat-icon [svgIcon]="getType(col)"></mat-icon>
+              </span>
+              <span
+                *ngIf="!isColumnIconByName(col)"
+                class="dataset-detail-content-table-item-type-icon"
+              >
+                {{ getType(col | lowercase) }}
+              </span>
+              {{ getVerboseNameByColName(col) }}
+            </th>
+            <td mat-cell class="dataset-detail-cell" *matCellDef="let dataset">
+              {{
+                getType(col | lowercase) === 'date-type'
+                  ? getFormatDate(col, dataset[col])
+                  : dataset[col]
+              }}
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="chartData?.colnames"></tr>
+          <tr mat-row *matRowDef="let dataset; columns: chartData?.colnames"></tr>
+        </table>
+      </div>
+      <mat-paginator
+        class="dataset-detail-content-paginator"
+        [pageSizeOptions]="[10, 25, 50, 100]"
+      ></mat-paginator>
+    </div>
+  </div>
+</div>

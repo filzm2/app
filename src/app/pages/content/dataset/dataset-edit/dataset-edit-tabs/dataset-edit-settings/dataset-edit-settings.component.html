@@ -1,0 +1,51 @@
+<div class="dataset-edit-settings">
+  <form *ngIf="formGroup" [formGroup]="formGroup">
+    <div class="column">
+      <div class="custom-form-field">
+        <app-chips-autocomplete-field
+          label="Доступы"
+          [allOptions]="owners"
+          [formControl]="getControlByName('owners')"
+        >
+        </app-chips-autocomplete-field>
+      </div>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Тайм-аут кэша</mat-label>
+        <input
+          formControlName="cache_timeout"
+          matInput
+          type="number"
+          inputmode="number"
+          min="0"
+          (change)="checkInputFieldNumber($event)"
+        />
+
+        <mat-hint>
+          Продолжительность времени в секундах до того, как кеш станет недействительным
+        </mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Смещение часов</mat-label>
+        <input
+          formControlName="offset"
+          matInput
+          (change)="checkInputFieldNumberWithMinusValue($event)"
+        />
+        <mat-hint>
+          Количество часов, отрицательное или положительное, для смещения столбца времени. Это можно
+          использовать для перевода времени UTC на местное время.
+        </mat-hint>
+      </mat-form-field>
+    </div>
+
+    <div class="column">
+      <mat-form-field appearance="outline" class="mat-textarea">
+        <mat-label>Описание</mat-label>
+        <textarea formControlName="description" matInput></textarea>
+        <mat-hint>Введите описание для набора данных</mat-hint>
+      </mat-form-field>
+    </div>
+  </form>
+</div>

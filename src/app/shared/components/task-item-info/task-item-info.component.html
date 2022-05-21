@@ -1,0 +1,43 @@
+<mat-card *ngIf="(tasksService.activeTask$ | async) as task">
+  <mat-card-content>
+    <div class="about_user_content">
+      <div class="about_user">
+        <div class="mc-user-block_card_type">
+          Задача
+        </div>
+        <div class="task__author">
+          <div class="task__userAvatar" [ngStyle]="{backgroundImage: user.avatar }">
+          </div>
+          <div [ngStyle]="{'padding-left': '15px'}">
+            <div><span class="task__userRole">{{user.position}}</span></div>
+            <div><a class="task__userName">{{user.fio}}.</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="timers">
+        <div class="task__item_clock"></div>
+        <div [ngStyle]="{'padding-left': '15px'}">
+          <span class="task__info_caption">SLA задачи</span>
+          <div class="task__item_to_end">{{task.sla.days > 0 ? task.sla.days + ' д.' : ''}} {{task.sla.hours > 0 ? task.sla.hours + ' ч.' : ''}} {{task.sla.minutes}} мин.</div>
+        </div>
+        <div *ngIf=" task && task.status === 1" class="task__item_play"></div>
+        <div *ngIf="task && task.status !== 1" class="task__item_pause"></div>
+      </div>
+    </div>
+    <div class="user_task_description">
+      <div class="about_user_task_icon">
+        <span class="material-icons">horizontal_rule</span>
+      </div>
+      <div *ngIf="task" class="about_user_task_caption">
+        {{task.name === 'Создание клиента' ? 'Заполните информацию о клиенте.' :
+        task.name === 'Создание заявки на лимит' ? 'Укажите информацию о лимите и продуктах.' :
+          task.name === 'Результат предварительных проверок' ? 'Выберите соответствующее действие по результатам предварительных проаерок.' :
+            task.name === 'Сбор и проверка документов' ? 'Проверьте минимальный пакет документов, при необходимости загрузите недостающие и верифицируйте их в Электронном досье.' :
+              task.name === 'Подготовка заявки для экспертизы СЭБ ' ? 'Подготовьте заявку для проверки в службе экономической безопасности.' :
+                'Выполните этап ' + task.name + ', после чего нажмите на кнопку “Завершить задачу”.'
+        }}
+<!--        Выполните этап "<span *ngIf="task">{{task.name}}</span>", после чего нажмите на кнопку “Завершить задачу”.-->
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

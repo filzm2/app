@@ -1,0 +1,39 @@
+<div class="user-edit">
+  <div class="user-edit__title">
+    {{userId ? 'Редактирование пользователя' : 'Добавление нового пользователя'}}
+  </div>
+
+  <div class="user-edit__body" *ngIf="formGroup" [formGroup]="formGroup">
+    <app-form-field [control]="getFormControl('firstName')" label="Имя"></app-form-field>
+    <app-form-field [control]="getFormControl('lastName')" label="Фамилия"></app-form-field>
+    <app-form-field [control]="getFormControl('username')" label="Логин"></app-form-field>
+    <app-form-field [control]="getFormControl('email')" label="E-mail"></app-form-field>
+    <app-chips-autocomplete-field [formControl]="getFormControl('roles')" label="Роли" [allOptions]="roles$ | async"></app-chips-autocomplete-field>
+    <mat-form-field appearance="outline">
+      <mat-select formControlName="activity">
+        <mat-option [value]="true">Активен</mat-option>
+        <mat-option [value]="false">Не активен</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <app-form-field *ngIf="!userId" type="password" [control]="getFormControl('password')" label="Пароль"></app-form-field>
+    <app-form-field *ngIf="!userId" type="password" [control]="getFormControl('passwordRepeat')" label="Повтор пароля"></app-form-field>
+  </div>
+
+  <div class="user-edit__actions">
+    <button
+      mat-raised-button
+      color="primary"
+      class="small-button "
+      (click)="saveChanges()">
+      Добавить
+    </button>
+
+    <button
+      mat-stroked-button
+      color="primary"
+      class="small-button primary-color close-button"
+      (click)="routeBack()">
+      Отмена
+    </button>
+  </div>
+</div>

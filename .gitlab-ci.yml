@@ -1,0 +1,84 @@
+variables:
+    KUBECONFIG: /builds/anozhenko/test-pipe/deploy/config
+
+stages:
+    - compile
+    - build
+    - deploy
+
+compile:
+    image: nexus3.int.netintel.ru/repository/docker-group/node:14
+    stage: compile
+    script:
+        - npm install
+        - npm run build
+    cache:
+      paths:
+        - ./node_modules/
+    artifacts:
+        paths:
+          - ./dist/psb-bi/
+
+build-master:
+    stage: build
+    image: nexus3.int.netintel.ru/repository/docker-group/docker:latest
+    services: 
+      - docker:17.12.1-dind
+    before_script:
+      - docker login -u "gitlab" -p "$REGISTRY_PASS" $NEXUS_URL
+    script:
+      - docker build -t $NEXUS_URL/repository/docker-group/exd-front-master .
+      - docker push $NEXUS_URL/repository/docker-group/exd-front-master
+    only:
+      - master
+    needs:
+      - compile
+    dependencies:
+      - compile
+
+deploy-master:
+    stage: deploy
+    image: anozhenko/oc:latest
+
+    script:
+      - mkdir -p /builds/anozhenko/test-pipe/deploy
+      - echo ${DEPLOYER_CONFIG} | base64 -d > ${KUBECONFIG}
+      - export KUBECONFIG=/builds/anozhenko/test-pipe/deploy/config
+      - oc version
+      - oc import-image image-registry.openshift-image-registry.svc:5000/ds/exd-front-master --from=$NEXUS_URL/repository/docker-group/exd-front-master --confirm
+    only:
+      - master
+    needs:
+      - build-master
+
+build-stable:
+    stage: build
+    image: nexus3.int.netintel.ru/repository/docker-group/docker:latest
+    services: 
+      - docker:17.12.1-dind
+    before_script:
+      - docker login -u "gitlab" -p "$REGISTRY_PASS" $NEXUS_URL
+    script:
+      - docker build -t $NEXUS_URL/repository/docker-group/exd-front-stable .
+      - docker push $NEXUS_URL/repository/docker-group/exd-front-stable
+    only:
+      - stable
+    needs:
+      - compile
+    dependencies:
+      - compile
+
+deploy-stable:
+    stage: deploy
+    image: anozhenko/oc:latest
+
+    script:
+      - mkdir -p /builds/anozhenko/test-pipe/deploy
+      - echo ${DEPLOYER_CONFIG} | base64 -d > ${KUBECONFIG}
+      - export KUBECONFIG=/builds/anozhenko/test-pipe/deploy/config
+      - oc version
+      - oc import-image image-registry.openshift-image-registry.svc:5000/ds/exd-front-stable --from=$NEXUS_URL/repository/docker-group/exd-front-stable --confirm
+    only:
+      - stable
+    needs:
+      - build-stable

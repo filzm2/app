@@ -1,0 +1,36 @@
+<div class="dashboard-owners-dialog">
+  <div class="close" (click)="close()">
+    <mat-icon>close</mat-icon>
+  </div>
+
+  <h2 class="title">Назначить владельцев</h2>
+
+  <div class="custom-form-field">
+    <app-chips-autocomplete-field
+      label="Владельцы"
+      [allOptions]="owners$ | async"
+      [formControl]="control"
+    >
+    </app-chips-autocomplete-field>
+  </div>
+
+  <div class="buttons">
+    <button
+      mat-stroked-button
+      color="primary"
+      class="mat-raised-button small-button mat-primary"
+      (click)="submit()"
+    >
+      Сохранить
+    </button>
+
+    <button
+      mat-stroked-button
+      color="primary"
+      class="cancel-button small-button primary-color"
+      (click)="close()"
+    >
+      Отмена
+    </button>
+  </div>
+</div>

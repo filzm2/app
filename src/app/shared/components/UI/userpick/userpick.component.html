@@ -1,0 +1,13 @@
+<div class="ui-userpick size{{size}}"
+     [ngStyle]="{ alignItems: !data?.position && !data?.department && !onlyPhoto ? 'center' : 'start'}"
+>
+  <div *ngIf="isOnline" class="ui-userpick__marker"></div>
+  <div class="ui-userpick__ava">
+    <img *ngIf="data?.photo" [src]="data?.photo" alt="">
+  </div>
+  <div *ngIf="!onlyPhoto" class="ui-userpick__info">
+    <p class="ui-userpick__info-position">{{data?.position}}</p>
+    <p class="ui-userpick__info-name">{{data?.name}}</p>
+    <p class="ui-userpick__info-department">{{data?.department}}</p>
+  </div>
+</div>

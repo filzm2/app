@@ -1,0 +1,37 @@
+@import "../../../../../../styles/exd-colors.scss";
+@import "../../../../../../styles/variables.scss";
+
+.dialog-chart {
+  background: white;
+  border-radius: $main-radius;
+  padding: 16px;
+  &__content {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 10px;
+    padding-bottom: 10px;
+    position: relative;
+    overflow: visible;
+    &_description {
+      margin: 8px 0;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+
+  }
+
+  &__actions {
+    padding-bottom: 20px;
+  }
+
+  .mat-form-field {
+    width: 100%;
+  }
+
+  .mat-tab-label {
+    min-width: 110px;
+  }
+}

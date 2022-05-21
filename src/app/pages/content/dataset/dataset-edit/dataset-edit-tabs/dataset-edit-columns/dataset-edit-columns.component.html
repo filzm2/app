@@ -1,0 +1,91 @@
+<div class="dataset-edit-columns">
+  <form *ngIf="formGroup" [formGroup]="formGroup">
+    <mat-accordion displayMode="flat" hideToggle formArrayName="columns" class="ui-accordion-v2">
+      <mat-expansion-panel disabled class="mat-elevation-z0">
+        <mat-expansion-panel-header>
+          <mat-panel-title class="label-column"> Столбец </mat-panel-title>
+          <mat-panel-title> Тип данных </mat-panel-title>
+          <mat-panel-title> Временной </mat-panel-title>
+          <mat-panel-title> Фильтруется </mat-panel-title>
+          <!-- <mat-panel-title> Измеряется </mat-panel-title> -->
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel
+        *ngFor="let column of getFormArray().controls; let i = index"
+        class="mat-elevation-z0"
+        [expanded]="expanded === i"
+        (opened)="setStep(i)"
+      >
+        <mat-expansion-panel-header>
+          <mat-icon class="arrow-drop-down" svgIcon="arrow_drop_down"></mat-icon>
+          <mat-panel-title *ngIf="calculated" class="label-column">
+            <span (click)="focusHiddenField(column_name, $event)" class="header-label">
+              {{ getControlByName('column_name', column).value || 'Новый столбец' }}
+            </span>
+
+            <input
+              #column_name
+              class="hidden-field"
+              [formControl]="getControlByName('column_name', column)"
+              matInput
+            />
+          </mat-panel-title>
+          <mat-panel-title *ngIf="!calculated" class="label-column">
+            {{ getControlByName('column_name', column).value }}
+          </mat-panel-title>
+          <mat-panel-title class="multirow">
+            {{ getControlByName('type', column).value }}
+          </mat-panel-title>
+          <mat-panel-title>
+            <mat-checkbox [formControl]="getControlByName('is_dttm', column)"></mat-checkbox>
+          </mat-panel-title>
+          <mat-panel-title>
+            <mat-checkbox [formControl]="getControlByName('filterable', column)"></mat-checkbox>
+          </mat-panel-title>
+          <!--
+          <mat-panel-title>
+            <mat-checkbox [formControl]="getControlByName('groupby', column)"></mat-checkbox>
+          </mat-panel-title>
+          -->
+          <app-icon-button name="delete" (click)="deleteItem(i, $event)"></app-icon-button>
+        </mat-expansion-panel-header>
+
+        <div class="dataset-edit-columns-item">
+          <mat-form-field *ngIf="calculated" appearance="outline" class="mat-textarea">
+            <mat-label>Поле с выражениями SQL</mat-label>
+            <textarea [formControl]="getControlByName('expression', column)" matInput></textarea>
+          </mat-form-field>
+
+          <app-form-field
+            label="Ярлык"
+            [control]="getControlByName('verbose_name', column)"
+            placeholder=""
+          ></app-form-field>
+
+          <app-form-field
+            label="Описание"
+            [control]="getControlByName('description', column)"
+            placeholder="Description"
+          ></app-form-field>
+
+          <mat-form-field *ngIf="calculated" appearance="outline">
+            <mat-label>Тип данных</mat-label>
+            <mat-select [formControl]="getControlByName('type', column)">
+              <mat-option *ngFor="let type of getDataTypes()" [value]="type.value">
+                {{ type.label }}
+              </mat-option>
+            </mat-select>
+            <mat-error>{{ getErrors(getControlByName('type', column)) }}</mat-error>
+          </mat-form-field>
+
+          <app-form-field
+            label="D3 формат"
+            [control]="getControlByName('python_date_format', column)"
+            placeholder="DD/MM/YYYY"
+          ></app-form-field>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </form>
+</div>

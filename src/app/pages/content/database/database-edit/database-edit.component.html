@@ -1,0 +1,27 @@
+<div class="database-edit">
+  <div class="database-edit-title">
+    Редактировать базу данных
+  </div>
+
+  <app-database-sql-alchemy-form [data]="data" [databaseId]="databaseId">
+
+  </app-database-sql-alchemy-form>
+
+  <div class="database-edit-actions">
+    <button
+      mat-raised-button
+      color="primary"
+      class="small-button "
+      (click)="saveChanges()">
+      Сохранить
+    </button>
+
+    <button
+      mat-stroked-button
+      color="primary"
+      class="small-button primary-color close-button"
+      (click)="routeBack()">
+      Закрыть
+    </button>
+  </div>
+</div>

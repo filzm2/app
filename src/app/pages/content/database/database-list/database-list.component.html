@@ -1,0 +1,293 @@
+<div class="database-list-container">
+  <div class="database-list-header">
+    <h1>Базы данных</h1>
+  </div>
+
+  <div class="database-list-actions-wrapper">
+    <div class="database-list-actions">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Поиск</mat-label>
+
+        <input
+          matInput
+          [(ngModel)]="filterState.database_name"
+          placeholder="Поиск"
+          (change)="onSearch()"
+        />
+
+        <mat-icon class="search-logo" svgIcon="search"></mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="outline-blue-select-field">
+        <mat-label>Сортировка</mat-label>
+        <mat-select [(ngModel)]="sortColumn" (selectionChange)="getSortedList($event.value)">
+          <mat-option value="database_name"> По Алфавиту </mat-option>
+          <mat-option value="changed_on_delta_humanized"> По Дате изменения </mat-option>
+          <mat-option value="allow_dml"> По DML </mat-option>
+          <mat-option value="allow_csv_upload"> По CSV </mat-option>
+          <mat-option value="allow_run_async"> AQE </mat-option>
+          <mat-option value="expose_in_sqllab"> Раскрывается в SQL Lab </mat-option>
+        </mat-select>
+
+        <mat-icon class="blue-logo" svgIcon="sort"></mat-icon>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="database-list-filters-wrapper">
+    <div class="database-list-filters">
+      <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+        <mat-label>Раскрывается в SQL Lab</mat-label>
+
+        <mat-select [(ngModel)]="filterState.expose_in_sqllab" (selectionChange)="onSearch()">
+          <mat-option [value]="null">Все</mat-option>
+          <mat-option [value]="true">Да</mat-option>
+          <mat-option [value]="false">Нет</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+        <mat-label>CSV/Excel загрузка</mat-label>
+
+        <mat-select [(ngModel)]="filterState.allow_csv_upload" (selectionChange)="onSearch()">
+          <mat-option [value]="null">Все</mat-option>
+          <mat-option [value]="true">Да</mat-option>
+          <mat-option [value]="false">Нет</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+        <mat-label>AQE</mat-label>
+
+        <mat-select [(ngModel)]="filterState.allow_run_async" (selectionChange)="onSearch()">
+          <mat-option [value]="null">Все</mat-option>
+          <mat-option [value]="true">Да</mat-option>
+          <mat-option [value]="false">Нет</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+        <mat-label>DML</mat-label>
+
+        <mat-select [(ngModel)]="filterState.allow_dml" (selectionChange)="onSearch()">
+          <mat-option [value]="null">Все</mat-option>
+          <mat-option [value]="true">Да</mat-option>
+          <mat-option [value]="false">Нет</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="database-list-list">
+    <table mat-table [dataSource]="databaseList" class="database-list-table">
+      <colgroup span="9">
+        <col span="1" />
+        <col span="1" />
+        <col span="1" class="boolean-table-column" />
+        <col span="1" class="boolean-table-column" />
+        <col span="1" class="boolean-table-column" />
+        <col span="1" class="boolean-table-column" />
+        <col span="1" />
+        <col span="1" />
+        <col span="1" class="action-table-column" />
+      </colgroup>
+
+      <ng-container matColumnDef="database_name">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          (click)="getSortedList('database_name')"
+          class="sortable-column-header"
+        >
+          <span>
+            База данных
+            <mat-icon
+              [ngClass]="{ desc: sortOrder === 'desc', active: sortColumn === 'database_name' }"
+              svgIcon="arrow_sort_down"
+            ></mat-icon>
+          </span>
+        </th>
+
+        <td mat-cell *matCellDef="let database">
+          {{ database.database_name }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="backend">
+        <th mat-header-cell *matHeaderCellDef>
+          <span>Backend</span>
+        </th>
+
+        <td mat-cell *matCellDef="let database">
+          {{ database.backend }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="allow_run_async">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          (click)="getSortedList('allow_run_async')"
+          class="sortable-column-header boolean-table-header"
+        >
+          <span>
+            AQE
+            <mat-icon
+              [ngClass]="{ desc: sortOrder === 'desc', active: sortColumn === 'allow_run_async' }"
+              svgIcon="arrow_sort_down"
+            ></mat-icon>
+          </span>
+        </th>
+        <td mat-cell *matCellDef="let database">
+          <mat-icon class="check-icon">{{ database.allow_run_async ? 'check' : 'close' }}</mat-icon>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="allow_dml">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          (click)="getSortedList('allow_dml')"
+          class="sortable-column-header boolean-table-header"
+        >
+          <span>
+            DML
+            <mat-icon
+              [ngClass]="{ desc: sortOrder === 'desc', active: sortColumn === 'allow_dml' }"
+              svgIcon="arrow_sort_down"
+            ></mat-icon>
+          </span>
+        </th>
+        <td mat-cell *matCellDef="let database">
+          <mat-icon class="check-icon">{{ database.allow_dml ? 'check' : 'close' }}</mat-icon>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="allow_csv_upload">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          (click)="getSortedList('allow_csv_upload')"
+          class="sortable-column-header boolean-table-header"
+        >
+          <span>
+            CSV/Excel загрузка
+            <mat-icon
+              [ngClass]="{ desc: sortOrder === 'desc', active: sortColumn === 'allow_csv_upload' }"
+              svgIcon="arrow_sort_down"
+            ></mat-icon>
+          </span>
+        </th>
+
+        <td mat-cell *matCellDef="let database">
+          <mat-icon class="check-icon">{{
+            database.allow_csv_upload ? 'check' : 'close'
+          }}</mat-icon>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="expose_in_sqllab">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          (click)="getSortedList('expose_in_sqllab')"
+          class="sortable-column-header boolean-table-header"
+        >
+          <span>
+            Раскрывается<br />
+            в SQL Lab
+            <mat-icon
+              [ngClass]="{ desc: sortOrder === 'desc', active: sortColumn === 'expose_in_sqllab' }"
+              svgIcon="arrow_sort_down"
+            ></mat-icon>
+          </span>
+        </th>
+
+        <td mat-cell *matCellDef="let database">
+          <mat-icon class="check-icon">{{
+            database.expose_in_sqllab ? 'check' : 'close'
+          }}</mat-icon>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="changed_on_delta_humanized">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          (click)="getSortedList('changed_on_delta_humanized')"
+          class="sortable-column-header"
+        >
+          <span>
+            Изменён
+            <mat-icon
+              [ngClass]="{
+                desc: sortOrder === 'desc',
+                active: sortColumn === 'changed_on_delta_humanized'
+              }"
+              svgIcon="arrow_sort_down"
+            ></mat-icon>
+          </span>
+        </th>
+        <td mat-cell *matCellDef="let database">
+          {{ database.changed_on }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="created_by">
+        <th mat-header-cell *matHeaderCellDef>
+          <span>Создатель</span>
+        </th>
+
+        <td mat-cell *matCellDef="let database">
+          {{ database.created_by?.first_name }} {{ database.created_by?.last_name }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td class="database-list-table-actions" mat-cell *matCellDef="let database">
+          <app-icon-button
+            [matMenuTriggerFor]="actions_menu"
+            (click)="$event.stopPropagation()"
+            class="database-list-table-actions-button"
+            color="white"
+            name="options"
+          >
+          </app-icon-button>
+          <mat-menu class="database-list-table-actions-menu" #actions_menu="matMenu">
+            <button
+              [disabled]="!permissions.canWrite"
+              mat-menu-item
+              (click)="editDatabase(database)"
+            >
+              <mat-icon svgIcon="create"></mat-icon>
+              Редактировать
+            </button>
+            <button
+              [disabled]="!permissions.canWrite"
+              mat-menu-item
+              (click)="deleteDatabase(database)"
+            >
+              <mat-icon svgIcon="delete"></mat-icon>
+              Удалить
+            </button>
+          </mat-menu>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <div class="database-list-table-footer">
+      <mat-paginator
+        class="database-list-paginator"
+        [length]="paginator.count"
+        [pageSize]="paginator.pageSize"
+        [pageSizeOptions]="[10, 25]"
+        [pageIndex]="paginator.currentPage"
+        (page)="onPageChange($event)"
+      ></mat-paginator>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+<div class="chart-add">
+  <div class="chart-add__title">
+    Создание нового графика
+  </div>
+  <div class="chart-add__description">
+
+    <app-form-field [control]="nameFormControl"
+                    label="Название">
+    </app-form-field>
+
+    <app-select-infinite-scroll
+      class="filters-input"
+      [control]="datasetFormControl"
+      [options]="datasets"
+      (updateList)="updateDatasetList()" label="Набор данных">
+    </app-select-infinite-scroll>
+    <div class="chart-add__description-label">
+      Тип визуализации
+    </div>
+  </div>
+  <div class="chart-add__body">
+    <div *ngFor="let chart of availableCharts"
+         (click)="selectChart(chart.key)"
+         [ngClass]="{ active: selectedVizType === chart.key }"
+         class="chart-add__body-item">
+      <div class="chart-add__body-icon-wrapper"
+           matRipple>
+        <mat-icon [svgIcon]="chart.icon"></mat-icon>
+      </div>
+      <div class="chart-add__body-name">{{chart.name}}</div>
+    </div>
+  </div>
+
+  <div class="chart-add__actions">
+    <button
+      (click)="submit()"
+      mat-raised-button
+      color="primary"
+      class="small-button">
+      Создать
+    </button>
+
+    <button
+      mat-stroked-button
+      color="primary"
+      class="small-button primary-color close-button"
+      (click)="routeBack()">
+      Закрыть
+    </button>
+  </div>
+</div>

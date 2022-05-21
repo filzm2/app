@@ -1,0 +1,60 @@
+<div class="row-level-edit">
+  <div class="row-level-edit__title">
+    {{row ? 'Редактирование записи' : 'Добавление записи'}}
+  </div>
+
+  <div class="row-level-edit__body" *ngIf="formGroup" [formGroup]="formGroup">
+    <app-chips-autocomplete-field [formControl]="getFormControl('tables')"
+                                  label="Таблица"
+                                  [allOptions]="tables$ | async"></app-chips-autocomplete-field>
+    <app-chips-autocomplete-field [formControl]="getFormControl('roles_excludes')"
+                                  label="Входят все кроме"
+                                  (select)="roleSelected($event, false)"
+                                  #excludes
+                                  [allOptions]="roles$ | async"></app-chips-autocomplete-field>
+    <app-chips-autocomplete-field [formControl]="getFormControl('roles_includes')"
+                                  label="Входят только"
+                                  (select)="roleSelected($event, true)"
+                                  #includes
+                                  [allOptions]="roles$ | async"></app-chips-autocomplete-field>
+
+    <app-form-field [control]="getFormControl('group_key')"
+                    label="Ключевая группа"
+                    [relativeHint]="true"
+                    hint="Фильтры с одним и тем же групповым ключом будут объединены оператором ИЛИ внутри группы,
+а разные группы фильтров будут объединены оператором И. Неопределенные групповые ключи
+рассматриваются как уникальные группы, т. Е. Не группируются вместе. Например, если в таблице
+есть три фильтра, два из которых предназначены для отделов финансов и маркетинга (групповой
+ключ = 'отдел'), а один относится к региону Европа (group key = 'region'), в предложении фильтра
+будет применяться фильтр (отдел = 'Финансы' ИЛИ отдел = 'Маркетинг') И (регион = 'Европа')."></app-form-field>
+
+    <mat-form-field appearance="outline" class="mat-textarea relative-hint-field">
+      <mat-label>Условие</mat-label>
+      <textarea formControlName="condition" placeholder="client_id = 9" matInput></textarea>
+      <mat-hint>Это условие будет добавлено в предложение WHERE. Например, чтобы возвращать строки только для
+        определенного клиента, вы можете определить обычный фильтр с предложением client_id = 9. Чтобы
+        не отображать строки, если пользователь не принадлежит к роли фильтра RLS, можно создать базовый
+        фильтр с условием «1 = 0» (всегда ложно).ых
+      </mat-hint>
+    </mat-form-field>
+
+  </div>
+
+  <div class="row-level-edit__actions">
+    <button
+      mat-raised-button
+      color="primary"
+      class="small-button "
+      (click)="saveChanges()">
+      Добавить
+    </button>
+
+    <button
+      mat-stroked-button
+      color="primary"
+      class="small-button primary-color close-button"
+      (click)="routeBack()">
+      Отмена
+    </button>
+  </div>
+</div>

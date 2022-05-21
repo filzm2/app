@@ -1,0 +1,32 @@
+<div *ngIf="type === 'normal'" class="upload_document_block">
+  <form class="drop-zone" file-drop>
+    <input id="file" type="file" [multiple]="multi" [disabled]="disabled">
+    <label for="file">
+      <div class="upload_document_block-icon">
+        <div class="upload_document_icon"></div>
+      </div>
+      <div class="upload_document_block-caption">
+        <span class="DnD-caption">Перетащите</span>
+        <span>или </span>
+        <span class="usual-file-upload-caption">выберите</span>
+        <span> файлы</span>
+      </div>
+    </label>
+  </form>
+</div>
+<div *ngIf="type === 'small'" class="upload_document_small">
+  <form class="drop-zone" file-drop>
+    <input id="file2" type="file" [multiple]="multi" [disabled]="disabled">
+    <label for="file2">
+      <div class="upload_document_block-icon">
+        <div class="upload_document_icon"></div>
+      </div>
+      <div class="upload_document_block-caption">
+        <span class="usual_text">Перетащите или </span>
+        <span class="active_text">выберите</span>
+        <span class="usual_text"> файлы</span>
+      </div>
+    </label>
+  </form>
+</div>
+<div class="upload_document_hint">Helper text</div>

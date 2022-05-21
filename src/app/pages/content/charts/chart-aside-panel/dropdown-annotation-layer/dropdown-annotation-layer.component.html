@@ -1,0 +1,61 @@
+<div class="dialog-chart">
+  <div class="dialog-chart__body">
+    <h3 mat-dialog-title class="dialog-chart__title">Аннотация и слои</h3>
+    <div class="dialog-chart__content" [formGroup]="formGroup" *ngIf="formGroup">
+      <div class="dialog-chart__content_column full-width">
+        <div class="subtitle">
+          Настройки слоя
+        </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Название</mat-label>
+          <input matInput formControlName="name">
+        </mat-form-field>
+        <div class="chart-form__checkbox-group">
+          <mat-checkbox formControlName="contribution">Скрыть слой
+          </mat-checkbox>
+        </div>
+        <mat-form-field class="relative-hint-field" appearance="outline">
+          <mat-label>Тип аннатационного слоя</mat-label>
+          <mat-select formControlName="annotationType">
+            <mat-option *ngFor="let type of annotationTypes" [value]="type.value">{{type.label}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="currentType === 'FORMULA'" class="relative-hint-field" appearance="outline">
+          <mat-label>Формула</mat-label>
+          <input matInput formControlName="value">
+        </mat-form-field>
+      </div>
+
+      <div class="dialog-chart__content_column full-width">
+
+        <div class="subtitle">
+          Настройки вида
+        </div>
+        <mat-form-field class="relative-hint-field" appearance="outline">
+          <mat-label>Стиль</mat-label>
+          <mat-select formControlName="style">
+            <mat-option *ngFor="let style of styles" [value]="style.value">{{style.label}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="relative-hint-field" appearance="outline">
+          <mat-label>Прозрачность</mat-label>
+          <mat-select formControlName="opacity">
+            <mat-option *ngFor="let opacity of opacities" [value]="opacity.value">{{opacity.label}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <app-color-picker [currentColor]="currentColor" (pickedColor)="pickColor($event)"></app-color-picker>
+
+        <mat-form-field class="relative-hint-field" appearance="outline">
+          <mat-label>Ширина линии</mat-label>
+          <input matInput formControlName="width">
+        </mat-form-field>
+
+      </div>
+    </div>
+    <div mat-dialog-actions class="dialog-chart__actions">
+      <button mat-raised-button color="primary" class="small-button" (click)="submit()">Применить</button>
+      <button mat-stroked-button class="primary-color small-button" color="primary" (click)="close()">Закрыть</button>
+    </div>
+  </div>
+</div>

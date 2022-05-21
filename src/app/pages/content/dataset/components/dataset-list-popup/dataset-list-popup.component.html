@@ -1,0 +1,103 @@
+<div class="dataset-list-popup">
+  <app-icon-button (click)="close()" class="dataset-list-popup-close" name="close"></app-icon-button>
+  <div class="dataset-list-popup-header">
+    <h3>Изменить набор данных</h3>
+  </div>
+
+  <mat-form-field
+    appearance="outline"
+    class="search-field">
+    <mat-label>Поиск</mat-label>
+
+    <input
+      matInput
+      [(ngModel)]="filterState.table_name"
+      placeholder="Поиск / Фильтры"
+      (change)="onSearch(search)"
+      #search>
+
+    <mat-icon class="search-logo" svgIcon="search"></mat-icon>
+  </mat-form-field>
+
+  <div *ngIf="isLoading" class="dataset-list-popup-spinner">
+    <mat-spinner color="primary"></mat-spinner>
+  </div>
+  <div *ngIf="!isLoading" class="dataset-list-popup-body">
+    <table mat-table [dataSource]="datasetList"
+           class="dataset-list-popup-body-table">
+
+      <ng-container matColumnDef="table_name">
+        <th mat-header-cell
+            *matHeaderCellDef
+            (click)="getSortList('table_name')"
+            class="sortable-column-header">
+          <span>Название
+          <mat-icon [ngClass]="{'desc': sortOrder === 'desc', 'active': sortColumn === 'table_name'}"
+                    svgIcon="arrow_sort_down"></mat-icon>
+            </span>
+        </th>
+        <td mat-cell *matCellDef="let dataset">
+          {{ dataset.table_name }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="kind">
+        <th mat-header-cell
+            *matHeaderCellDef>Тип
+        </th>
+        <td mat-cell *matCellDef="let dataset">
+          <span class="custom-badge custom-badge__primary-white" *ngIf="dataset.kind === 'virtual'">
+            <mat-icon svgIcon="virtual"></mat-icon>Виртуальный
+          </span>
+          <span class="custom-badge custom-badge__primary-filled" *ngIf="dataset.kind === 'physical'">
+            <mat-icon svgIcon="physical"></mat-icon>Физический
+          </span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="schema">
+        <th mat-header-cell
+            *matHeaderCellDef
+            (click)="getSortList('schema')"
+            class="sortable-column-header"><span>Схема
+          <mat-icon [ngClass]="{'desc': sortOrder === 'desc', 'active': sortColumn === 'schema'}"
+                    svgIcon="arrow_sort_down"></mat-icon>
+          </span>
+        </th>
+        <td mat-cell *matCellDef="let dataset">
+          {{ dataset.schema }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="database.database_name">
+        <th mat-header-cell
+            *matHeaderCellDef>Соединение
+        </th>
+        <td mat-cell *matCellDef="let dataset">
+          {{ dataset.database?.database_name }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="changed_by_name">
+        <th mat-header-cell
+            *matHeaderCellDef>Разработчик
+        </th>
+        <td mat-cell *matCellDef="let dataset">
+          {{ dataset.changed_by_name }}
+        </td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="redirectToDataset(row)"></tr>
+    </table>
+    <div class="dataset-list-popup-paginator">
+      <mat-paginator class="dashboard-paginator"
+                     [length]="paginator.count"
+                     [pageSize]="paginator.pageSize"
+                     [pageIndex]="paginator.currentPage"
+                     (page)="onPageChange($event)"></mat-paginator>
+    </div>
+  </div>
+  <div class="dataset-list-popup-footer">
+    <mat-icon svgIcon="warning"></mat-icon>
+    <div>{{warningText}}</div>
+  </div>
+</div>
+

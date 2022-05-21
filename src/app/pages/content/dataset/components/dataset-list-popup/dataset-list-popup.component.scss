@@ -1,0 +1,77 @@
+@import "../../../../../../styles/exd-colors.scss";
+@import "../../../../../../styles/variables.scss";
+@import "../../../../../../styles/mixins.scss";
+
+.dataset-list-popup {
+  background: white;
+  border-radius: $main-radius;
+  width: 100%;
+  max-width: 900px;
+  min-width: 600px;
+  padding: 20px 32px 40px;
+  position: relative;
+  &-close {
+    position: absolute;
+    top: 0;
+    right: -52px;
+    .icon-button {
+      background: map-get($exd-grayscale, 400) !important;
+      path {
+        fill: white;
+      }
+      mat-icon {
+        opacity: 1 !important;
+      }
+    }
+  }
+  &-header {
+  }
+
+  .search-field {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  &-body {
+    border: 1px solid map-get($exd-grayscale, 100);
+    border-radius: $main-radius;
+    overflow: hidden;
+    &-table {
+      width: 100%;
+      padding: 0;
+      border-bottom: none;
+      tr, th, td {
+        background: transparent;
+      }
+    }
+  }
+  &-paginator {
+    height: 48px;
+    display: flex;
+    align-content: center;
+    flex-wrap: nowrap;
+    justify-content: center;
+    overflow: hidden;
+    mat-paginator {
+      margin-top: -14px;
+    }
+  }
+  &-footer {
+    padding-top: 20px;
+    @include font(14px, 500);
+    display: flex;
+    mat-icon {
+      margin-right: 16px;
+      path {
+        fill: map-get($exd-warning, 400)
+      }
+    }
+  }
+
+  &-spinner {
+    height: 340px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

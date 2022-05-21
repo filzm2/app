@@ -1,0 +1,117 @@
+@font-face {
+  font-family: Gilroy;
+  src: url('../../fonts/gilroy/Gilroy-Medium_0.otf') format("opentype");
+}
+@font-face {
+  font-family: Gilroy-Bold;
+  src: url('../../fonts/gilroy/Gilroy-Bold_0.otf') format("opentype");
+}
+@font-face {
+  font-family: Gilroy-SemiBold;
+  src: url('../../fonts/gilroy/Gilroy-SemiBold_0.otf') format("opentype");
+}
+
+.icm-gilroy {
+  &-H900 {
+    font-family: Gilroy-Bold, serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 72px;
+    line-height: 108px;
+  }
+
+  &-H800 {
+    font-family: Gilroy-Bold, serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 56px;
+    line-height: 84px;
+  }
+
+  &-H700 {
+    font-family: Gilroy-Bold, serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 40px;
+    line-height: 60px;
+  }
+
+  &-H600 {
+    font-family: Gilroy-Bold, serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 48px;
+  }
+
+  &-H500 {
+    font-family: Gilroy-Bold, serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 36px;
+  }
+
+  &-H400 {
+    font-family: Gilroy-Bold, serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 32px;
+  }
+
+  &-H300 {
+    font-family: Gilroy-SemiBold, serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  &-H200 {
+    font-family: Gilroy-SemiBold, serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  &-H100 {
+    font-family: Gilroy-SemiBold, serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+}
+.icm-subtitle {
+  font-family: Gilroy, serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 32px;
+}
+.icm-body {
+  &-large {
+    font-family: Gilroy, serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+  }
+  &-medium {
+    font-family: Gilroy, serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+  }
+  &-small {
+    font-family: Gilroy, serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+  }
+}

@@ -1,0 +1,280 @@
+/* ========================================================================
+   Component: Margin
+ ========================================================================== */
+
+/*
+  xSmall = 8
+  small = 10
+  medium = 16
+  large = 24
+  xLarge = 32
+
+ */
+$x-small: 8px;
+$small: 10px;
+$medium: 16px;
+$large: 24px;
+$x-large: 32px;
+
+
+/*
+ * Default
+ */
+.icm-margin {
+  margin: 20px;
+}
+* + .icm-margin {
+  margin-top: 20px !important;
+}
+.icm-margin-top {
+  margin-top: 20px !important;
+}
+.icm-margin-bottom {
+  margin-bottom: 20px !important;
+}
+.icm-margin-left {
+  margin-left: 20px !important;
+}
+.icm-margin-right {
+  margin-right: 20px !important;
+}
+/* xSmall
+ ========================================================================== */
+.icm-margin-xsmall {
+  margin: $x-small;
+}
+* + .icm-margin-xsmall {
+  margin-top: $x-small !important;
+}
+.icm-margin-xsmall-top {
+  margin-top: $x-small !important;
+}
+.icm-margin-xsmall-bottom {
+  margin-bottom: $x-small !important;
+}
+.icm-margin-xsmall-left {
+  margin-left: $x-small !important;
+}
+.icm-margin-xsmall-right {
+  margin-right: $x-small !important;
+}
+
+/* Small
+ ========================================================================== */
+.icm-margin-small {
+  margin: $small;
+}
+* + .icm-margin-small {
+  margin-top: $small !important;
+}
+.icm-margin-small-top {
+  margin-top: $small !important;
+}
+.icm-margin-small-bottom {
+  margin-bottom: $small !important;
+}
+.icm-margin-small-left {
+  margin-left: $small !important;
+}
+.icm-margin-small-right {
+  margin-right: $small !important;
+}
+/* Medium
+ ========================================================================== */
+.icm-margin-medium {
+  margin: $medium;
+}
+* + .icm-margin-medium {
+  margin-top: $medium !important;
+}
+.icm-margin-medium-top {
+  margin-top: $medium !important;
+}
+.icm-margin-medium-bottom {
+  margin-bottom: $medium !important;
+}
+.icm-margin-medium-left {
+  margin-left: $medium !important;
+}
+.icm-margin-medium-right {
+  margin-right: $medium !important;
+}
+/* Large
+ ========================================================================== */
+.icm-margin-large {
+  margin: $large;
+}
+* + .icm-margin-large {
+  margin-top: $large !important;
+}
+.icm-margin-large-top {
+  margin-top: $large !important;
+}
+.icm-margin-large-bottom {
+  margin-bottom: $large !important;
+}
+.icm-margin-large-left {
+  margin-left: $large !important;
+}
+.icm-margin-large-right {
+  margin-right: $large !important;
+}
+/* XLarge
+ ========================================================================== */
+.icm-margin-xlarge {
+  margin: $x-large;
+}
+* + .icm-margin-xlarge {
+  margin-top: $x-large !important;
+}
+.icm-margin-xlarge-top {
+  margin-top: $x-large !important;
+}
+.icm-margin-xlarge-bottom {
+  margin-bottom: $x-large !important;
+}
+.icm-margin-xlarge-left {
+  margin-left: $x-large !important;
+}
+.icm-margin-xlarge-right {
+  margin-right: $x-large !important;
+}
+
+/* Auto
+ ========================================================================== */
+.icm-margin-auto {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+.icm-margin-auto-top {
+  margin-top: auto !important;
+}
+.icm-margin-auto-bottom {
+  margin-bottom: auto !important;
+}
+.icm-margin-auto-left {
+  margin-left: auto !important;
+}
+.icm-margin-auto-right {
+  margin-right: auto !important;
+}
+.icm-margin-auto-vertical {
+  margin-top: auto !important;
+  margin-bottom: auto !important;
+}
+/* Phone landscape and bigger */
+@media (min-width: 640px) {
+  .icm-margin-auto\@s {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .icm-margin-auto-left\@s {
+    margin-left: auto !important;
+  }
+  .icm-margin-auto-right\@s {
+    margin-right: auto !important;
+  }
+}
+/* Tablet landscape and bigger */
+@media (min-width: 960px) {
+  .icm-margin-auto\@m {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .icm-margin-auto-left\@m {
+    margin-left: auto !important;
+  }
+  .icm-margin-auto-right\@m {
+    margin-right: auto !important;
+  }
+}
+/* Desktop and bigger */
+@media (min-width: 1200px) {
+  .icm-margin-auto\@l {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .icm-margin-auto-left\@l {
+    margin-left: auto !important;
+  }
+  .icm-margin-auto-right\@l {
+    margin-right: auto !important;
+  }
+}
+/* Large screen and bigger */
+@media (min-width: 1600px) {
+  .icm-margin-auto\@xl {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .icm-margin-auto-left\@xl {
+    margin-left: auto !important;
+  }
+  .icm-margin-auto-right\@xl {
+    margin-right: auto !important;
+  }
+}
+/* Remove
+ ========================================================================== */
+.icm-margin-remove {
+  margin: 0 !important;
+}
+.icm-margin-remove-top {
+  margin-top: 0 !important;
+}
+.icm-margin-remove-bottom {
+  margin-bottom: 0 !important;
+}
+.icm-margin-remove-left {
+  margin-left: 0 !important;
+}
+.icm-margin-remove-right {
+  margin-right: 0 !important;
+}
+.icm-margin-remove-vertical {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+.icm-margin-remove-adjacent + *,
+.icm-margin-remove-first-child > :first-child {
+  margin-top: 0 !important;
+}
+.icm-margin-remove-last-child > :last-child {
+  margin-bottom: 0 !important;
+}
+/* Phone landscape and bigger */
+@media (min-width: 640px) {
+  .icm-margin-remove-left\@s {
+    margin-left: 0 !important;
+  }
+  .icm-margin-remove-right\@s {
+    margin-right: 0 !important;
+  }
+}
+/* Tablet landscape and bigger */
+@media (min-width: 960px) {
+  .icm-margin-remove-left\@m {
+    margin-left: 0 !important;
+  }
+  .icm-margin-remove-right\@m {
+    margin-right: 0 !important;
+  }
+}
+/* Desktop and bigger */
+@media (min-width: 1200px) {
+  .icm-margin-remove-left\@l {
+    margin-left: 0 !important;
+  }
+  .icm-margin-remove-right\@l {
+    margin-right: 0 !important;
+  }
+}
+/* Large screen and bigger */
+@media (min-width: 1600px) {
+  .icm-margin-remove-left\@xl {
+    margin-left: 0 !important;
+  }
+  .icm-margin-remove-right\@xl {
+    margin-right: 0 !important;
+  }
+}

@@ -1,0 +1,54 @@
+@import "src/assets/scss/icm/_tabs.scss";
+@import "src/assets/scss/materialCustom/_tables.scss";
+
+.texts {
+  width: 300px;
+}
+
+.kit-table {
+  width: 100%;
+
+  &_wrap {
+    margin-bottom: 40px;
+  }
+}
+
+.userpick-block {
+  &:not(:last-child) {
+    margin-right: 50px;
+  }
+
+  &_item:not(:last-child) {
+    margin-bottom: 20px;
+  }
+}
+
+.simple-flex {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+
+  app-ui-chip:not(:last-child) {
+    margin-right: 16px;
+  }
+}
+
+.uk-flex {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.margin-bottom {
+  margin-bottom: 28px;
+}
+
+.card {
+  padding: 16px;
+  background: #ffffff;
+  border-radius: 4px;
+}
+
+.upload {
+  width: 330px;
+}

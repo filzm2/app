@@ -1,0 +1,51 @@
+<div class="dialog-chart">
+  <div class="dialog-chart__time-range">
+    <h3 mat-dialog-title class="dialog-chart__title">Метрика</h3>
+    <div class="dialog-chart__content" [formGroup]="formGroup" *ngIf="formGroup">
+      <mat-tab-group [selectedIndex]="selectedIndex" (selectedTabChange)="tabSelection($event)">
+
+        <mat-tab label="Сохранённые">
+          <div class="dialog-chart__content_field full-width">
+            <mat-form-field class="relative-hint-field" appearance="outline">
+              <mat-label>Сохранённая метрика</mat-label>
+              <mat-select formControlName="metric">
+                <mat-option *ngFor="let metric of availableMetrics" [value]="metric.metric_name">{{metric.metric_name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Обычный">
+          <div class="dialog-chart__content_field full-width">
+            <mat-form-field class="relative-hint-field" appearance="outline">
+              <mat-label>Столбец</mat-label>
+              <mat-select formControlName="column">
+                <mat-option *ngFor="let column of availableColumns" [value]="column">{{column.column_name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="relative-hint-field" appearance="outline">
+              <mat-label>Суммарный</mat-label>
+              <mat-select formControlName="aggregate">
+                <mat-option *ngFor="let operator of operators" [value]="operator">{{operator}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+          </div>
+        </mat-tab>
+        <mat-tab label="Расширенный SQL">
+
+          <div class="comments-container__add-textarea">
+            <mat-form-field appearance="outline" class="mat-textarea" style="width: 100%; height: 100%">
+              <mat-label></mat-label>
+              <textarea matInput formControlName="sqlExpression"></textarea>
+            </mat-form-field>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    <div mat-dialog-actions class="dialog-chart__actions">
+      <button mat-raised-button color="primary" class="small-button" (click)="submit()">Применить</button>
+      <button mat-stroked-button class="primary-color small-button" color="primary" (click)="close()">Закрыть</button>
+    </div>
+  </div>
+</div>

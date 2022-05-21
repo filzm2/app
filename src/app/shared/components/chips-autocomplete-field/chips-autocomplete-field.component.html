@@ -1,0 +1,54 @@
+<mat-form-field class="chip-list" appearance="outline">
+  <mat-label>{{ label }}</mat-label>
+
+  <mat-chip-list #chipList>
+    <mat-chip
+      *ngFor="let option of options"
+      [selectable]="selectable"
+      [removable]="removable"
+      (removed)="remove(option)"
+    >
+      {{ option.text }}
+
+      <button matChipRemove *ngIf="removable">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-chip>
+
+    <input
+      #input
+      #trigger="matAutocompleteTrigger"
+      (click)="trigger.openPanel()"
+      [formControl]="inputControl"
+      [matAutocomplete]="auto"
+      [matChipInputFor]="chipList"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      placeholder="Начните ввод..."
+    />
+  </mat-chip-list>
+
+  <mat-autocomplete
+    #auto="matAutocomplete"
+    (optionSelected)="selected($event)"
+    (opened)="isAutocompliteShown = true"
+    (closed)="isAutocompliteShown = false"
+  >
+    <mat-option
+      (click)="trigger.openPanel()"
+      *ngFor="let item of filteredItems | async"
+      [value]="item.value"
+    >
+      {{ item.text }}
+    </mat-option>
+  </mat-autocomplete>
+
+  <div class="field-suffix">
+    <mat-icon class="field-suffix-clear" (click)="clear()">close</mat-icon>
+
+    <mat-icon
+      [style]="{ transform: isAutocompliteShown ? 'rotate(180deg)' : 'rotate(0deg)' }"
+      svgIcon="arrow_drop_down"
+      (click)="toggleOpenPanel(trigger)"
+    ></mat-icon>
+  </div>
+</mat-form-field>

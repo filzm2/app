@@ -1,0 +1,60 @@
+/* ========================================================================
+   Component: Padding
+ ========================================================================== */
+
+$x-small: 8px;
+$small: 10px;
+$medium: 16px;
+$large: 24px;
+$x-large: 32px;
+
+.icm-padding-medium {
+  padding: $medium;
+}
+/* Small
+ ========================================================================== */
+.icm-padding-small {
+  padding: $x-small;
+}
+
+/* xSmall
+ ========================================================================== */
+.icm-padding-x-small {
+  padding: $x-small;
+}
+/* Large
+ ========================================================================== */
+.icm-padding-large {
+  padding: $large;
+}
+
+/* Large
+ ========================================================================== */
+.icm-padding-x-large {
+  padding: $x-large;
+}
+/* Remove
+ ========================================================================== */
+.icm-padding-remove {
+  padding: 0 !important;
+}
+.icm-padding-remove-top {
+  padding-top: 0 !important;
+}
+.icm-padding-remove-bottom {
+  padding-bottom: 0 !important;
+}
+.icm-padding-remove-left {
+  padding-left: 0 !important;
+}
+.icm-padding-remove-right {
+  padding-right: 0 !important;
+}
+.icm-padding-remove-vertical {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+.icm-padding-remove-horizontal {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}

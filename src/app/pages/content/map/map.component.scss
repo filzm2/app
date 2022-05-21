@@ -1,0 +1,58 @@
+@import '../../../../styles/exd-colors.scss';
+
+.map-container {
+  display: grid;
+  grid-template-rows: 210px auto 1fr;
+  height: calc(100vh - 60px); // 60px - шапка.
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    height: 76px;
+    padding-left: 20px;
+    font-size: 18px;
+
+    .map-name {
+      padding: 24px 0;
+      margin: 0;
+      color: map-get($exd-psb-blue, 500);
+      transition: font-size 0.1s;
+
+      @media (max-width: 1600px) {
+        line-height: 1.3;
+        font-size: 30px;
+      }
+
+      @media (max-width: 760px) {
+        line-height: 1.1;
+        font-size: 24px;
+      }
+    }
+
+    .period-row {
+      display: flex;
+      color: map-get($exd-psb-orange, 500);
+      transition: font-size 0.1s;
+
+      @media (max-width: 1600px) {
+        line-height: 1.3;
+        font-size: 26px;
+      }
+
+      @media (max-width: 760px) {
+        line-height: 1.1;
+        font-size: 20px;
+      }
+    }
+
+    .blue-text {
+      color: map-get($exd-psb-blue, 500);
+      padding-right: 5px;
+    }
+  }
+
+  .map {
+    // height: 100vh;
+  }
+}

@@ -1,0 +1,64 @@
+<div class="app-dashboard-filters">
+  <div class="filters-container">
+    <button
+      class="add-filter"
+      (click)="openFilterDialog(true)"
+    >
+      <img
+        src="assets/icons/plus_white.svg"
+        alt="plus_white"
+        class="add-filter-image"
+      >
+
+      Добавить фильтр
+    </button>
+
+    <mat-chip-list class="dashboard-chip-list">
+      <mat-chip
+        *ngFor="let filter of filters; let i = index;"
+        [selected]="selectedIndex === i"
+        
+        class="dashboard-chip"
+        (click)="changeFilterActive(i)"
+      >
+        {{ filter.name }}
+        <button mat-icon-button (click)="$event.stopPropagation(); openFilterPopup(i)" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
+          <mat-icon svgIcon="settings2"></mat-icon>
+        </button>
+        <ng-template
+        cdkConnectedOverlay
+        [cdkConnectedOverlayOrigin]="trigger"
+        [cdkConnectedOverlayOpen]="openFilterIndex === i"
+      >
+        <mat-card>
+          <app-dashboard-filter-bar [filterData]="filter" (changeFilter)="changeFilterDetail($event)"></app-dashboard-filter-bar>
+          <div class="filter-actions">
+            <button mat-raised-button color="primary" class="small-button" (click)="saveFilterPopup()" [disabled]="isEmptyObject(openFilterData)">
+              Сохранить
+            </button>
+            <button mat-stroked-button color="primary" class="small-button cancel-button primary-color" (click)="closeFilterPopup()">
+              Отменить
+            </button>
+          </div>
+        </mat-card>
+      </ng-template>
+      </mat-chip>
+    </mat-chip-list>
+  </div>
+
+  <button
+    class="configure-button"
+    (click)="openFilterDialog(false)"
+    [disabled]="!filters.length"
+    [ngClass]="{'configure-button__disabled': !filters.length}"
+  >
+    <img
+      src="assets/icons/filter_settings.svg"
+      alt="filter_settings"
+      class="configure-button-image"
+      [ngClass]="{'configure-button-image__disabled': !filters.length}"
+    >
+
+    Конфигурация фильтров
+  </button>
+</div>

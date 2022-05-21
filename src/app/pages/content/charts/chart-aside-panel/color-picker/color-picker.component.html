@@ -1,0 +1,36 @@
+<div class="color-picker">
+  <div class="color-picker__label">Цвет</div>
+  <div class="color-picker__colors">
+    <div *ngFor="let color of colors"
+         class="color-picker__colors_item"
+         [style.background]="'#' + color"
+         (click)="selectColor(color)">
+
+    </div>
+  </div>
+
+  <div [formGroup]="group" class="color-picker__form">
+    <div [style.background]="'#' + _currentColor.hex"
+         class="color-picker__colors_item">
+    </div>
+    <input formControlName="hex" pattern="#[0-9a-fA-F]{3}([0-9a-fA-F]{3})?" [attr.maxlength]="6">
+    <div class="color-picker__colors_item"
+         [style.background]="'#fb1409'">R</div>
+    <input formControlName="red" type="number" [attr.maxlength]="3">
+    <div class="color-picker__colors_item"
+         [style.background]="'#01d32f'">G</div>
+    <input formControlName="green" type="number" [attr.min]="0" [attr.max]="999" [attr.maxlength]="3">
+    <div class="color-picker__colors_item"
+         [style.background]="'#0057ff'">B</div>
+    <input formControlName="blue" type="number" [attr.min]="0" [attr.max]="999" [attr.maxlength]="3">
+  </div>
+
+</div>
+
+<button
+  mat-stroked-button
+  color="accent"
+  class="mat-raised-button small-button accent-color color-picker__reset-button"
+  (click)="pickDefaultColor()">
+   Автоматический цвет
+</button>

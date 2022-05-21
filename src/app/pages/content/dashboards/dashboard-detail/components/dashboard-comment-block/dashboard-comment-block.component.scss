@@ -1,0 +1,76 @@
+@import '../../../../../../../styles/exd-colors.scss';
+
+.comments-container {
+  background-color: map-get($exd-primary, 1);
+  width: 350px;
+  height: 570px;
+  padding: 20px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.16);
+  border: 1px solid map-get($exd-grayscale, 50);
+
+  &__actions {
+    height: 200px;
+    display: flex;
+    align-items: center;
+  }
+
+  &__info {
+    height: 400px;
+    display: flex;
+    align-items: center;
+    .no-comments {
+      color: map-get($exd-grayscale, 200);
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &__area {
+    box-sizing: border-box;
+    height: 400px;
+    padding: 2px;
+    overflow-y: auto;
+  }
+
+  &__comment {
+    // height: 112px;
+    box-sizing: border-box;
+    padding-top: 18px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid map-get($exd-grayscale, 100);
+  }
+
+  &__comment:last-child {
+    border: none;
+  }
+
+  .comments-button {
+    font-size: 12px !important;
+  }
+
+  &__add {
+    &-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 16px;
+
+      .status-icons {
+        width: 76px;
+        display: flex;
+        justify-content: space-between;
+
+        &__small {
+          cursor: pointer;
+          width: 20px;
+          height: 20px;
+          opacity: 0.5;
+        }
+      }
+
+      .status-checked {
+        opacity: 1;
+      }
+    }
+  }
+}

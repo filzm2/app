@@ -1,0 +1,91 @@
+@import "../../../../../styles/exd-colors.scss";
+
+.dashboard-detail-dialog {
+  position: relative;
+  min-width: 574px;
+  padding: 20px 32px 40px;
+  border-radius: 8px;
+  background-color: map-get($exd-primary, 1);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04), 0 4px 8px rgba(0, 0, 0, 0.16);
+
+  .close {
+    position: absolute;
+    top: 0;
+    right: -52px; // -36(ширина) -16(макет)
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background-color: map-get($exd-grayscale, 500);
+    cursor: pointer;
+  }
+
+  .title {
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 24px;
+    color: map-get($exd-primary, 0);
+  }
+
+  .inputs-container {
+    .input-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .input-title {
+        width: 100%;
+      }
+
+      .input-add-email {
+        margin: -6px 0 0 16px;
+        flex-shrink: 0;
+
+        &.hide {
+          opacity: 0;
+          pointer-events: none;
+        }
+      }
+    }
+  }
+
+  .sub-container {
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+
+    .sub-title {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+
+      .sub-title-text {
+        margin-left: 10px;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 20px;
+        color: map-get($exd-primary, 0);
+        user-select: none;
+      }
+    }
+  }
+
+  .app-mat-select {
+    margin-top: 22px;
+  }
+
+  .buttons {
+    margin-top: 14px;
+    display: flex;
+
+    .cancel-button {
+      margin-left: 16px;
+    }
+  }
+
+  .app-mat-select {
+    width: 414px;
+  }
+}

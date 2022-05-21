@@ -1,0 +1,283 @@
+/* ========================================================================
+   Component: Grid
+ ========================================================================== */
+/*
+ * 1. Allow cells to wrap into the next line
+ * 2. Reset list
+ */
+.icm-grid {
+  display: flex;
+  /* 1 */
+  flex-wrap: wrap;
+  /* 2 */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+/*
+ * Grid cell
+ * Note: Space is allocated solely based on content dimensions, but shrinks: 0 1 auto
+ * Reset margin for e.g. paragraphs
+ */
+.icm-grid > * {
+  margin: 0;
+}
+/*
+ * Remove margin from the last-child
+ */
+.icm-grid > * > :last-child {
+  margin-bottom: 0;
+}
+/* Gutter
+ ========================================================================== */
+/*
+ * Default
+ */
+///* Horizontal */
+.icm-grid {
+  margin-left: -30px;
+}
+.icm-grid > * {
+  padding-left: 16px;
+}
+/* Vertical */
+.icm-grid + .icm-grid,
+.icm-grid > .icm-grid-margin,
+* + .icm-grid-margin {
+  margin-top: 30px;
+}
+/*
+ * Small
+ */
+/* Horizontal */
+.icm-grid-small,
+.icm-grid-column-small {
+  margin-left: -15px;
+}
+.icm-grid-small > *,
+.icm-grid-column-small > * {
+  padding-left: 15px;
+}
+/* Vertical */
+.icm-grid + .icm-grid-small,
+.icm-grid + .icm-grid-row-small,
+.icm-grid-small > .icm-grid-margin,
+.icm-grid-row-small > .icm-grid-margin,
+* + .icm-grid-margin-small {
+  margin-top: 15px;
+}
+/*
+ * Medium
+ */
+/* Horizontal */
+.icm-grid-medium,
+.icm-grid-column-medium {
+  margin-left: -30px;
+}
+.icm-grid-medium > *,
+.icm-grid-column-medium > * {
+  padding-left: 30px;
+}
+/* Vertical */
+.icm-grid + .icm-grid-medium,
+.icm-grid + .icm-grid-row-medium,
+.icm-grid-medium > .icm-grid-margin,
+.icm-grid-row-medium > .icm-grid-margin,
+* + .icm-grid-margin-medium {
+  margin-top: 30px;
+}
+/*
+ * Large
+ */
+/* Horizontal */
+.icm-grid-large,
+.icm-grid-column-large {
+  margin-left: -40px;
+}
+.icm-grid-large > *,
+.icm-grid-column-large > * {
+  padding-left: 40px;
+}
+/* Vertical */
+.icm-grid + .icm-grid-large,
+.icm-grid + .icm-grid-row-large,
+.icm-grid-large > .icm-grid-margin,
+.icm-grid-row-large > .icm-grid-margin,
+* + .icm-grid-margin-large {
+  margin-top: 40px;
+}
+/*
+ * Collapse
+ */
+/* Horizontal */
+.icm-grid-collapse,
+.icm-grid-column-collapse {
+  margin-left: 0;
+}
+.icm-grid-collapse > *,
+.icm-grid-column-collapse > * {
+  padding-left: 0;
+}
+/* Vertical */
+.icm-grid + .icm-grid-collapse,
+.icm-grid + .icm-grid-row-collapse,
+.icm-grid-collapse > .icm-grid-margin,
+.icm-grid-row-collapse > .icm-grid-margin {
+  margin-top: 0;
+}
+/* Divider
+ ========================================================================== */
+.icm-grid-divider > * {
+  position: relative;
+}
+.icm-grid-divider > :not(.icm-first-column)::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-left: 1px solid #e5e5e5;
+}
+/* Vertical */
+.icm-grid-divider.icm-grid-stack > .icm-grid-margin::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-top: 1px solid #e5e5e5;
+}
+/*
+ * Default
+ */
+/* Horizontal */
+.icm-grid-divider {
+  margin-left: -60px;
+}
+.icm-grid-divider > * {
+  padding-left: 60px;
+}
+.icm-grid-divider > :not(.icm-first-column)::before {
+  left: 30px;
+}
+/* Vertical */
+.icm-grid-divider.icm-grid-stack > .icm-grid-margin {
+  margin-top: 60px;
+}
+.icm-grid-divider.icm-grid-stack > .icm-grid-margin::before {
+  top: -30px;
+  left: 60px;
+}
+/*
+ * Small
+ */
+/* Horizontal */
+.icm-grid-divider.icm-grid-small,
+.icm-grid-divider.icm-grid-column-small {
+  margin-left: -30px;
+}
+.icm-grid-divider.icm-grid-small > *,
+.icm-grid-divider.icm-grid-column-small > * {
+  padding-left: 30px;
+}
+.icm-grid-divider.icm-grid-small > :not(.icm-first-column)::before,
+.icm-grid-divider.icm-grid-column-small > :not(.icm-first-column)::before {
+  left: 15px;
+}
+/* Vertical */
+.icm-grid-divider.icm-grid-small.icm-grid-stack > .icm-grid-margin,
+.icm-grid-divider.icm-grid-row-small.icm-grid-stack > .icm-grid-margin {
+  margin-top: 30px;
+}
+.icm-grid-divider.icm-grid-small.icm-grid-stack > .icm-grid-margin::before {
+  top: -15px;
+  left: 30px;
+}
+.icm-grid-divider.icm-grid-row-small.icm-grid-stack > .icm-grid-margin::before {
+  top: -15px;
+}
+.icm-grid-divider.icm-grid-column-small.icm-grid-stack > .icm-grid-margin::before {
+  left: 30px;
+}
+/*
+ * Medium
+ */
+/* Horizontal */
+.icm-grid-divider.icm-grid-medium,
+.icm-grid-divider.icm-grid-column-medium {
+  margin-left: -60px;
+}
+.icm-grid-divider.icm-grid-medium > *,
+.icm-grid-divider.icm-grid-column-medium > * {
+  padding-left: 60px;
+}
+.icm-grid-divider.icm-grid-medium > :not(.icm-first-column)::before,
+.icm-grid-divider.icm-grid-column-medium > :not(.icm-first-column)::before {
+  left: 30px;
+}
+/* Vertical */
+.icm-grid-divider.icm-grid-medium.icm-grid-stack > .icm-grid-margin,
+.icm-grid-divider.icm-grid-row-medium.icm-grid-stack > .icm-grid-margin {
+  margin-top: 60px;
+}
+.icm-grid-divider.icm-grid-medium.icm-grid-stack > .icm-grid-margin::before {
+  top: -30px;
+  left: 60px;
+}
+.icm-grid-divider.icm-grid-row-medium.icm-grid-stack > .icm-grid-margin::before {
+  top: -30px;
+}
+.icm-grid-divider.icm-grid-column-medium.icm-grid-stack > .icm-grid-margin::before {
+  left: 60px;
+}
+/*
+ * Large
+ */
+/* Horizontal */
+.icm-grid-divider.icm-grid-large,
+.icm-grid-divider.icm-grid-column-large {
+  margin-left: -80px;
+}
+.icm-grid-divider.icm-grid-large > *,
+.icm-grid-divider.icm-grid-column-large > * {
+  padding-left: 80px;
+}
+.icm-grid-divider.icm-grid-large > :not(.icm-first-column)::before,
+.icm-grid-divider.icm-grid-column-large > :not(.icm-first-column)::before {
+  left: 40px;
+}
+/* Vertical */
+.icm-grid-divider.icm-grid-large.icm-grid-stack > .icm-grid-margin,
+.icm-grid-divider.icm-grid-row-large.icm-grid-stack > .icm-grid-margin {
+  margin-top: 80px;
+}
+.icm-grid-divider.icm-grid-large.icm-grid-stack > .icm-grid-margin::before {
+  top: -40px;
+  left: 80px;
+}
+.icm-grid-divider.icm-grid-row-large.icm-grid-stack > .icm-grid-margin::before {
+  top: -40px;
+}
+.icm-grid-divider.icm-grid-column-large.icm-grid-stack > .icm-grid-margin::before {
+  left: 80px;
+}
+/* Match child of a grid cell
+ ========================================================================== */
+/*
+ * Behave like a block element
+ * 1. Wrap into the next line
+ * 2. Take the full width, at least 100%. Only if no class from the Width component is set.
+ * 3. Expand width even if larger than 100%, e.g. because of negative margin (Needed for nested grids)
+ */
+.icm-grid-match > *,
+.icm-grid-item-match {
+  display: flex;
+  /* 1 */
+  flex-wrap: wrap;
+}
+.icm-grid-match > * > :not([class*='icm-width']),
+.icm-grid-item-match > :not([class*='icm-width']) {
+  /* 2 */
+  box-sizing: border-box;
+  width: 100%;
+  /* 3 */
+  flex: auto;
+}

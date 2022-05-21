@@ -1,0 +1,59 @@
+@import "../../../../../../../styles/exd-colors";
+
+.dataset-edit-database {
+  padding: 10px 30px;
+
+  .form-container {
+    display: flex;
+
+    .form {
+      width: 100%;
+      max-width: 380px;
+
+      .form-input {
+        margin-top: 20px;
+        display: block;
+        max-width: 346px;
+      }
+    }
+
+    .sql {
+      position: relative;
+      margin: 20px 0 0 40px;
+      width: 100%;
+      max-width: 408px;
+
+      .label {
+        position: absolute;
+        top: -9px;
+        left: 12px;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16px;
+        color: map-get($exd-grayscale, 400);
+        background-color: map-get($exd-primary, 1);
+      }
+
+      .textarea {
+        box-sizing: border-box;
+        border: 1px solid map-get($exd-grayscale, 200);
+        border-radius: 8px;
+        padding: 8px 16px;
+        height: 159px;
+      }
+    }
+
+    mat-form-field {
+      position: relative;
+      .refresh-icon {
+        position: absolute;
+        top: 11px;
+        right: -45px;
+        cursor: pointer;
+        path {
+          fill: map-get($exd-grayscale, 300);
+        }
+      }
+    }
+  }
+}

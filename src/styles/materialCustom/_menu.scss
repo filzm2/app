@@ -1,0 +1,22 @@
+@import "../../styles/exd-colors.scss";
+
+.cdk-overlay-pane {
+  margin-top: 8px;
+
+  .mat-menu-panel {
+    min-width: 167px;
+    border-radius: 8px;
+
+    .mat-menu-content {
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04), 0 4px 8px rgba(0, 0, 0, 0.16);
+
+      .mat-menu-item {
+        padding-left: 8px;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16px;
+        color: map-get($exd-grayscale, 500);
+      }
+    }
+  }
+}

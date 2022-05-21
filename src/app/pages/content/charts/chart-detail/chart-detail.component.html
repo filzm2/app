@@ -1,0 +1,155 @@
+<div class="chart-detail">
+  <div class="chart-detail-header">
+    <div class="chart-detail-header-title">{{ chartName }}</div>
+    <mat-icon
+      [ngClass]="{ checked: favoriteStatus }"
+      class="star-checkbox"
+      role="checkbox"
+      svgIcon="star"
+      (click)="setFavoriteStatus(); $event.stopPropagation()"
+    ></mat-icon>
+
+    <div class="custom-badge custom-badge__warning">{{ getCountRowLabel() }}</div>
+
+    <div class="custom-badge custom-badge__green">{{ lastTimerState }}</div>
+
+    <button class="primary-light-flat-button" disabled mat-flat-button>Изменения</button>
+
+    <button
+      mat-stroked-button
+      color="primary"
+      class="small-button primary-color"
+      [disabled]="startDate"
+      (click)="playChart()"
+    >
+      <mat-icon svgIcon="play"></mat-icon>
+      Запустить
+    </button>
+    <button class="primary-light-flat-button"
+            [disabled]="startDate"
+            (click)="saveChart()"
+            mat-flat-button>
+      Сохранить
+    </button>
+
+    <app-icon-button
+      [matMenuTriggerFor]="actionMenu"
+      (click)="$event.stopPropagation()"
+      color="white"
+      name="options"
+    >
+    </app-icon-button>
+
+    <mat-menu #actionMenu="matMenu"> </mat-menu>
+  </div>
+
+  <div class="chart-detail-container">
+    <app-dataset-aside-panel
+      [@toggleMenu]="asidePanelAnimationState$ | async"
+      [datasetData]="datasetData"
+      (openSql)="openSqlLab()"
+      (edit)="editDataset()"
+      (changeDataset)="changeDataset()"
+    >
+    </app-dataset-aside-panel>
+    <div class="chart-detail-content-wrapper">
+      <div class="chart-detail-content">
+        <div class="chart-detail-content-spinner" *ngIf="!dataSource">
+          <mat-spinner color="primary"></mat-spinner>
+        </div>
+
+        <div *ngIf="dataSource">
+          <div *ngIf="viewMode === 'chart'" class="chart-detail-content-chart">
+            <div *ngIf="chartDetailComplete" class="main-container">
+              <div class="chart-container">
+                <div class="mat-body-2 chart-name">
+                  {{ chartDetailComplete.result?.slice_name }}
+                </div>
+
+                <app-table-chart-view
+                  [data]="chartData"
+                  *ngIf="chartType === 'table'"
+                ></app-table-chart-view>
+                <div
+                  class="chart-bignumber"
+                  *ngIf="
+                    (chartType === 'big_number' || chartType === 'big_number_total') && chartOption
+                  "
+                  [ngClass]="{ 'positive-percent': chartOption.parsedParams.subheader === '%' }"
+                >
+                  <div class="bignumber-text">
+                    {{ chartOption.data | shortNumber }}
+                  </div>
+
+                  <div class="bignumber-text" style="padding-left: 10px">
+                    {{ chartOption.parsedParams.subheader }}
+                  </div>
+                </div>
+
+                <div
+                  echarts
+                  [options]="chartOption"
+                  class="chart-detail__chart"
+                  *ngIf="chartType !== 'big_number' && chartType !== 'big_number_total'"
+                ></div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="viewMode === 'dataset'" class="chart-detail-content-dataset">
+            <mat-form-field appearance="outline" class="search-field">
+              <mat-label>Поиск</mat-label>
+
+              <input
+                matInput
+                [formControl]="searchFormControl"
+                placeholder="Введите фразу"
+                (change)="onSearch(search)"
+                #search
+              />
+
+              <mat-icon class="search-logo" svgIcon="search"></mat-icon>
+            </mat-form-field>
+
+            <table [dataSource]="dataSource" mat-table matSort class="chart-detail-content-table">
+              <ng-container
+                *ngFor="let col of chartData?.colnames; let i = index"
+                [matColumnDef]="col"
+              >
+                <th mat-sort-header mat-header-cell *matHeaderCellDef>
+                  {{ getVerboseNameByColName(col) }}
+                </th>
+                <td mat-cell class="chart-detail-cell" *matCellDef="let dataset">
+                  {{
+                    getType(col | lowercase) === 'date-type'
+                      ? getFormatDate(col, dataset[col])
+                      : dataset[col]
+                  }}
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="chartData?.colnames"></tr>
+              <tr mat-row *matRowDef="let dataset; columns: chartData?.colnames"></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <mat-button-toggle-group
+        [value]="viewMode"
+        class="chart-detail-view-toggle app-button-toggle-group"
+        (change)="changeViewMode($event)"
+      >
+        <mat-button-toggle value="chart">График</mat-button-toggle>
+        <mat-button-toggle value="dataset">Данные</mat-button-toggle>
+      </mat-button-toggle-group>
+      <!--      <mat-paginator-->
+      <!--        class="chart-detail-content-paginator"-->
+      <!--        [pageSizeOptions]="[10, 25, 50, 100]"-->
+      <!--      ></mat-paginator>-->
+    </div>
+    <app-chart-aside-panel [name]="chartName"
+                           [sliceId]="routerState?.state?.params?.id"
+                           [datasetData]="datasetData"
+                           [chartData]="chartOption">
+    </app-chart-aside-panel>
+  </div>
+</div>

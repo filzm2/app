@@ -1,0 +1,1077 @@
+<div class="dashboard-container__header">
+  <div class="dashboard-container__header-row">
+    <div class="dashboard-container__header-row__headline">
+      <div>
+        <mat-form-field appearance="outline" class="name-form" color="primary" style="width: 300px">
+          <input [formControl]="name" matInput placeholder="Название аналитической панели" />
+        </mat-form-field>
+      </div>
+
+      <!-- <div class="radio-button-star" *ngIf="">
+            <img src="assets/icons/ui-kit/radio-button/star.svg" width="20" height="19" />
+          </div> -->
+      <mat-icon
+        [ngClass]="{ checked: favoriteStatus }"
+        class="star-checkbox"
+        role="checkbox"
+        svgIcon="star"
+        (click)="setFavoriteStatus(); $event.stopPropagation()"
+      ></mat-icon>
+
+      <div
+        class="custom-badge custom-badge__primary status-badge"
+        *ngIf="!isPublished"
+        (click)="publishDashboard()"
+      >
+        Черновик
+      </div>
+
+      <div
+        *ngIf="isPublished"
+        class="custom-badge custom-badge__primary-filled status-badge"
+        (click)="publishDashboard()"
+      >
+        Опубликовано
+      </div>
+    </div>
+
+    <div class="dashboard-container__header-row__actions">
+      <button
+        [ngClass]="dashboardHistoryLeft.length === 0 ? 'disabled' : ''"
+        mat-button
+        color="primary"
+        class="header-action-button"
+        (click)="undoChange()"
+      >
+        <img
+          src="assets/icons/arrow_left.svg"
+          alt="arrow_left"
+          class="header-action-button-image"
+        />
+      </button>
+
+      <button
+        [ngClass]="dashboardHistoryRight.length === 0 ? 'disabled' : ''"
+        mat-button
+        color="primary"
+        class="header-action-button header-action-button-right"
+        (click)="returnCanceledChange()"
+      >
+        <img
+          src="assets/icons/arrow_left.svg"
+          alt="arrow_right"
+          class="header-action-button-image"
+        />
+      </button>
+
+      <button mat-button color="primary" (click)="onButtonCancelClick()">
+        Выйти без сохранения
+      </button>
+
+      <button
+        mat-raised-button
+        color="primary"
+        class="button-save"
+        (click)="onButtonSaveClick()"
+        [disabled]="loading"
+      >
+        Сохранить
+      </button>
+
+      <div class="popup-card-dropdown">
+        <app-icon-button [matMenuTriggerFor]="menu" color="white" name="options"></app-icon-button>
+
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item class="popup-card-button">
+            <div class="save-icon popup-card-button-icon"></div>
+            Сохранить как
+          </button>
+
+          <button mat-menu-item class="popup-card-button" (click)="onCopyLinkDashboardId()">
+            <div class="link-icon popup-card-button-icon"></div>
+            Скопировать ссылку
+          </button>
+
+          <button
+            mat-menu-item
+            class="popup-card-button"
+            (click)="onOpenDialogSendDashboardToEmail()"
+          >
+            <div class="email-icon popup-card-button-icon"></div>
+            Отправить через email
+          </button>
+
+          <button
+            [disabled]="loading"
+            mat-menu-item
+            class="popup-card-button dashboard-menu-button-refresh"
+            (click)="reloadDashboard()"
+          >
+            <img
+              src="/assets/icons/ui-kit/base/refresh_24px.svg"
+              width="20"
+              height="20"
+              class="refresh-icon-2"
+            />
+            Обновить аналитическую панель
+          </button>
+
+          <div class="separator"></div>
+
+          <button
+            [disabled]="loading"
+            mat-menu-item
+            class="popup-card-button dashboard-menu-button-refresh"
+            (click)="setAutoRefreshIntervalClick()"
+          >
+            <img
+              src="/assets/icons/ui-kit/base/interval_autorefresh.svg"
+              width="20"
+              height="20"
+              class="refresh-icon-2"
+            />
+            Интервал автообновления
+          </button>
+
+          <button mat-menu-item class="popup-card-button" (click)="openOwnersPopup()">
+            <img
+              src="assets/icons/person.svg"
+              alt="person"
+              width="20"
+              height="20"
+              class="popup-card-button-icon-person"
+            />
+            Назначить владельцев
+          </button>
+
+          <div class="menu-delimiter"></div>
+          <!--              <button mat-menu-item style="display: flex; align-items: center;" (click)="reloadDashboard()">-->
+          <!--                <div class="refresh-icon"></div>-->
+          <!--                Обновить аналитическую панель-->
+          <!--              </button>-->
+          <!--              <button [disabled]="loading" mat-menu-item (click)="exportPDFAll(cssGrid.HEADER_ID.meta.text)" style="display: flex; align-items: center;">-->
+          <!--                <div class="export-icon"></div>-->
+          <!--                Экспорт PDF-->
+          <!--              </button>-->
+        </mat-menu>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="edit-container">
+  <div
+    #mainList="cdkDropList"
+    cdkDropList
+    class="edit-container__empty example-list"
+    (cdkDropListDropped)="drop($event)"
+  >
+    <div *ngIf="!dashboard.length" class="edit-container__empty__filler">
+      <div class="accent-circle">
+        <mat-icon style="font-size: 20px; width: 20px; height: 20px; margin-top: 2px">add</mat-icon>
+      </div>
+
+      <div class="mat-caption empty-edit-caption">
+        Перетащите, чтобы добавить в аналитическую панель
+      </div>
+    </div>
+
+    <gridster [options]="options">
+      <gridster-item
+        *ngFor="let item of dashboard; let i = index"
+        [item]="item"
+        [ngClass]="item.content?.type"
+      >
+        <div *ngIf="item.itemType === 'layer'">
+          <button
+            mat-icon-button
+            style="float: right"
+            class="small-button"
+            color="primary"
+            (mousedown)="removeItem(item)"
+            (touchstart)="removeItem(item)"
+          >
+            <div class="delete-icon"></div>
+          </button>
+        </div>
+
+        <div *ngIf="item?.itemType !== 'layer' && item?.content">
+          <button
+            style="float: right"
+            mat-icon-button
+            class="small-button"
+            color="primary"
+            *ngIf="
+              !item.hasContent &&
+              item.content?.type !== 'header' &&
+              item.content?.type !== 'markdown'
+            "
+            (mousedown)="removeItem(item)"
+            (touchstart)="removeItem(item)"
+          >
+            <div class="delete-icon"></div>
+          </button>
+
+          <div style="height: 90%" class="button-holder" *ngIf="item.content?.component">
+            <div *ngIf="item.content.type === 'delimeter'" class="delimeter-component">
+              <mat-divider></mat-divider>
+            </div>
+
+            <div *ngIf="item.content.type === 'header'" class="header-component">
+              <!-- <form> -->
+              <mat-form-field
+                appearance="outline"
+                color="primary"
+                style="width: 300px"
+                class="large-header"
+                (mousedown)="$event.stopPropagation()"
+                [ngClass]="{
+                  'large-header': item.content.size === 20,
+                  'medium-header': item.content.size === 16,
+                  'small-header': item.content.size === 14,
+                  'extrasmall-header': item.content.size === 12
+                }"
+              >
+                <input
+                  [(ngModel)]="dashboard[i].content.header"
+                  matInput
+                  placeholder="Заголовок"
+                  (focus)="headerTitleFocus(item, 'header')"
+                  (blur)="headerTitleBlur()"
+                  (change)="headerTitleChanged(item, 'header')"
+                />
+              </mat-form-field>
+
+              <!-- <mat-form-field appearance="outline">
+                  <mat-label>Размер</mat-label>
+                  <mat-select (selectionChange)="headerSizeChange($event, i)">
+                    <mat-option value="large">Крупный</mat-option>
+                    <mat-option value="medium">Средний</mat-option>
+                    <mat-option value="small">Маленький</mat-option>
+                    <mat-option value="extrasmall">Крошечный</mat-option>
+                  </mat-select>
+                </mat-form-field> -->
+              <!-- </form> -->
+              <div class="header-component__actions">
+                <button
+                  mat-icon-button
+                  class="header-component__settings-button"
+                  (mousedown)="$event.stopPropagation()"
+                >
+                  <div
+                    class="settings-icon"
+                    (click)="onEditHeader(i, item.content.size, item.content.background)"
+                  ></div>
+                </button>
+
+                <div class="header-component__actions__settings-popup" *ngIf="editHeader === i">
+                  <div class="settings-block">
+                    <div class="size-block">
+                      <div class="mat-caption">Размер</div>
+                      <div class="size-selector">
+                        <div
+                          class="size-large selectable-option"
+                          (click)="headerSizeChange('large', i)"
+                          [ngStyle]="{ color: item.content.size === 20 ? '#C7C7C7' : '#1A1A1A' }"
+                        >
+                          Крупный
+                        </div>
+
+                        <div
+                          class="size-medium selectable-option"
+                          (click)="headerSizeChange('medium', i)"
+                          [ngStyle]="{ color: item.content.size === 16 ? '#C7C7C7' : '#1A1A1A' }"
+                        >
+                          Средний
+                        </div>
+
+                        <div
+                          class="size-small selectable-option"
+                          (click)="headerSizeChange('small', i)"
+                          [ngStyle]="{ color: item.content.size === 14 ? '#C7C7C7' : '#1A1A1A' }"
+                        >
+                          Маленький
+                        </div>
+
+                        <div
+                          class="size-extrasmall selectable-option"
+                          (click)="headerSizeChange('extrasmall', i)"
+                          [ngStyle]="{ color: item.content.size === 12 ? '#C7C7C7' : '#1A1A1A' }"
+                        >
+                          Крошечный
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="background-block">
+                      <div class="mat-caption">Цвет фона</div>
+                      <div class="background-selector">
+                        <div
+                          class="background-white selectable-option"
+                          (click)="headerBackgroundChange('white', i)"
+                          [ngStyle]="{
+                            color: item.content.background === 'white' ? '#C7C7C7' : '#1A1A1A'
+                          }"
+                        >
+                          <div class="white-circle"></div>
+                          <div class="background-text">Белый</div>
+                        </div>
+
+                        <div
+                          class="background-transparent selectable-option"
+                          (click)="headerBackgroundChange('transparent', i)"
+                          [ngStyle]="{
+                            color: item.content.background === 'transparent' ? '#C7C7C7' : '#1A1A1A'
+                          }"
+                        >
+                          <div class="transparent-circle"></div>
+                          <div class="background-text">Прозрачный</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="actions-block">
+                    <button
+                      mat-raised-button
+                      color="primary"
+                      class="small-button"
+                      (click)="onSaveEditHeader()"
+                    >
+                      Сохранить
+                    </button>
+
+                    <button
+                      mat-stroked-button
+                      class="small-button primary-stroked-button close-button"
+                      (click)="onCloseEditHeader(i)"
+                    >
+                      Закрыть
+                    </button>
+                  </div>
+                  <!-- <mat-form-field appearance="outline">
+                      <mat-label>Размер</mat-label>
+                      <mat-select (selectionChange)="headerSizeChange($event, i)">
+                        <mat-option value="large">Крупный</mat-option>
+                        <mat-option value="medium">Средний</mat-option>
+                        <mat-option value="small">Маленький</mat-option>
+                        <mat-option value="extrasmall">Крошечный</mat-option>
+                      </mat-select>
+                    </mat-form-field> -->
+                </div>
+
+                <button
+                  mat-icon-button
+                  class="small-button"
+                  color="primary"
+                  (mousedown)="removeItem(item)"
+                  (touchstart)="removeItem(item)"
+                >
+                  <div class="delete-icon"></div>
+                </button>
+              </div>
+            </div>
+
+            <div *ngIf="item.content.type === 'markdown'" class="markdown-component">
+              <div class="markdown-component__actions">
+                <button
+                  *ngIf="editMarkdown === -1"
+                  mat-icon-button
+                  class="small-button"
+                  (mousedown)="$event.stopPropagation()"
+                  (click)="onEditMarkdown(i)"
+                >
+                  <div class="settings-icon"></div>
+                </button>
+
+                <button
+                  *ngIf="editMarkdown === i"
+                  mat-icon-button
+                  class="small-button"
+                  (mousedown)="$event.stopPropagation()"
+                  (click)="onEditMarkdown(i)"
+                >
+                  <div class="preview-icon"></div>
+                </button>
+
+                <button
+                  mat-icon-button
+                  class="small-button delete-button"
+                  color="primary"
+                  (mousedown)="removeItem(item)"
+                  (touchstart)="removeItem(item)"
+                >
+                  <div class="delete-icon"></div>
+                </button>
+              </div>
+
+              <div *ngIf="editMarkdown === i" class="markdown-component__edit">
+                <mat-form-field
+                  appearance="outline"
+                  class="mat-textarea"
+                  style="width: 100%; height: 100%"
+                  (mousedown)="$event.stopPropagation()"
+                >
+                  <textarea
+                    [(ngModel)]="dashboard[i].content.text"
+                    matInput
+                    (focus)="headerTitleFocus(dashboard[i], 'text')"
+                    (blur)="headerTitleBlur()"
+                    (change)="headerTitleChanged(dashboard[i], 'text')"
+                  ></textarea>
+                </mat-form-field>
+              </div>
+
+              <div
+                *ngIf="editMarkdown !== i"
+                class="markdown-component__preview"
+                (click)="onEditMarkdown(i)"
+              >
+                <markdown [data]="dashboard[i].content.text"></markdown>
+              </div>
+            </div>
+
+            <div *ngIf="item.content.type === 'tabs'" class="tabs-component">
+              <mat-tab-group (selectedIndexChange)="onChangeSelectedTab($event, i)">
+                <mat-tab *ngFor="let tab of item.content.tabs; let tabIndex = index">
+                  <ng-template mat-tab-label class="tabs-component__label">
+                    <div
+                      *ngIf="i === editTabTitle[0] && tabIndex === editTabTitle[1]"
+                      [id]="tab.elementTabItemIndex"
+                    >
+                      <mat-form-field
+                        appearance="outline"
+                        color="primary"
+                        style="width: 300px"
+                        (mousedown)="$event.stopPropagation()"
+                      >
+                        <input
+                          [(ngModel)]="dashboard[i].content.tabs[tabIndex].title"
+                          matInput
+                          placeholder="Введите название"
+                          class="js-tabs-component-input"
+                          (focus)="headerTabTitleFocus($event, dashboard[i], tabIndex, 'title')"
+                          (blur)="headerTitleBlur()"
+                          (change)="headerTabTitleChanged(dashboard[i], tabIndex, 'title')"
+                          (keydown)="$event.stopPropagation()"
+                        />
+                      </mat-form-field>
+
+                      <button mat-icon-button class="small-button" (click)="removeTab(tabIndex, i)">
+                        <div class="close-icon"></div>
+                      </button>
+                      <!-- <button mat-icon-button class="small-button" (click)="addTab(i)">
+                        <div class="add-icon"></div>
+                      </button> -->
+                    </div>
+
+                    <div
+                      *ngIf="!(i === editTabTitle[0] && tabIndex === editTabTitle[1])"
+                      [id]="tab.elementTabItemIndex"
+                      class="tabs-component__label__text"
+                      (dblclick)="editTabTitleClick(i, tabIndex)"
+                    >
+                      <div class="tab-title">
+                        {{ tab.title }}
+                      </div>
+
+                      <button mat-icon-button class="small-button" (click)="removeTab(tabIndex, i)">
+                        <div class="close-icon"></div>
+                      </button>
+                    </div>
+
+                    <button
+                      mat-icon-button
+                      class="small-button"
+                      (click)="addTab(i); $event.stopPropagation()"
+                      *ngIf="tabIndex === item.content.tabs.length - 1"
+                    >
+                      <div class="add-icon"></div>
+                    </button>
+                  </ng-template>
+
+                  <!-- Далее происходит копипаст кода, чтобы отображать добавленные во вкладку компоненты/графики -->
+                  <div
+                    class="tabs-component__items"
+                    [ngStyle]="{ height: tabHeightSettings[item.id] }"
+                  >
+                    <gridster [options]="tab.options" style="height: 100%">
+                      <gridster-item
+                        *ngFor="let element of tab.items; let tabItemIndex = index"
+                        [item]="element"
+                        [ngClass]="element.content.type"
+                      >
+                        <!-- <div *ngFor="let element of tab.items; let tabItemIndex = index;" [ngStyle]="{ 'height.px': element.rows * 14,
+                  'width.px': element.cols * 105 }"> -->
+                        <!-- {{ element | json }} -->
+                        <div
+                          *ngIf="element.content?.component"
+                          style="height: 90%"
+                          class="button-holder"
+                        >
+                          <div
+                            *ngIf="element.content.type === 'delimeter'"
+                            class="delimeter-component"
+                          >
+                            <mat-divider></mat-divider>
+
+                            <button
+                              mat-icon-button
+                              class="small-button"
+                              color="primary"
+                              (mousedown)="removeItemFromTab(tabItemIndex, tabIndex, i)"
+                              (touchstart)="removeItemFromTab(tabItemIndex, tabIndex, i)"
+                            >
+                              <div class="delete-icon"></div>
+                            </button>
+                          </div>
+
+                          <div *ngIf="element.content.type === 'header'" class="header-component">
+                            <!-- <form> -->
+                            <mat-form-field
+                              appearance="outline"
+                              color="primary"
+                              style="width: 300px"
+                              class="large-header"
+                              (mousedown)="$event.stopPropagation()"
+                              [ngClass]="{
+                                'large-header': element.content.size === 20,
+                                'medium-header': element.content.size === 16,
+                                'small-header': element.content.size === 14,
+                                'extrasmall-header': element.content.size === 12
+                              }"
+                            >
+                              <input
+                                matInput
+                                placeholder="Заголовок"
+                                [(ngModel)]="element.content.header"
+                                (focus)="headerTitleFocus(element, 'header')"
+                                (blur)="headerTitleBlur()"
+                                (change)="headerTitleChanged(element, 'header')"
+                              />
+                            </mat-form-field>
+
+                            <!-- <mat-form-field appearance="outline">
+                                <mat-label>Размер</mat-label>
+                                <mat-select (selectionChange)="headerSizeChange($event, i)">
+                                  <mat-option value="large">Крупный</mat-option>
+                                  <mat-option value="medium">Средний</mat-option>
+                                  <mat-option value="small">Маленький</mat-option>
+                                  <mat-option value="extrasmall">Крошечный</mat-option>
+                                </mat-select>
+                              </mat-form-field> -->
+                            <!-- </form> -->
+                            <div class="header-component__actions">
+                              <button
+                                mat-icon-button
+                                class="header-component__settings-button"
+                                (mousedown)="$event.stopPropagation()"
+                              >
+                                <div
+                                  class="settings-icon"
+                                  (click)="
+                                    onEditHeader(
+                                      i,
+                                      element.content.size,
+                                      element.content.background
+                                    )
+                                  "
+                                ></div>
+                              </button>
+                              <div
+                                class="header-component__actions__settings-popup"
+                                *ngIf="editHeader === i"
+                              >
+                                <div class="settings-block">
+                                  <div class="size-block">
+                                    <div class="mat-caption">Размер</div>
+                                    <div class="size-selector">
+                                      <div
+                                        class="size-large selectable-option"
+                                        (click)="headerSizeChange('large', i)"
+                                        [ngStyle]="{
+                                          color: element.content.size === 20 ? '#C7C7C7' : '#1A1A1A'
+                                        }"
+                                      >
+                                        Крупный
+                                      </div>
+                                      <div
+                                        class="size-medium selectable-option"
+                                        (click)="headerSizeChange('medium', i)"
+                                        [ngStyle]="{
+                                          color: element.content.size === 16 ? '#C7C7C7' : '#1A1A1A'
+                                        }"
+                                      >
+                                        Средний
+                                      </div>
+                                      <div
+                                        class="size-small selectable-option"
+                                        (click)="headerSizeChange('small', i)"
+                                        [ngStyle]="{
+                                          color: element.content.size === 14 ? '#C7C7C7' : '#1A1A1A'
+                                        }"
+                                      >
+                                        Маленький
+                                      </div>
+                                      <div
+                                        class="size-extrasmall selectable-option"
+                                        (click)="headerSizeChange('extrasmall', i)"
+                                        [ngStyle]="{
+                                          color: element.content.size === 12 ? '#C7C7C7' : '#1A1A1A'
+                                        }"
+                                      >
+                                        Крошечный
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="background-block">
+                                    <div class="mat-caption">Цвет фона</div>
+                                    <div class="background-selector">
+                                      <div
+                                        class="background-white selectable-option"
+                                        (click)="headerBackgroundChange('white', i)"
+                                        [ngStyle]="{
+                                          color:
+                                            element.content.background === 'white'
+                                              ? '#C7C7C7'
+                                              : '#1A1A1A'
+                                        }"
+                                      >
+                                        <div class="white-circle"></div>
+                                        <div class="background-text">Белый</div>
+                                      </div>
+                                      <div
+                                        class="background-transparent selectable-option"
+                                        (click)="headerBackgroundChange('transparent', i)"
+                                        [ngStyle]="{
+                                          color:
+                                            element.content.background === 'transparent'
+                                              ? '#C7C7C7'
+                                              : '#1A1A1A'
+                                        }"
+                                      >
+                                        <div class="transparent-circle"></div>
+                                        <div class="background-text">Прозрачный</div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="actions-block">
+                                  <button
+                                    mat-raised-button
+                                    color="primary"
+                                    class="small-button"
+                                    (click)="onSaveEditHeader()"
+                                  >
+                                    Сохранить
+                                  </button>
+
+                                  <button
+                                    mat-stroked-button
+                                    class="small-button primary-stroked-button close-button"
+                                    (click)="onCloseEditHeader(i)"
+                                  >
+                                    Закрыть
+                                  </button>
+                                </div>
+                                <!-- <mat-form-field appearance="outline">
+                                    <mat-label>Размер</mat-label>
+                                    <mat-select (selectionChange)="headerSizeChange($event, i)">
+                                      <mat-option value="large">Крупный</mat-option>
+                                      <mat-option value="medium">Средний</mat-option>
+                                      <mat-option value="small">Маленький</mat-option>
+                                      <mat-option value="extrasmall">Крошечный</mat-option>
+                                    </mat-select>
+                                  </mat-form-field> -->
+                              </div>
+
+                              <button
+                                mat-icon-button
+                                class="small-button"
+                                color="primary"
+                                (mousedown)="removeItemFromTab(tabItemIndex, tabIndex, i)"
+                                (touchstart)="removeItemFromTab(tabItemIndex, tabIndex, i)"
+                              >
+                                <div class="delete-icon"></div>
+                              </button>
+                            </div>
+                          </div>
+
+                          <div
+                            *ngIf="element.content.type === 'markdown'"
+                            class="markdown-component"
+                          >
+                            <div class="markdown-component__actions">
+                              <button
+                                mat-icon-button
+                                class="small-button"
+                                (mousedown)="$event.stopPropagation()"
+                                *ngIf="editMarkdown === -1"
+                                (click)="onEditMarkdown(i)"
+                              >
+                                <div class="settings-icon"></div>
+                              </button>
+
+                              <button
+                                mat-icon-button
+                                class="small-button"
+                                (mousedown)="$event.stopPropagation()"
+                                *ngIf="editMarkdown === i"
+                                (click)="onEditMarkdown(i)"
+                              >
+                                <div class="preview-icon"></div>
+                              </button>
+
+                              <button
+                                mat-icon-button
+                                class="small-button"
+                                color="primary"
+                                (mousedown)="removeItemFromTab(tabItemIndex, tabIndex, i)"
+                                (touchstart)="removeItemFromTab(tabItemIndex, tabIndex, i)"
+                              >
+                                <div class="delete-icon"></div>
+                              </button>
+                            </div>
+
+                            <div *ngIf="editMarkdown === i" class="markdown-component__edit">
+                              <mat-form-field
+                                appearance="outline"
+                                class="mat-textarea"
+                                style="width: 100%; height: 100%"
+                                (mousedown)="$event.stopPropagation()"
+                              >
+                                <textarea
+                                  [(ngModel)]="element.content.text"
+                                  matInput
+                                  (focus)="headerTitleFocus(element, 'text')"
+                                  (blur)="headerTitleBlur()"
+                                  (change)="headerTitleChanged(element, 'text')"
+                                >
+                                </textarea>
+                              </mat-form-field>
+                            </div>
+
+                            <div class="markdown-component__preview" *ngIf="editMarkdown !== i">
+                              <markdown [data]="element.content.text"></markdown>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Компонент в гриде -->
+                        <div
+                          *ngIf="!element.content?.component"
+                          class="button-holder"
+                          style="height: 90%"
+                        >
+                          <div class="chart-card" style="height: 100%">
+                            <div
+                              class="mat-body-2 chart-name"
+                              [ngClass]="{ edit: editChartTitleId === item.content.chartId }"
+                            >
+                              <div class="chart-title">
+                                <div
+                                  *ngIf="editChartTitleId !== element.content.chartId"
+                                  (mousedown)="chartTitleSelectStart($event, item.content.chartId)"
+                                >
+                                  {{ element.content.chartName }}
+                                </div>
+
+                                <mat-form-field
+                                  *ngIf="editChartTitleId === element.content.chartId"
+                                  appearance="outline"
+                                  color="primary"
+                                  style="width: 300px"
+                                  (mousedown)="$event.stopPropagation()"
+                                >
+                                  <input
+                                    [ngModel]="element.content.chartName"
+                                    id="globalChartNameInput"
+                                    matInput
+                                    placeholder="Название графика"
+                                    (blur)="onStopEditChartTitle($event, element.content.chartId)"
+                                  />
+                                </mat-form-field>
+
+                                <button
+                                  mat-icon-button
+                                  class="small-button"
+                                  color="primary"
+                                  (mousedown)="removeItemFromTab(tabItemIndex, tabIndex, i)"
+                                  (touchstart)="removeItemFromTab(tabItemIndex, tabIndex, i)"
+                                >
+                                  <div class="delete-icon"></div>
+                                </button>
+                              </div>
+                            </div>
+
+                            <div
+                              *ngIf="
+                                element.content.chartType !== 'big_number' &&
+                                element.content.chartType !== 'big_number_total' &&
+                                element.content.chartType !== 'sunburst'
+                              "
+                              echarts
+                              style="height: 90%"
+                              (chartInit)="onChartInit($event, element.content.chartId, element)"
+                              [options]="chartsFromDashboardData[element.content.chartId]?.graph"
+                            ></div>
+
+                            <div
+                              class="chart-bignumber"
+                              *ngIf="
+                                element.content.chartType === 'big_number' ||
+                                element.content.chartType === 'big_number_total'
+                              "
+                              [ngClass]="{
+                                'positive-percent': element.content.chartSubheader === '%'
+                              }"
+                            >
+                              <!-- [ngClass]="{'negative-value': isNegativeNumber(dashboardChartsObject[cssGrid[item].meta.chartId].graph.data) < 0,
+                          'positive-percent': dashboardChartsObject[cssGrid[item].meta.chartId].chartSubheader === '%' && dashboardChartsObject[cssGrid[item].meta.chartId].graph.data > 0}" -->
+                              <div
+                                *ngIf="element.content.chartSubheader === '₽'"
+                                class="bignumber-text"
+                              >
+                                {{
+                                  chartsFromDashboardData[element.content.chartId]?.graph?.data
+                                    | shortNumber
+                                }}
+                              </div>
+
+                              <div
+                                *ngIf="element.content.chartSubheader !== '₽'"
+                                class="bignumber-text"
+                              >
+                                {{
+                                  (chartsFromDashboardData[element.content.chartId]?.graph?.data >=
+                                  0
+                                    ? chartsFromDashboardData[element.content.chartId]?.graph?.data
+                                    : -chartsFromDashboardData[element.content.chartId]?.graph?.data
+                                  ) | number: '1.2-2'
+                                }}
+                              </div>
+
+                              <div class="bignumber-text" style="padding-left: 10px">
+                                {{ element.content.chartSubheader }}
+                              </div>
+                            </div>
+
+                            <div *ngIf="element.content.chartType === 'sunburst'">
+                              <div
+                                [options]="chartsFromDashboardData[element.content.chartId]?.graph"
+                                echarts
+                                style="height: 40px"
+                              ></div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- / Компонент в гриде -->
+                      </gridster-item>
+                    </gridster>
+                  </div>
+                  <!-- копипаст кода закончен -->
+                </mat-tab>
+              </mat-tab-group>
+            </div>
+          </div>
+
+          <div *ngIf="!item.content?.component" style="height: 90%" class="button-holder">
+            <div style="height: 100%" class="chart-card">
+              <div
+                class="mat-body-2 chart-name"
+                [ngClass]="{ edit: editChartTitleId === item.content.chartId }"
+              >
+                <div class="chart-title">
+                  <div
+                    *ngIf="editChartTitleId !== item.content.chartId"
+                    (mousedown)="chartTitleSelectStart($event, item.content.chartId)"
+                  >
+                    {{ item.content.chartName }}
+                  </div>
+
+                  <mat-form-field
+                    appearance="outline"
+                    color="primary"
+                    style="width: 300px"
+                    *ngIf="editChartTitleId === item.content.chartId"
+                    (mousedown)="$event.stopPropagation()"
+                  >
+                    <input
+                      [ngModel]="item.content.chartName"
+                      id="globalChartNameInput"
+                      matInput
+                      placeholder="Название графика"
+                      (blur)="onStopEditChartTitle($event, item.content.chartId)"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div
+                style="height: 90%"
+                (chartInit)="onChartInit($event, item.content.chartId, item)"
+                echarts
+                [options]="item.content.graph"
+                *ngIf="
+                  item.content.chartType !== 'big_number' &&
+                  item.content.chartType !== 'big_number_total' &&
+                  item.content.chartType !== 'sunburst'
+                "
+              ></div>
+              <div
+                class="chart-bignumber"
+                *ngIf="
+                  item.content.chartType === 'big_number' ||
+                  item.content.chartType === 'big_number_total'
+                "
+                [ngClass]="{ 'positive-percent': item.content.chartSubheader === '%' }"
+              >
+                <!-- [ngClass]="{'negative-value': isNegativeNumber(dashboardChartsObject[cssGrid[item].meta.chartId].graph.data) < 0,
+              'positive-percent': dashboardChartsObject[cssGrid[item].meta.chartId].chartSubheader === '%' && dashboardChartsObject[cssGrid[item].meta.chartId].graph.data > 0}" -->
+                <div class="bignumber-text" *ngIf="item.content.chartSubheader === '₽'">
+                  {{ item.content.graph.data | shortNumber }}
+                </div>
+                <div class="bignumber-text" *ngIf="item.content.chartSubheader !== '₽'">
+                  {{
+                    (item.content.graph.data >= 0
+                      ? item.content.graph.data
+                      : -item.content.graph.data
+                    ) | number: '1.2-2'
+                  }}
+                </div>
+                <div class="bignumber-text" style="padding-left: 10px">
+                  {{ item.content.chartSubheader }}
+                </div>
+              </div>
+              <div *ngIf="item.content.chartType === 'sunburst'">
+                <div style="height: 40px" echarts [options]="item.content.graph"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </gridster-item>
+    </gridster>
+    <!-- <div class="edit-container__empty__filler" cdkDropList #mainList="cdkDropList"
+        [cdkDropListConnectedTo]="[componentList]" (cdkDropListDropped)="drop($event)"
+        [cdkDropListData]="dashboardDataList"> -->
+    <!-- <div *ngFor="let chart of dashboardDataList">
+          <div class="charts-list__element-name mat-caption">
+            {{ chart.slice_name }}
+          </div>
+          <div class="charts-list__element-metarow">
+            <div class="custom-badge custom-badge__secondary-filled mat-caption">
+              {{ chart.viz_type }}
+            </div>
+            <div class="custom-badge custom-badge__gray mat-caption datasource-name">
+              {{ chart.datasource_name_text }}
+            </div>
+          </div>
+          <div class="charts-list__element-changed mat-caption">
+            Изменен {{ chart.changed_on_delta_humanized }}
+          </div>
+        </div> -->
+    <!-- <div class="accent-circle">
+          <mat-icon style="font-size: 20px; width: 20px; height: 20px; margin-top: 2px;">add</mat-icon>
+        </div>
+        <div class="mat-caption empty-edit-caption"> Перетащите, чтобы добавить в аналитическую панель </div>
+      </div> -->
+  </div>
+
+  <div class="edit-container__menu">
+    <mat-tab-group mat-stretch-tabs (selectedTabChange)="onTabChange($event)">
+      <mat-tab label="Компоненты">
+        <div
+          class="components-list"
+          cdkDropList
+          #componentsList="cdkDropList"
+          [cdkDropListConnectedTo]="[mainList]"
+          (cdkDropListDropped)="drop($event)"
+          [cdkDropListData]="dashComponentsList"
+        >
+          <div
+            class="components-list__element"
+            *ngFor="let component of dashComponentsList"
+            cdkDrag
+            [cdkDragData]="component"
+          >
+            <div class="components-list__element-icon">
+              <div [ngClass]="component.type + '-icon'"></div>
+            </div>
+            <div class="components-list__element-text">{{ component.title }}</div>
+          </div>
+        </div>
+
+        <mat-slide-toggle
+          class="components-list__slider"
+          checked="showGrid"
+          (toggleChange)="onToggleShowGrid()"
+        >
+          <span>Показать сетку</span>
+        </mat-slide-toggle>
+      </mat-tab>
+
+      <mat-tab label="Графики">
+        <div class="charts-filter-container">
+          <form [formGroup]="chartsFilter">
+            <mat-form-field appearance="outline" class="charts-filter-container__quicksearch">
+              <input matInput placeholder="Поиск" formControlName="quicksearch" />
+            </mat-form-field>
+
+            <mat-form-field
+              appearance="outline"
+              color="primary"
+              class="charts-filter-container__sort"
+            >
+              <mat-label>Сортировка</mat-label>
+              <mat-select (selectionChange)="onSortCharts($event)">
+                <mat-option *ngFor="let elem of sortOptions" [value]="elem.value">
+                  {{ elem.viewValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </form>
+        </div>
+
+        <div
+          class="charts-list"
+          cdkDropList
+          #chartsList="cdkDropList"
+          [cdkDropListData]="chartListFiltered"
+          (cdkDropListDropped)="drop($event)"
+          [cdkDropListConnectedTo]="[mainList]"
+        >
+          <div
+            class="charts-list__element"
+            *ngFor="let chart of chartListFiltered"
+            cdkDrag
+            [cdkDragData]="chart"
+          >
+            <div class="charts-list__element-name mat-caption">
+              {{ chart.slice_name }}
+            </div>
+            <div class="charts-list__element-metarow">
+              <div class="custom-badge custom-badge__secondary-filled mat-caption">
+                {{ chart.viz_type }}
+              </div>
+              <div class="custom-badge custom-badge__gray mat-caption datasource-name">
+                {{ chart.datasource_name_text }}
+              </div>
+            </div>
+            <div class="charts-list__element-changed mat-caption">
+              Изменен {{ chart.changed_on_delta_humanized }}
+            </div>
+          </div>
+        </div>
+
+        <mat-paginator
+          class="dashboard-paginator"
+          [length]="paginator.count"
+          [pageSize]="paginator.pageSize"
+          [pageIndex]="paginator.currentPage"
+          (page)="onPageChange($event)"
+        ></mat-paginator>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

@@ -1,0 +1,94 @@
+@import "../../../../../../styles/exd-colors.scss";
+@import "../../../../../../styles/mixins.scss";
+
+.settings-filters {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  * {
+    box-sizing: border-box;
+  }
+  &__header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__title {
+    @include font(16px, 700);
+  }
+  &__add {
+    &_button {
+      align-items: center;
+      mat-icon {
+        margin-bottom: -14px;
+      }
+    }
+  }
+  &__body {
+
+  }
+  &__item {
+    border-bottom: 1px solid map-get($exd-grayscale, 100);
+    &:last-child {
+      border-bottom: none;
+    }
+    padding-top: 12px;
+    &_content {
+
+    }
+  }
+  &__label {
+    @include font(12px, 700);
+    color: map-get($exd-psb-blue, 480);
+    display: flex;
+    justify-content: space-between;
+    mat-icon {
+      @include font(18px, 700);
+      cursor: pointer;
+    }
+  }
+  &__group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+  }
+  &__type1 {
+
+  }
+  &__type2 {
+
+  }
+  &__type3 {
+
+  }
+  &__type4 {
+
+  }
+  &__type5 {
+
+  }
+  &__type6 {
+
+  }
+  &__type7 {
+    .mat-form-field {
+      width: 100%;
+    }
+  }
+  &__type8 {
+
+  }
+  &__type9 {
+    .mat-form-field {
+      width: 100%;
+    }
+  }
+  &__actions {
+    margin-top: 8px;
+  }
+  .mat-form-field {
+    min-width: 180px;
+  }
+}

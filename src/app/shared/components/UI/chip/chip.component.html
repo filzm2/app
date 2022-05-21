@@ -1,0 +1,27 @@
+<div class="ui-chip" (click)="onClick()" [ngClass]="{'primary': primary, 'active': active}">
+  <mat-icon *ngIf="prefixIcon"
+            class="icon-prefix"
+            fontSet="material-icons-outlined"
+            [ngClass]="{
+              'icon-cancel': prefixIcon === 'cancel',
+              'icon-delete': prefixIcon === 'delete',
+              'icon-error': prefixIcon === 'error',
+              'icon-check': prefixIcon === 'check_circle'
+            }"
+  >
+    {{prefixIcon}}
+  </mat-icon>
+  <span class="ui-chip__text"><ng-content></ng-content></span>
+  <mat-icon *ngIf="postfixIcon"
+            class="icon-postfix"
+            fontSet="material-icons-outlined"
+            [ngClass]="{
+              'icon-cancel': postfixIcon === 'cancel',
+              'icon-delete': postfixIcon === 'delete',
+              'icon-error': postfixIcon === 'error',
+              'icon-check': postfixIcon === 'check_circle'
+            }"
+  >
+    {{postfixIcon}}
+  </mat-icon>
+</div>

@@ -1,0 +1,14 @@
+.open-icon {
+  top: 20px;
+  right: 20px;
+  color: #FF6C00;
+  cursor: pointer;
+  position: absolute;
+}
+
+.exp-content {
+  overflow: hidden;
+
+  &-open { height: auto; }
+  &-closed { height: 0; }
+}

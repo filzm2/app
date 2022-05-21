@@ -1,0 +1,24 @@
+
+<div *ngIf="group" class="database-connection">
+  <div>
+    <app-form-field [control]="getFormControl('database_name')"
+                    [relativeHint]="true"
+                    label="Наименование базы данных *"
+                    hint="Введите наименование для идентификации базы данных">
+    </app-form-field>
+  </div>
+  <div class="database-connection-field-wrapper">
+    <app-form-field [control]="getFormControl('sqlalchemy_uri')"
+                    [relativeHint]="true"
+                    label="SQLALCHEMY URI *"
+                    hint="Refer to the SQLAlchemy docs for more information on how to structure your URI.">
+    </app-form-field>
+    <button
+      (click)="testConnection()"
+      mat-raised-button
+      color="primary"
+      class="small-button save-button">
+      Тест соединения
+    </button>
+  </div>
+</div>

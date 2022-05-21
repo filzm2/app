@@ -1,0 +1,18 @@
+$pmsize: 16px;
+.simple-flex {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+
+  app-ui-chip:not(:last-child) {
+    margin-right: $pmsize;
+  }
+}
+
+.cl {
+  margin-top: $pmsize;
+}
+
+app-ui-chip {
+  padding-top: $pmsize;
+}

@@ -1,0 +1,22 @@
+.nda mat-radio-group{
+  margin-left: 24px;
+  mat-radio-button + mat-radio-button {
+    margin-left: 16px;
+  }
+}
+
+.nda .document {
+  width: 326px;
+}
+
+.nda {
+  box-sizing: border-box;
+  min-height: 79px;
+  background: #ffffff;
+  border-radius: 4px;
+  padding: 24px;
+}
+
+.header-size {
+  width: 175px;
+}

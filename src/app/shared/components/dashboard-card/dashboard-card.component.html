@@ -1,0 +1,78 @@
+<mat-card class="dashboard-card">
+  <mat-card-header>
+    <mat-card-title></mat-card-title>
+
+    <div role="checkbox" (click)="setFavoriteStatus($event)" class="favorite-button">
+      <mat-icon
+        [ngClass]="{ checked: dashboard.favorite }"
+        class="star-checkbox"
+        svgIcon="star"
+      ></mat-icon>
+    </div>
+
+    <div class="badge-wrapper">
+      <div *ngIf="isChart">
+        <div class="custom-badge custom-badge__gray">
+          {{ this.dashboard.datasource_name_text }}
+        </div>
+      </div>
+
+      <div *ngIf="!isChart">
+        <div class="custom-badge custom-badge__gray" *ngIf="!dashboard.published">Черновик</div>
+        <div class="custom-badge custom-badge__primary-filled" *ngIf="dashboard.published">
+          Опубликовано
+        </div>
+      </div>
+    </div>
+  </mat-card-header>
+
+  <div class="dashboard-card-image">
+    <img [src]="thumbnail$ | async" />
+  </div>
+
+  <mat-card-content>
+    <mat-icon *ngIf="!isChart" class="dashboards-icon" svgIcon="dashboards"></mat-icon>
+    <mat-icon *ngIf="isChart" class="dashboards-icon" svgIcon="charts"></mat-icon>
+
+    <div class="dashboard-tile-card-description">
+      <mat-card-title [title]="getTitle()">{{ getTitle() }}</mat-card-title>
+
+      <div class="dashboard-tile-card-info">
+        <img
+          *ngIf="pinned.pin"
+          src="assets/icons/pin_small.svg"
+          width="12"
+          height="12"
+          class="pin-icon"
+        />
+
+        <mat-card-subtitle>Изменено {{ dashboard.changed_on }}</mat-card-subtitle>
+      </div>
+    </div>
+
+    <app-icon-button
+      [matMenuTriggerFor]="actions_menu"
+      (click)="$event.stopPropagation()"
+      class="dashboard-table-actions-button"
+      name="options"
+    >
+    </app-icon-button>
+
+    <mat-menu class="dashboard-table-actions-menu" #actions_menu="matMenu">
+      <button [disabled]="!permissions.canWrite" mat-menu-item (click)="editDashboard(dashboard)">
+        <mat-icon svgIcon="create"></mat-icon>
+        Редактировать
+      </button>
+
+      <button [disabled]="!permissions.canRead" mat-menu-item (click)="exportDashboard()">
+        <mat-icon svgIcon="file_upload"></mat-icon>
+        Экспорт
+      </button>
+
+      <button [disabled]="!permissions.canWrite" mat-menu-item (click)="deleteDashboard()">
+        <mat-icon svgIcon="delete"></mat-icon>
+        Удалить
+      </button>
+    </mat-menu>
+  </mat-card-content>
+</mat-card>

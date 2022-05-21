@@ -1,0 +1,46 @@
+.icm-paginator {
+  display: flex;
+  align-items: center;
+}
+
+
+.icm-pg-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Gilroy, serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  width: 36px;
+  height: 36px;
+  background: #FFFFFF;
+  border-radius: 4px;
+  text-align: center;
+  color: #1A1A1A;
+  &:hover {
+    cursor: pointer;
+    background: #EEF3FF;
+    color: #1A1A1A;
+  }
+  &:active {
+    background: #2C5DE5;
+    color: #FFFFFF;
+  }
+  &-active {
+    background: #2C5DE5;
+    color: #FFFFFF;
+  }
+  &-active-icon {
+
+  }
+  &-inactive-icon {
+    color: #A1A1A1;
+    &:hover {
+      cursor: not-allowed;
+      background: #FFFFFF;
+      color: #A1A1A1;
+    }
+  }
+}

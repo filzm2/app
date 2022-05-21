@@ -1,0 +1,170 @@
+<header
+  class="app-header"
+  [class]="isMobileMenuShowed ? 'app-header-mobile-opened' : 'app-header-mobile-closed'"
+>
+  <div
+    [class]="isMobileMenuShowed ? 'open' : 'close'"
+    class="logo"
+    (click)="switchMobileMenuOpened({ reset: true })"
+  >
+    <a
+      href="start-page"
+      routerLink="start-page"
+      mat-button
+      class="header-link"
+      ondragstart="return false"
+    >
+      <img src="assets/logo_psbAsset.svg" alt="psb" height="30" class="logo-image-default" />
+      <img src="assets/PSB_logo_full_white.svg" alt="psb" height="30" class="logo-image-white" />
+    </a>
+  </div>
+
+  <div class="header-menu">
+    <button [matMenuTriggerFor]="menuData" mat-button class="header-menu-item">
+      Данные
+      <span class="material-icons"> arrow_drop_down </span>
+    </button>
+
+    <mat-menu #menuData="matMenu">
+      <a
+        *ngIf="permissions.can_read_dataset || permissions.can_edit_dataset"
+        routerLink="dataset"
+        mat-menu-item
+      >
+        Набор данных
+      </a>
+
+      <a *ngIf="permissions.can_read_database" routerLink="database" mat-menu-item> Базы данных </a>
+
+      <a routerLink="database/upload/csv" mat-menu-item>Загрузить CSV</a>
+      <a routerLink="database/upload/excel" mat-menu-item>Загрузить Excel</a>
+    </mat-menu>
+
+    <a
+      *ngIf="permissions.can_read_dashboard || permissions.can_edit_dashboard"
+      routerLink="dashboard"
+      mat-button
+      class="header-link"
+      ondragstart="return false"
+    >
+      Аналитические панели
+    </a>
+
+    <a
+      *ngIf="permissions.can_read_chart || permissions.can_edit_dataset"
+      routerLink="charts"
+      mat-button
+      class="header-link"
+      ondragstart="return false"
+    >
+      Графики
+    </a>
+
+    <!-- <button
+      mat-button
+      routerLink="dashboard"
+      disabled
+    >
+      SQL Lab
+    </button> -->
+
+    <a href="map" routerLink="map" mat-button class="header-link" ondragstart="return false">
+      Карта
+    </a>
+
+    <a
+      href="mailing"
+      routerLink="mailing"
+      mat-button
+      class="header-link"
+      ondragstart="return false"
+    >
+      Рассылки
+    </a>
+  </div>
+
+  <div class="right-menu">
+    <div class="create-menu">
+      <button [matMenuTriggerFor]="menuCreate" mat-raised-button color="accent">
+        Создать
+        <span class="material-icons"> add </span>
+      </button>
+
+      <mat-menu #menuCreate="matMenu">
+        <button *ngIf="permissions.can_create_dashboard" (click)="createDashboard()" mat-menu-item>
+          Аналитическая панель
+        </button>
+
+        <button *ngIf="permissions.can_create_chart" (click)="createChart()" mat-menu-item>
+          График
+        </button>
+
+        <button mat-menu-item *ngIf="permissions.can_create_dataset" (click)="createDataset()">
+          Набор данных
+        </button>
+
+        <button mat-menu-item *ngIf="permissions.can_create_db" (click)="createDatabase()">
+          База данных
+        </button>
+      </mat-menu>
+    </div>
+
+    <div class="user-menu">
+      <button [matMenuTriggerFor]="menuUser" mat-button>
+        Настройки
+        <span class="material-icons"> arrow_drop_down </span>
+      </button>
+
+      <mat-menu #menuUser="matMenu">
+        <a
+          *ngIf="permissions.can_read_udbmv || permissions.can_edit_udbmv"
+          routerLink="security/users"
+          mat-menu-item
+          class="header-link"
+          ondragstart="return false"
+        >
+          Список пользователей
+        </a>
+
+        <a
+          *ngIf="permissions.can_read_rmv || permissions.can_edit_rmv"
+          routerLink="security/roles"
+          mat-menu-item
+          class="header-link"
+        >
+          Список ролей
+        </a>
+
+        <a
+          routerLink="security/row-level"
+          mat-menu-item
+          class="header-link"
+          ondragstart="return false"
+        >
+          Строчный уровень безопасности
+        </a>
+
+        <a
+          *ngIf="permissions.can_read_log"
+          routerLink="logs"
+          mat-menu-item
+          class="header-link"
+          ondragstart="return false"
+        >
+          Список действий
+        </a>
+
+        <button mat-menu-item (click)="logoutClick()">Выйти</button>
+      </mat-menu>
+    </div>
+  </div>
+
+  <button
+    class="mobile-menu"
+    [class]="isMobileMenuShowed ? 'open' : 'close'"
+    (click)="switchMobileMenuOpened({ type: 'isMobileMenuShowed' })"
+  >
+    <img src="assets/icons/burger_menu.svg" alt="burger_menu" class="burger-menu" />
+    <img src="assets/icons/close_white_24px.svg" alt="burger_menu" class="burger-menu-close" />
+  </button>
+</header>

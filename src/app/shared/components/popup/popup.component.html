@@ -1,0 +1,20 @@
+<div
+    [ngClass]="{
+    'jw-modal': !this.secondStep,
+    'jw-modal-second': this.secondStep
+    }"
+>
+  <div class="order-modal-body"
+    [ngClass]="{
+    'order-modal-body': !this.secondStep,
+    'order-modal-second-body': this.secondStep
+    }"
+  >
+    <ng-content></ng-content>
+  </div>
+</div>
+<div [ngClass]="{
+    'jw-modal-background': !this.secondStep,
+    'jw-modal-background-second': this.secondStep
+    }"
+></div>

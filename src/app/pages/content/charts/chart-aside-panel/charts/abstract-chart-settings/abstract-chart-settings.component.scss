@@ -1,0 +1,24 @@
+.chart-form {
+  .vertical {
+    flex-direction: column;
+  }
+
+  &__aggregate {
+    &.flex-gap {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-bottom: 20px;
+    }
+  }
+
+  &__checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin: 14px 0;
+    mat-checkbox {
+      width: 40%;
+    }
+  }
+}

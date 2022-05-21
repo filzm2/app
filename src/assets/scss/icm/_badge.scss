@@ -1,0 +1,111 @@
+.icm-badge {
+  font-family: 'Gilroy', serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  height: 24px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  white-space: nowrap;
+
+  span { white-space: nowrap }
+
+  &-primary {
+    background: #FFF7F1;
+    border: 1px solid #FFD2B1;
+    color: #F37A1F;
+  }
+
+  &-accent {
+    background: #F4F7FF;
+    border: 1px solid #BFD0FD;
+    color: #2C5DE5;
+  }
+
+  &-grey{
+    border: 1px solid #656565;
+    color: #656565;
+  }
+
+  &-alert{
+    border: 1px solid #DE1C22;
+    color: #DE1C22;
+  }
+
+  &-success{
+    border: 1px solid #008556;
+    color: #008556;
+  }
+
+  &-warning{
+    border: 1px solid #E86825;
+    color: #E86825;
+  }
+
+  &-date{
+    background: #F4F7FF;
+    border: 1px solid #BFD0FD;
+    color: #656565;
+  }
+  &-icon {
+    padding-left: 0;
+    .mat-icon {
+      display: flex;
+      justify-content: center;
+      height: 24px;
+      width: 24px;
+      font-weight: bold;
+      line-height: 24px;
+      font-size: 14px;
+    }
+  }
+
+}
+
+.icm-badge.icm-badge-icon.icm-badge-icon-only {
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  border-radius: 50%;
+  box-sizing: border-box;
+
+  mat-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+    line-height: 18px;
+    font-weight: normal;
+    display: inline-block;
+  }
+
+}
+
+.icm-icon-primary {
+  border-radius: 50%;
+  border: 1px solid #F37A1F;
+  color: #F37A1F;
+}
+
+.icm-icon-alert {
+  border-radius: 50%;
+  border: 1px solid #DE1C22;
+  color: #DE1C22;
+}
+
+.icm-icon-success {
+  border-radius: 50%;
+  border: 1px solid #008556;
+  color: #008556;
+}
+
+.icm-icon-warning {
+  border-radius: 50%;
+  border: 1px solid #E86825;
+  color: #E86825;
+}

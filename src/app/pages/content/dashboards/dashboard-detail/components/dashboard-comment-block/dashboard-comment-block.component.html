@@ -1,0 +1,80 @@
+<div class="comments-container">
+  <div class="comments-container__info" *ngIf="loading || !commentData.length">
+    <mat-spinner *ngIf="loading"></mat-spinner>
+    <div *ngIf="!commentData.length && !loading" class="no-comments">
+      <div>Комментарии отсутствуют. Чтобы добавить, нажмите на кнопку "Добавить комментарий"</div>
+    </div>
+  </div>
+  <div class="comments-container__area" *ngIf="!loading && commentData.length">
+    <div *ngFor="let comment of commentData" class="comments-container__comment">
+      <app-dashboard-comment
+        [data]="comment"
+        (deleteCommentEvent)="deleteComment($event)"
+        (editCommentEvent)="openEditComment($event)"
+      ></app-dashboard-comment>
+    </div>
+  </div>
+  <div class="comments-container__actions" *ngIf="!addComment && editCommentId < 0">
+    <button mat-raised-button color="accent" class="comments-button" (click)="onAddCommentClick()">
+      Добавить комментарий
+    </button>
+  </div>
+  <div class="comments-container__add" *ngIf="addComment || editCommentId > 0">
+    <form [formGroup]="commentForm">
+      <div class="comments-container__add-textarea">
+        <mat-form-field appearance="outline" class="mat-textarea" style="width: 100%; height: 100%">
+          <mat-label>Текст комментария</mat-label>
+          <textarea matInput formControlName="comment"></textarea>
+        </mat-form-field>
+      </div>
+      <div class="comments-container__add-buttons">
+        <div class="status-icons">
+          <mat-icon
+            svgIcon="comments_com"
+            class="status-icons__small"
+            (click)="checkStatus(1)"
+            [ngClass]="{
+              'status-checked': statusChecked === 1
+            }"
+          ></mat-icon>
+          <mat-icon
+            svgIcon="comments_question"
+            class="status-icons__small"
+            (click)="checkStatus(2)"
+            [ngClass]="{
+              'status-checked': statusChecked === 2
+            }"
+          ></mat-icon>
+          <mat-icon
+            svgIcon="comments_attention"
+            class="status-icons__small"
+            (click)="checkStatus(3)"
+            [ngClass]="{
+              'status-checked': statusChecked === 3
+            }"
+          ></mat-icon>
+        </div>
+        <button
+          [disabled]="!commentForm.valid"
+          *ngIf="editCommentId < 0"
+          mat-raised-button
+          color="primary"
+          class="comments-button"
+          (click)="onSaveCommentClick()"
+        >
+          Сохранить
+        </button>
+        <button
+          [disabled]="!commentForm.valid"
+          *ngIf="editCommentId > 0"
+          mat-raised-button
+          color="primary"
+          class="comments-button"
+          (click)="onUpdateCommentClick()"
+        >
+          Обновить комментарий
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

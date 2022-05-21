@@ -1,0 +1,53 @@
+<div class="dataset-edit">
+  <div class="title">
+    Редактировать набор данных - <span class="title-light">{{ data?.table_name }}</span>
+  </div>
+
+  <mat-tab-group (selectedTabChange)="tabChange($event)" class="tabs">
+    <mat-tab label="Источник">
+      <app-dataset-edit-database #tab0></app-dataset-edit-database>
+    </mat-tab>
+
+    <mat-tab label="Метрика">
+      <app-dataset-edit-metric #tab1></app-dataset-edit-metric>
+    </mat-tab>
+
+    <mat-tab label="Столбцы">
+      <app-dataset-edit-columns [calculated]="false" #tab2></app-dataset-edit-columns>
+    </mat-tab>
+
+    <mat-tab label="Вычисляемые столбцы">
+      <app-dataset-edit-columns [calculated]="true" #tab3></app-dataset-edit-columns>
+    </mat-tab>
+
+    <mat-tab label="Настройки">
+      <app-dataset-edit-settings #tab4></app-dataset-edit-settings>
+    </mat-tab>
+  </mat-tab-group>
+
+  <div class="actions">
+    <button mat-raised-button color="primary" class="small-button" (click)="saveChanges()">
+      Сохранить
+    </button>
+
+    <button
+      mat-stroked-button
+      color="primary"
+      class="small-button primary-color"
+      (click)="routeBack()"
+    >
+      Закрыть
+    </button>
+
+    <button
+      *ngIf="tabButtonSettings"
+      mat-raised-button
+      color="accent"
+      class="additional-button small-button primary-color"
+      (click)="tabAction()"
+    >
+      <mat-icon [svgIcon]="tabButtonSettings.icon"></mat-icon>
+      {{ tabButtonSettings.label }}
+    </button>
+  </div>
+</div>

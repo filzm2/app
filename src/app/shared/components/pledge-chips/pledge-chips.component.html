@@ -1,0 +1,13 @@
+<div class="pledge-chips-card">
+  <div class="text--header mb-16">Добавить обьект залога</div>
+  <div class="chips">
+    <div *ngFor="let chip of chips" class="chip" [ngClass]="{'chip-active': chip.active}"
+         (click)="setActiveChip(chip.caption)">
+      <mat-icon class="mat-18"
+                [ngClass]="{'chip-active-icon': chip.active, 'chip-icon' : !chip.active}">{{chip.icon}}</mat-icon>
+      <div class="chip-caption">
+        {{chip.caption}}
+      </div>
+    </div>
+  </div>
+</div>

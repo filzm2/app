@@ -1,0 +1,95 @@
+<div class="settings-list-container">
+  <div class="settings-list-header">
+    <div class="settings-list-header-title">Список ролей пользователей</div>
+    <div class="custom-badge custom-badge__primary-filled">{{ getCountRoleLabel() }}</div>
+
+    <button class="primary-light-flat-button" (click)="createRole()" mat-flat-button>
+      <mat-icon svgIcon="person_selected"></mat-icon>Добавить роль
+    </button>
+  </div>
+
+  <div class="settings-list-filters-wrapper">
+    <div class="settings-list-filters">
+      <app-filters
+        (submitFilters)="getFilteredData($event)"
+        [selectedFilters]="selectedFilters"
+        [availableFilters]="availableFilters"
+      >
+      </app-filters>
+    </div>
+  </div>
+
+  <div class="settings-list-list">
+    <div *ngIf="isLoading" class="settings-list-spinner">
+      <mat-spinner color="primary"></mat-spinner>
+    </div>
+
+    <table *ngIf="!isLoading" mat-table [dataSource]="roleList" class="settings-list-table">
+      <colgroup span="2">
+        <col span="1" />
+        <col span="1" class="action-table-column" />
+      </colgroup>
+
+      <ng-container matColumnDef="role">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          (click)="getSortedList('name')"
+          class="sortable-column-header"
+        >
+          <span>
+            Наименование роли
+            <mat-icon
+              [ngClass]="{ desc: sortOrder === 'desc', active: sortColumn === 'name' }"
+              svgIcon="arrow_sort_down"
+            ></mat-icon>
+          </span>
+        </th>
+
+        <td mat-cell *matCellDef="let role" style="cursor: auto">
+          {{ role.name }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td class="settings-list-table-actions" mat-cell *matCellDef="let role">
+          <app-icon-button
+            [matMenuTriggerFor]="actions_menu"
+            (click)="$event.stopPropagation()"
+            class="settings-list-table-actions-button"
+            color="white"
+            name="options"
+          >
+          </app-icon-button>
+
+          <mat-menu class="settings-list-table-actions-menu" #actions_menu="matMenu">
+            <button [disabled]="!permissions.canWrite" mat-menu-item (click)="editRole(role)">
+              <mat-icon svgIcon="create"></mat-icon>
+              Редактировать
+            </button>
+
+            <button [disabled]="!permissions.canWrite" mat-menu-item (click)="deleteRole(role.id)">
+              <mat-icon svgIcon="delete"></mat-icon>
+              Удалить
+            </button>
+          </mat-menu>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <div class="settings-list-table-footer">
+      <mat-paginator
+        class="settings-list-paginator"
+        [length]="paginator.count"
+        [pageSize]="paginator.pageSize"
+        [pageSizeOptions]="[10, 25]"
+        [pageIndex]="paginator.currentPage"
+        (page)="onPageChange($event)"
+      ></mat-paginator>
+    </div>
+  </div>
+</div>

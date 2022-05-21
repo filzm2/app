@@ -1,0 +1,84 @@
+@import '../../../../../../../styles/exd-colors.scss';
+
+.app-dashboard-filters {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 8px 20px 16px;
+
+  .filters-container {
+    display: flex;
+
+    .add-filter {
+      margin-right: 10px;
+      display: flex;
+      align-items: center;
+      height: max-content;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 18px;
+      white-space: nowrap;
+      font-size: 12px;
+      line-height: 16px;
+      color: map-get($exd-primary, 1);
+      background-color: map-get($exd-primary, 450);
+      cursor: pointer;
+
+      .add-filter-image {
+        margin-right: 8px;
+      }
+    }
+
+    .dashboard-chip-list {
+      .dashboard-chip {
+        border: 1px solid map-get($exd-grayscale, 300);
+        color: map-get($exd-grayscale, 300);
+        background-color: map-get($exd-primary, 1);
+        user-select: none;
+
+        &.mat-chip-selected {
+          color: map-get($exd-primary, 1);
+          border-color: map-get($exd-primary, 450);
+          background-color: map-get($exd-primary, 450);
+        }
+      }
+
+      .dashboard-chip-hidden {
+        display: none;
+      }
+    }
+  }
+
+  .configure-button {
+    display: flex;
+    align-items: center;
+    height: max-content;
+    padding: 8px 16px 8px 12px;
+    border: 1px solid map-get($exd-primary, 450);
+    border-radius: 4px;
+    white-space: nowrap;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 16px;
+    color: map-get($exd-primary, 450);
+    background-color: transparent;
+    cursor: pointer;
+
+    .configure-button-image {
+      margin-right: 10px;
+
+      &__disabled {
+        filter: invert(66%) sepia(2%) saturate(0%) hue-rotate(163deg) brightness(98%) contrast(87%);
+      }
+    }
+
+    &__disabled {
+      color: map-get($exd-grayscale, 300);
+      border: 1px solid map-get($exd-grayscale, 300);
+    }
+  }
+}
+
+.cancel-button {
+  margin-left: 16px;
+}

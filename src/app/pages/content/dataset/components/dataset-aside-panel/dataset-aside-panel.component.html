@@ -1,0 +1,110 @@
+<div class="dataset-detail-aside">
+  <div class="dataset-detail-aside-header">
+    <mat-icon class="dataset-detail-aside-header-icon" svgIcon="dataset-detail"></mat-icon>
+    <div [@horizontalHide]="asidePanelAnimationState$ | async" class="dataset-detail-aside-title">Набор данных</div>
+    <app-icon-button
+      [matMenuTriggerFor]="actions_menu"
+      [@horizontalHide]="asidePanelAnimationState$ | async"
+      name="more-vert"
+      color="white">
+    </app-icon-button>
+    <mat-menu class="dashboard-table-actions-menu" #actions_menu="matMenu">
+      <button (click)="editDataset()" [disabled]="!permissions?.canWrite" mat-menu-item>
+        <mat-icon svgIcon="create"></mat-icon>
+        Редактировать набор данных
+      </button>
+      <button (click)="onChangeDataset()" [disabled]="!permissions?.canRead" mat-menu-item >
+        <mat-icon svgIcon="database"></mat-icon>
+        Изменить набор данных
+      </button>
+      <button (click)="openSqlLab()" [disabled]="!permissions?.canWrite" mat-menu-item >
+        <mat-icon svgIcon="pancakes"></mat-icon>
+        Запуск SQL-lab
+      </button>
+    </mat-menu>
+  </div>
+  <div [@horizontalHide]="asidePanelAnimationState$ | async" class="dataset-detail-aside-body">
+    <div *ngIf="!datasetData?.description" class="dataset-detail-aside-title">{{datasetData?.table_name}}</div>
+    <div [@verticalHideDescription]="stateDropdownAnimation.description" *ngIf="datasetData?.description" class="dataset-detail-aside-description">
+      {{this.stateDropdownAnimation.description === 'open' ? datasetData?.description : cutDescription}}
+      <div class="expand-button" (click)="setDropdownState('description')">{{this.stateDropdownAnimation.description === 'open' ? '-' : '+'}}</div>
+    </div>
+    <mat-form-field
+      appearance="outline"
+      class="search-field">
+      <mat-label>Поиск метрик и столбцов</mat-label>
+
+      <input
+        matInput
+        [formControl]="asideSearchFormControl"
+        placeholder="Поиск метрик и столбцов"
+        (change)="onSearchMetricsAndColumn(searchMetricAndColumns)"
+        #searchMetricAndColumns>
+
+      <mat-icon class="search-logo" svgIcon="search"></mat-icon>
+    </mat-form-field>
+    <div class="dataset-detail-aside-metrics">
+      <div class="dataset-detail-aside-group">
+        <div class="dataset-detail-aside-group-header">
+          <div class="dataset-detail-aside-group-header-title">Метрика</div>
+          <div class="dataset-detail-aside-group-header-icon">
+            <mat-icon (click)="setDropdownState('metrics')"
+                      [@turn180]="stateDropdownAnimation.metrics">keyboard_arrow_down</mat-icon>
+          </div>
+        </div>
+        <div class="dataset-detail-aside-group-count">{{getGroupCountLabel('metrics')}}</div>
+        <ul [@verticalHide]="stateDropdownAnimation.metrics" class="dataset-detail-aside-group-list">
+          <li *ngFor="let metric of displayMetrics" class="dataset-detail-aside-group-item">
+            <span class="dataset-detail-aside-group-item-type-icon">{{getMetricTypeIconName(metric)}}</span>
+            <span class="dataset-detail-aside-group-item-label">{{getMetricLabel(metric)}}</span>
+            <span *ngIf="metric.description" [matTooltip]="metric.description" class="mat-tooltip-icon description">i</span>
+            <span *ngIf="metric.expression" [matTooltip]="metric.expression" class="mat-tooltip-icon">?</span>
+          </li>
+          <div class="dataset-detail-aside-group-list-href" *ngIf="isAllShowed('metrics')"
+               (click)="showAll('metrics')">Показать все
+          </div>
+          <div class="dataset-detail-aside-group-list-href" *ngIf="this.displayMetrics.length > 50"
+               (click)="showLess('metrics')">Скрыть
+          </div>
+        </ul>
+      </div>
+    </div>
+    <div class="dataset-detail-aside-columns">
+      <div class="dataset-detail-aside-group">
+        <div class="dataset-detail-aside-group-header">
+          <div class="dataset-detail-aside-group-header-title">Столбцы</div>
+          <div class="dataset-detail-aside-group-header-icon">
+            <mat-icon (click)="setDropdownState('columns')"
+                      [@turn180]="stateDropdownAnimation.columns">keyboard_arrow_down</mat-icon>
+          </div>
+        </div>
+        <div class="dataset-detail-aside-group-count">{{getGroupCountLabel('columns')}}</div>
+        <ul [@verticalHide]="stateDropdownAnimation.columns" class="dataset-detail-aside-group-list">
+          <li *ngFor="let column of displayColumns" class="dataset-detail-aside-group-item">
+            <span *ngIf="isColumnIcon(column)" class="dataset-detail-aside-group-item-type-icon">
+              <mat-icon [svgIcon]="getColumnTypeIconName(column)"></mat-icon>
+            </span>
+            <span *ngIf="!isColumnIcon(column)" class="dataset-detail-aside-group-item-type-icon">
+              {{getColumnTypeIconName(column)}}
+            </span>
+            <span [matTooltip]="column.column_name" [matTooltipDisabled]="!column.verbose_name" class="dataset-detail-aside-group-item-label">{{getColumnLabel(column)}}
+              <mat-icon *ngIf="column.verbose_name" svgIcon="change"></mat-icon>
+            </span>
+
+            <span *ngIf="column.description" [matTooltip]="column.description" class="mat-tooltip-icon description mat-tooltip-icon">i</span>
+            <span *ngIf="column.expression" [matTooltip]="column.expression" class="mat-tooltip-icon">?</span>
+          </li>
+          <div class="dataset-detail-aside-group-list-href" *ngIf="isAllShowed('columns')"
+               (click)="showAll('columns')">Показать все
+          </div>
+          <div class="dataset-detail-aside-group-list-href" *ngIf="this.displayColumns.length > 50"
+               (click)="showLess('columns')">Скрыть
+          </div>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="dataset-detail-aside-footer">
+    <app-icon-button [ngClass]="(asidePanelAnimationState$ | async) === 'open' ? 'hide' : ''" name="unhide" (click)="toggleAsideOpen()"></app-icon-button>
+  </div>
+</div>

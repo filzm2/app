@@ -1,0 +1,103 @@
+<div class="app-header-mobile">
+  <div class="container">
+    <div class="column">
+      <a
+        *ngIf="permissions.can_read_dashboard || permissions.can_edit_dashboard"
+        routerLink="dashboard"
+        class="link-title"
+        (click)="closeHeaderMobile()"
+      >
+        Аналитические панели
+      </a>
+
+      <a
+        *ngIf="permissions.can_read_chart || permissions.can_edit_dataset"
+        routerLink="charts"
+        class="link-title"
+        (click)="closeHeaderMobile()"
+      >
+        Графики
+      </a>
+
+      <div class="link-title not-button">Данные</div>
+
+      <div class="links">
+        <a
+          *ngIf="permissions.can_read_database"
+          routerLink="database"
+          class="link"
+          (click)="closeHeaderMobile()"
+        >
+          Базы данных
+        </a>
+
+        <a
+          *ngIf="permissions.can_read_dataset || permissions.can_edit_dataset"
+          routerLink="dataset"
+          class="link"
+          (click)="closeHeaderMobile()"
+        >
+          Наборы данных
+        </a>
+
+        <a routerLink="database/upload/csv" class="link" (click)="closeHeaderMobile()">
+          Загрузка CSV
+        </a>
+
+        <a routerLink="database/upload/excel" class="link" (click)="closeHeaderMobile()">
+          Загрузка Excel
+        </a>
+      </div>
+    </div>
+
+    <div class="column">
+      <a routerLink="map" class="link-title" (click)="closeHeaderMobile()">Карта</a>
+      <a routerLink="mailing" class="link-title" (click)="closeHeaderMobile()"> Рассылки </a>
+
+      <!--
+      <div class="link-title not-button">
+        SQL
+      </div>
+      -->
+    </div>
+
+    <div class="column">
+      <div class="link-title not-button">Настройки</div>
+
+      <div class="links">
+        <a
+          *ngIf="permissions.can_read_udbmv || permissions.can_edit_udbmv"
+          routerLink="security/users"
+          class="link"
+          (click)="closeHeaderMobile()"
+        >
+          Список пользователей
+        </a>
+
+        <a
+          *ngIf="permissions.can_read_rmv || permissions.can_edit_rmv"
+          routerLink="security/roles"
+          class="link"
+          (click)="closeHeaderMobile()"
+        >
+          Список ролей
+        </a>
+
+        <a routerLink="security/row-level" class="link" (click)="closeHeaderMobile()">
+          Строчный уровень безопасности
+        </a>
+
+        <a
+          *ngIf="permissions.can_read_log"
+          routerLink="logs"
+          class="link"
+          (click)="closeHeaderMobile()"
+        >
+          Список действий
+        </a>
+
+        <button class="link" (click)="logoutClick()">Выйти</button>
+      </div>
+    </div>
+  </div>
+</div>

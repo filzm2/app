@@ -1,0 +1,15 @@
+.database-connection {
+
+  &-field-wrapper {
+    width: 100%;
+    display: flex;
+    app-form-field {
+      width: 100%;
+    }
+    button {
+      width: 143px;
+      height: 36px;
+      margin: 5px 0 0 20px;
+    }
+  }
+}

@@ -1,0 +1,22 @@
+    <mat-card class="mc-task-progress">
+      <mat-card-content>
+        <div class="text--header">Информация о продуктах, входящих в лимит</div>
+        <div *ngFor="let checkStatus of checkStatuses" class="mc-task-progress_action_type">
+          <div class="action_type_caption">
+            {{checkStatus.caption}}
+          </div>
+          <div class="action_type_info">
+            <div class="checking-status_container">
+              <app-checking-status *ngFor="let type of checkStatus.types" [type]="type.status" [caption]="type.caption"></app-checking-status>
+            </div>
+            <div class="description">
+              <mat-card>
+                <mat-card-content>
+                  {{checkStatus.description}}
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>

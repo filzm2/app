@@ -1,0 +1,26 @@
+<div class="filter-bar-container">
+  <form [formGroup]="filterForm" (ngSubmit)="onFormSubmit()">
+    <!-- <div>
+      <mat-checkbox formControlName="default">Значение фильтра по умолчанию</mat-checkbox>
+    </div> -->
+
+    <mat-form-field appearance="outline" color="primary" class="small-input form-input filter-type">
+      <mat-label>Квартал</mat-label>
+
+      <mat-select formControlName="quarter">
+        <mat-option value="0">1 квартал 2021 года</mat-option>
+        <mat-option value="1">2 квартал 2021 года</mat-option>
+        <mat-option value="2">3 квартал 2021 года</mat-option>
+        <mat-option value="3">4 квартал 2021 года</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- <div>
+      <div class="mat-caption">Фактический временной диапазон</div>
+      <div>
+        {{ factStartDate ? (factStartDate | date: 'shortDate') : '' }} < col <
+        {{ factEndDate ? (factEndDate | date: 'shortDate') : '' }}
+      </div>
+    </div> -->
+  </form>
+</div>

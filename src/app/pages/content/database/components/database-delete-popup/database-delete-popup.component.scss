@@ -1,0 +1,31 @@
+@import "../../../../../../styles/exd-colors.scss";
+
+.dialog-database-delete {
+  background: white;
+  border-radius: 8px;
+  padding: 20px 32px 32px;
+  box-sizing: border-box;
+  * {
+    box-sizing: border-box;
+  }
+  &__content {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+    position: relative;
+    overflow: visible;
+    .strong {
+      font-weight: 700;
+    }
+  }
+  &__text {
+    padding-bottom: 20px;
+  }
+  &__actions {
+    display: flex;
+    justify-content: end;
+    gap: 20px;
+    margin-top: 12px;
+  }
+}

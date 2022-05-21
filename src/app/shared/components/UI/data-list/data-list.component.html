@@ -1,0 +1,44 @@
+<div *ngIf="userList.length">
+  <ul>
+    <li *ngFor="let user of userList; let idx = index" class="badge-container">
+      <hr>
+      <div class="badges">
+        <div class="badge badge__content"
+        >{{idx + 1}}</div>
+        <mat-icon (click)="badgeDeleteHandler(user.fullName)" class="badge badge__delete" >delete</mat-icon>
+      </div>
+      <div class="container__info">
+        <div class="info__col">
+          <div class="col__item">
+            <div class="item__label">Фио</div>
+            <div class="item__text">{{user.fullName}}</div>
+          </div>
+          <div class="col__item">
+            <div class="item__label">Дата рождения</div>
+            <div class="item__text">{{user.birthday}}</div>
+          </div>
+        </div>
+        <div class="info__col">
+          <div class="col__item">
+            <div class="item__label">Должность</div>
+            <div class="item__text">{{user.function}}</div>
+          </div>
+          <div class="col__item">
+            <div class="item__label">Место рождения</div>
+            <div class="item__text">{{user.bornPlace}}</div>
+          </div>
+        </div>
+        <div class="info__col">
+          <div class="col__item">
+            <div class="item__label">Реквизиты документа, удостоверяющего личность</div>
+            <div class="item__text">{{user.document}}</div>
+          </div>
+          <div class="col__item">
+            <div class="item__label">Адрес регистрации по месту жительства</div>
+            <div class="item__text">{{user.address}}</div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>

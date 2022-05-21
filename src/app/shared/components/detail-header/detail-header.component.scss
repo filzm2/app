@@ -1,0 +1,196 @@
+.task_header {
+  box-sizing: border-box;
+  margin-bottom: 16px;
+  background: white;
+  border-radius: 4px;
+
+  .task_status_type {
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    color: #FF6C00;
+    font-weight: 400;
+  }
+
+  .mc-task_header {
+    padding: 24px;
+  }
+
+  .mcc-task_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .header_info {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+
+      > div {
+        margin-right: 24px;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+
+      .task_status {
+        display: block;
+        margin-bottom: 0;
+
+        .task_status_caption {
+          font-size: 12px;
+          display: flex;
+          align-items: center;
+          color: #C1C1C1;
+        }
+
+      }
+
+      .order_status {
+        .order_status_caption {
+          font-size: 12px;
+          display: flex;
+          align-items: center;
+          color: rgba(0, 0, 0, 0.5);
+        }
+
+        .order_status_type {
+          font-size: 16px;
+          display: flex;
+          align-items: center;
+          color: #000000;
+        }
+      }
+
+      .SLA_of_order {
+        display: flex;
+
+        .task__item_clock {
+          color: #3D50B7;
+          height: 21px;
+          min-width: 19px;
+          background-size: cover;
+          margin-right: 12px;
+          margin-left: 4px;
+          margin-top: 17px;
+        }
+
+        .SLA_of_order_caption {
+          font-size: 12px;
+          display: flex;
+          align-items: center;
+          color: rgba(0, 0, 0, 0.5);
+        }
+
+        .SLA_of_order_time {
+
+        }
+      }
+
+      .SLA_of_task {
+        display: flex;
+
+        .task__item_clock {
+          color: #3D50B7;
+          height: 21px;
+          min-width: 19px;
+          background-size: cover;
+          margin-right: 12px;
+          margin-left: 4px;
+          margin-top: 17px;
+        }
+
+        .SLA_of_task_caption {
+          font-size: 12px;
+          display: flex;
+          align-items: center;
+          color: #C1C1C1;
+        }
+
+        .SLA_of_task_time {
+
+        }
+      }
+
+      .task__author {
+        display: flex;
+        margin-left: auto;
+
+        .task__userAvatar {
+          margin-left: 15px;
+          min-width: 46px;
+          height: 46px;
+          border-radius: 25px;
+        }
+      }
+
+      .task__userRole {
+        color: rgba(0, 0, 0, 0.5);
+        Font-Size: 12px;
+      }
+
+      .task__userName {
+        font-size: 16px;
+      }
+    }
+    .header {
+      &__search {
+        width: 440px;
+        height: 40px;
+      }
+
+      &__list {
+        height: 40px;
+        margin-right: 40px;
+      }
+
+      &__numbers {
+        display: flex;
+        align-items: center;
+
+        &-block {
+          display: flex;
+
+          &:not(:last-child) {
+            margin-right: 30px;
+          }
+
+          &_label {
+            color: #656565;
+            font-size: 14px;
+            font-weight: 400;
+            margin-right: 8px;
+          }
+
+          &_count {
+            color: #F37A1F;
+            font-size: 20px;
+            font-weight: 600;
+          }
+        }
+      }
+    }
+  }
+
+  .text_header {
+    &_caption {
+      display: flex;
+      font-size: 22px;
+      font-weight: bold;
+      line-height: 140%;
+      margin-right: 40px;
+      align-items: center;
+    }
+  }
+}
+
+.header-status_separator {
+  height: 1px;
+  margin: 0 24px 24px 24px;
+  background: rgba(61, 80, 183, 0.15);
+}
+
+.ws {
+  white-space: nowrap;
+}

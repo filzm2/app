@@ -1,0 +1,29 @@
+<div class="row">
+    <h2  class="text--header">Состав холдинга</h2>
+  <ng-content></ng-content>
+</div>
+<div #compositionDiv class="simple-flex">
+    <app-ui-chip
+      id="uiChips{{idx}}"
+      *ngFor="let el of mode ? compositionVisible : composition;
+               let idx = index"
+      [prefixIcon]="status ? checkStatus(el.status) : ''"
+      [primary]="el.main"
+      [active]="el?.selected"
+      (click)="selectLegal(idx)"
+    >{{el?.name}}
+    </app-ui-chip>
+  <div class="cl" *ngIf="changeMode">
+    <button *ngIf="composition.length !== compositionVisible.length"
+            id="addButton" class="icm-btn icm-btn-text
+  icm-btn-icon icm-btn-small icm-btn-text-accent
+  icm-btn-text-icon-right"
+            (click)="switchMode()"
+    >
+      <span>{{getSpanTitle()}}</span>
+      <mat-icon class="material-icons-outlined edit_icon">
+        {{mode ? 'chevron_right' : 'expand_less'}}
+      </mat-icon>
+    </button>
+  </div>
+</div>

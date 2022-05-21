@@ -1,0 +1,59 @@
+@import "../../../../styles/exd-colors.scss";
+@import "../../../../styles/variables.scss";
+@import "../../../../styles/mixins.scss";
+
+.multi-select-panel {
+  border: 1px solid map-get($exd-grayscale, 100);
+  border-radius: $main-radius;
+  padding: 16px;
+  position: relative;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  &__add {
+    height: 36px;
+    cursor: pointer;
+    border-radius: $main-radius;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid map-get($exd-grayscale, 100);
+    color: map-get($exd-grayscale, 300);
+    padding: 10px;
+  }
+
+  &__label {
+    color: map-get($exd-grayscale, 400);
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 16px;
+    position: absolute;
+    background: white;
+    top: -8px;
+    left: 10px;
+    padding: 0 5px;
+
+  }
+
+  &__item {
+    height: 36px;
+    cursor: pointer;
+    border-radius: $main-radius;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    background: map-get($exd-psb-orange, 600);
+    padding: 10px;
+    &_label {
+      margin-right: auto;
+    }
+  }
+
+  &__dropdown-bar {
+    position: absolute;
+    right: 400px;
+  }
+}

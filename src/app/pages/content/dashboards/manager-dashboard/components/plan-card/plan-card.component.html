@@ -1,0 +1,41 @@
+<!-- [ngClass]="{ active: active }" (click)="cardClick()" -->
+<div
+  class="plan-card"
+  (click)="cardClick(title)"
+  [ngStyle]="{ display: showIndicator ? 'flex' : 'none' }"
+>
+  <div [ngClass]="color" class="plan-card__stick"></div>
+  <div class="plan-card__description">
+    <div class="title">{{ title }}</div>
+    <div>{{ subTitle }}</div>
+    <div *ngIf="endOfPeriod" class="eop-text">eop</div>
+  </div>
+  <div class="plan-card__big-number fact">
+    <div class="label">Факт</div>
+    <div class="value" *ngIf="fact">
+      {{ fact | number: '1.0-1':'ru' }}<span *ngIf="subTitle === '%'">{{ subTitle }}</span>
+    </div>
+    <div class="value" *ngIf="!fact">-</div>
+  </div>
+  <div class="plan-card__big-number plan">
+    <div class="label">План</div>
+    <div class="value" *ngIf="plan">
+      {{ plan | number: '1.0-1':'ru' }}<span *ngIf="subTitle === '%'">{{ subTitle }}</span>
+    </div>
+    <div class="no-plan" *ngIf="!plan">Не планируется</div>
+  </div>
+  <div class="plan-card__big-number percent">
+    <div class="label">Исполнение</div>
+    <div class="value" [ngClass]="color" *ngIf="percent">
+      {{ percent | number: '1.0-1':'ru' }} %
+    </div>
+    <div class="value" *ngIf="!percent">-</div>
+  </div>
+  <!-- <div class="plan-card__big-number top">
+    <div class="label">{{topText}}</div>
+    <div class="value">№{{top}}</div>
+  </div> -->
+  <div class="plan-card__arrow">
+    <mat-icon>keyboard_arrow_right</mat-icon>
+  </div>
+</div>

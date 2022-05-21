@@ -1,0 +1,169 @@
+<div *ngIf="formGroup" [formGroup]="formGroup">
+  <div class="chart-form" *ngIf="currentTab === 'data'">
+
+    <div (click)="toggleExpandedState('time')" class="chart-aside-panel__title top-line">
+      Время
+      <div class="chart-aside-panel__dropdown-icon ">
+        <mat-icon [@turn180]="stateExpandedAnimation.time">keyboard_arrow_down</mat-icon>
+      </div>
+    </div>
+    <div class="chart-aside-panel__top-bar_expand vertical" [@verticalHide]="stateExpandedAnimation.time">
+
+      <mat-form-field appearance="outline"
+                      color="primary"
+                      class="mat-form-field small-input form-input">
+        <mat-label>Столбец времени</mat-label>
+
+        <mat-select formControlName="time_column">
+          <mat-option *ngFor="let column of timeColumns$ | async"></mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <app-multi-select-panel [availableAdd]="false"
+                              label="Диапазон времени"
+                              [availableDeleteItem]="false"
+                              (addClick)="itemClick($event, 'time_range')"
+                              (itemClick)="itemClick($event, 'time_range')"
+                              [selected]="this.multipleOptionsFieldsState.time_range">
+
+      </app-multi-select-panel>
+    </div>
+    <div (click)="toggleExpandedState('fetch')" class="chart-aside-panel__title top-line">
+      Запрос
+      <div class="chart-aside-panel__dropdown-icon">
+        <mat-icon [@turn180]="stateExpandedAnimation.time">keyboard_arrow_down</mat-icon>
+      </div>
+    </div>
+    <div class="chart-aside-panel__top-bar_expand vertical" [@verticalHide]="stateExpandedAnimation.fetch">
+
+
+      <div class="chart-form__aggregate flex-gap">
+
+
+        <app-chips-autocomplete-field label="Сгруппировать по"
+                                      [allOptions]="groupByOptions"
+                                      [formControl]="getFormControl('group_by')">
+        </app-chips-autocomplete-field>
+
+        <app-multi-select-panel [availableAdd]="true"
+                                label="Метрики"
+                                (addClick)="itemClick($event, 'metrics')"
+                                (itemClick)="itemClick($event, 'metrics')"
+                                [selected]="multipleOptionsFieldsState.metrics">
+
+        </app-multi-select-panel>
+
+        <app-multi-select-panel [availableAdd]="true"
+                                label="Фильтры"
+                                (addClick)="itemClick($event, 'filters')"
+                                (itemClick)="itemClick($event, 'filters')"
+                                [selected]="multipleOptionsFieldsState.filters">
+        </app-multi-select-panel>
+
+        <mat-form-field appearance="outline"
+                        color="primary"
+                        class="mat-form-field small-input form-input">
+          <mat-label>Лимит строк</mat-label>
+
+          <mat-select formControlName="row_limit">
+            <mat-option *ngFor="let limit of rowLimits" [value]="limit">{{limit}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="chart-form__checkbox-group">
+          <mat-checkbox formControlName="sort_by_metric">Сортировка по метрикам
+          </mat-checkbox>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-form" *ngIf="currentTab === 'customize'">
+
+    <div (click)="toggleExpandedState('settings')" class="chart-aside-panel__title">
+      Настройки
+      <div class="chart-aside-panel__dropdown-icon">
+        <mat-icon [@turn180]="stateExpandedAnimation.settings">keyboard_arrow_down</mat-icon>
+      </div>
+    </div>
+    <div class="chart-aside-panel__top-bar_expand vertical" [@verticalHide]="stateExpandedAnimation.settings">
+
+      <mat-form-field appearance="outline"
+                      color="primary"
+                      class="mat-form-field small-input form-input">
+        <mat-label>Цветовая схема</mat-label>
+
+        <mat-select formControlName="color_scheme">
+          <mat-option *ngFor="let column of timeStampFormats"></mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Процентный порог</mat-label>
+
+        <input
+          matInput
+          formControlName="percentage_threshold"/>
+      </mat-form-field>
+
+
+      <div class="chart-form__checkbox-group">
+        <mat-checkbox formControlName="show_legend">Легенда
+        </mat-checkbox>
+      </div>
+
+      <mat-form-field appearance="outline"
+                      color="primary"
+                      class="mat-form-field small-input form-input">
+        <mat-label>Тип легенды</mat-label>
+
+        <mat-select formControlName="label_type">
+          <mat-option *ngFor="let column of legendType"></mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline"
+                      color="primary"
+                      class="mat-form-field small-input form-input">
+        <mat-label>Формат значений</mat-label>
+
+        <mat-select formControlName="number_format">
+          <mat-option *ngFor="let column of legendType"></mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline"
+                      color="primary"
+                      class="mat-form-field small-input form-input">
+        <mat-label>Формат даты</mat-label>
+
+        <mat-select formControlName="date_format">
+          <mat-option *ngFor="let column of legendType"></mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+      <div class="chart-form__checkbox-group">
+        <mat-checkbox formControlName="show_labels">Показать подписи
+        </mat-checkbox>
+        <mat-checkbox formControlName="put_labels_outside">Подписи за пределом графика
+        </mat-checkbox>
+        <mat-checkbox formControlName="label_line">Линия к подписи
+        </mat-checkbox>
+      </div>
+
+      <mat-label>Внешний радиус</mat-label>
+      <mat-slider color="primary" formControlName="outer_radius"></mat-slider>
+
+
+      <div class="chart-form__checkbox-group">
+        <mat-checkbox formControlName="donut">Пончик
+        </mat-checkbox>
+      </div>
+
+      <mat-label>Внутренний радиус</mat-label>
+      <mat-slider color="primary" formControlName="inner_radius"></mat-slider>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+{
+  "/api/v1/": {
+    "target": "http://bi-project.psb.netintel.ru/",
+    "secure": true
+  },
+  "/ms/": {
+    "target": "http://bi-project.psb.netintel.ru/",
+    "secure": false
+  },
+  "/msi/": {
+    "target": "http://bi-project.psb.netintel.ru/",
+    "secure": false
+  }
+}

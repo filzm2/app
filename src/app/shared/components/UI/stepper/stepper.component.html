@@ -1,0 +1,13 @@
+<div class="badge__stepper">
+  <div *ngFor="let step of steps; let idx = index">
+    <span
+      class="modal__badge"
+      [ngClass]="{
+      'badge--done': step.condition,
+      'badge--pass': !step.condition
+      }"
+    >{{idx +1}}</span>
+    <span class="text--small">{{step.title}}</span>
+    <span *ngIf="idx < steps.length -1" class="badge__divider"></span>
+  </div>
+</div>

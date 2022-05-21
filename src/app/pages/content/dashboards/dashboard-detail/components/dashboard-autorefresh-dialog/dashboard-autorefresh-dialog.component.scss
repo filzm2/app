@@ -1,0 +1,45 @@
+@import '../../../../../../../styles/exd-colors.scss';
+
+.dashboard-autorefresh-dialog {
+  position: relative;
+  min-width: 574px;
+  padding: 20px 32px 40px;
+  border-radius: 8px;
+  background-color: map-get($exd-primary, 1);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04), 0 4px 8px rgba(0, 0, 0, 0.16);
+
+  .close {
+    position: absolute;
+    top: 0;
+    right: -52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background-color: map-get($exd-grayscale, 500);
+    cursor: pointer;
+    mat-icon {
+      color: white;
+    }
+  }
+
+  .title {
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 24px;
+    color: map-get($exd-primary, 0);
+  }
+
+  .buttons {
+    margin-top: 14px;
+    display: flex;
+    justify-content: flex-end;
+
+    .cancel-button {
+      margin-left: 16px;
+    }
+  }
+
+}

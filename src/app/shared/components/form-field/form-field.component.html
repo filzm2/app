@@ -1,0 +1,11 @@
+<mat-form-field [ngClass]="{'relative-hint-field': relativeHint, l: size === 'l'}" appearance="outline">
+  <mat-label>{{label}}</mat-label>
+  <input [formControl]="control"
+         matInput
+         [attr.inputmode]="inputMode"
+         [type]="type"
+         [placeholder]="placeholder"
+         (blur)="onBlur()">
+  <mat-error>{{getErrors()}}</mat-error>
+  <mat-hint *ngIf="hint">{{hint}}</mat-hint>
+</mat-form-field>

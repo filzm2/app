@@ -1,0 +1,165 @@
+<form [formGroup]="form" (ngSubmit)="submitHandler()" class="fields-group">
+  <div class="row mb20">
+    <div class="col b3">
+      <div class="icm-outline-big-field">
+        <mat-form-field appearance="outline" [hideRequiredMarker]="true">
+          <mat-label>Фамилия</mat-label>
+          <input type="text" formControlName="lastName" matInput required (input)="checkRule('lastName', 'onlyRus')">
+          <mat-error *ngIf="form.controls.lastName.invalid">{{getErrorMessage('lastName')}}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col b3">
+      <div class="icm-outline-big-field">
+        <mat-form-field appearance="outline" [hideRequiredMarker]="true">
+          <mat-label>Имя</mat-label>
+          <input type="text" formControlName="name" matInput required (input)="checkRule('name', 'onlyRus')">
+          <mat-error *ngIf="form.controls.name.invalid">{{getErrorMessage('name')}}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col b3">
+      <div class="icm-outline-big-field">
+        <mat-form-field appearance="outline" [hideRequiredMarker]="true">
+          <mat-label>Отчество</mat-label>
+          <input type="text" formControlName="fatherName" matInput required (input)="checkRule('fatherName', 'onlyRus')">
+          <mat-error *ngIf="form.controls.fatherName.invalid">{{getErrorMessage('fatherName')}}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb20">
+    <div class="col b3">
+      <div class="icm-outline-big-field">
+        <mat-form-field appearance="outline" [hideRequiredMarker]="true">
+          <mat-label>Должность</mat-label>
+          <input type="text" formControlName="position" matInput required (input)="checkRule('position', 'charNum')">
+          <mat-error *ngIf="form.controls.position.invalid">{{getErrorMessage('position')}}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col b6">
+      <div class="icm-outline-big-field icm-datepicker">
+        <mat-form-field appearance="outline">
+          <mat-label>Дата рождения</mat-label>
+          <input matInput formControlName="birthDate" readonly [matDatepicker]="picker" required>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="form.controls.birthDate.invalid">{{getErrorMessage('birthDate')}}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col b6">
+      <div class="icm-outline-big-field icm-outline-big-field-select" >
+        <mat-form-field appearance="outline" [hideRequiredMarker]="true">
+          <mat-label>Тип телефона</mat-label>
+          <mat-select formControlName="phoneType" required>
+            <mat-option [value]="phone" *ngFor="let phone of phoneTypes">
+              <div class="icm-outline-big-field-select-option">{{phone}}</div>
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.controls.phoneType.invalid">{{getErrorMessage('phoneType')}}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col b6">
+      <div class="icm-outline-big-field icm-outline-big-field-select" >
+        <mat-form-field appearance="outline" [hideRequiredMarker]="true">
+          <mat-label>Тип номера</mat-label>
+          <mat-select formControlName="phonePriorityType" required>
+            <mat-option [value]="phone" *ngFor="let phone of phonePriority">
+              <div class="icm-outline-big-field-select-option">{{phone}}</div>
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.controls.phonePriorityType.invalid">{{getErrorMessage('phonePriorityType')}}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col b6">
+      <div class="icm-outline-big-field">
+        <mat-form-field appearance="outline" [hideRequiredMarker]="true">
+          <mat-label>Телефон</mat-label>
+          <input type="text" formControlName="telephoneNumber" matInput required>
+          <mat-error *ngIf="form.controls.telephoneNumber.invalid">{{getErrorMessage('telephoneNumber')}}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb20">
+    <div class="col b3">
+      <div class="icm-outline-big-field">
+        <mat-form-field appearance="outline" [hideRequiredMarker]="true">
+          <mat-label>Email</mat-label>
+          <input type="email" formControlName="email" matInput required>
+          <mat-error *ngIf="form.controls.email.invalid">{{getErrorMessage('email')}}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col b3-66 pt15">
+      <div class="icm-checkbox">
+        <mat-checkbox formControlName="firstFace">Первое лицо</mat-checkbox>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb20">
+    <div class="col b1">
+      <button class="icm-btn icm-btn-outlined icm-btn-outlined-accent" type="submit" [disabled]="!form.valid">
+        Добавить контактное лицо
+      </button>
+    </div>
+  </div>
+</form>
+
+
+
+<div class="persons-list" *ngIf="userList.length">
+  <ul>
+    <li *ngFor="let user of userList; let idx = index">
+      <div class="row mb30 badges">
+        <div class="badges-left">
+          <div class="badge">{{idx + 1}}</div>
+          <div class="badges-left-title">
+            {{user.lastName + ' ' + user.name + ' ' + user.fatherName}}
+          </div>
+          <div *ngIf="user.firstFace" class="icm-badge icm-badge-primary">Первое лицо</div>
+        </div>
+        <div class="badges-right">
+          <div class="badge badge-right badge-edit" (click)="editUser(idx)"></div>
+          <div class="badge badge-right badge-delete" (click)="badgeDeleteHandler(idx)"></div>
+        </div>
+      </div>
+
+      <div class="row mb20">
+        <div class="col b3 item__col">
+          <div class="item__label">Должность</div>
+          <div class="item__text">{{user.position}}</div>
+        </div>
+        <div class="col b6 item__col">
+          <div class="item__label">Дата рождения</div>
+          <div class="item__text"><div class="item__text-icon item__text-icon-calendar"></div>{{displayBeatifulDate(user.birthDate)}}</div>
+        </div>
+        <div class="col b6 item__col">
+          <div class="item__label">Тип телефона</div>
+          <div class="item__text">{{user.phoneType}}</div>
+        </div>
+        <div class="col b6 item__col">
+          <div class="item__label">Тип номера</div>
+          <div class="item__text">{{user.phonePriorityType}}</div>
+        </div>
+        <div class="col b6 item__col">
+          <div class="item__label">Телефон</div>
+          <div class="item__text">{{user.telephoneNumber}}</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col b1 item__col">
+          <div class="item__label">Email</div>
+          <div class="item__text">{{user.email}}</div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>

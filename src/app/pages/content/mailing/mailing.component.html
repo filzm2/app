@@ -1,0 +1,61 @@
+<div class="app-mailing-container">
+  <div class="header">
+    Ваши подписки на e-mail рассылки графиков
+  </div>
+
+  <div class="divider"></div>
+
+  <table
+    *ngIf="emails.length > 0"
+    class="table"
+  >
+    <tr class="tr">
+      <th class="th">
+        Название графика
+      </th>
+
+      <th class="th">
+        Почта
+      </th>
+
+      <th class="th">
+      </th>
+    </tr>
+
+    <tr
+      *ngFor="let email of emails"
+      class="tr"
+    >
+      <td class="td">
+        <a
+          [href]="email.href"
+          target="_blank"
+        >
+          {{ email.title }}
+        </a>
+      </td>
+
+      <td class="td">
+        <div *ngFor="let emailParsed of email.emailsParsed">
+          {{ emailParsed.value }}
+        </div>
+      </td>
+
+      <td class="td">
+        <button
+          (click)="unsubscribe(email)"
+          class="button"
+        >
+          Отписаться
+        </button>
+      </td>
+    </tr>
+  </table>
+
+  <div
+    *ngIf="emails.length === 0"
+    class="not-found"
+  >
+    У Вас нет подписок на рассылку графиков
+  </div>
+</div>

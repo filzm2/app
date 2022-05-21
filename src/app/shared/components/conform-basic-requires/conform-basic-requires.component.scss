@@ -1,0 +1,48 @@
+.conform-basic-requires {
+  background: #F9F9F9;
+  padding: 24px;
+  &__table {
+    background: white;
+    .mat-table-custom {
+      width: 100%;
+      box-shadow: none;
+      td .complete-status-cell {
+        display: flex;
+        align-items: center;
+        width: 252px;
+        height: 20px;
+        background: #D9DDEB;
+        border: 1px solid #D3DCF3;
+        border-radius: 4px;
+        &__completed {
+          position: absolute;
+          // width: 50px;
+          height: 20px;
+          border-radius: 4px;
+          background: #F0F4FF;
+          border: 1px solid #D3DCF3;
+          box-sizing: border-box;
+        }
+        &__val {
+          position: absolute;
+          padding-left: 7px;
+          z-index: 3;
+        }
+      }
+      th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
+        border: none;
+        font-size: 12px;
+        line-height: 120%;
+        &:nth-child(4) {
+          padding-left: 92px;
+        }
+      }
+      .yes {
+        color: #13BB9D;
+      }
+      .no {
+        color: #D35555;
+      }
+    }
+  }
+}

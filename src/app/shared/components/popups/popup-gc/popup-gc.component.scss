@@ -1,0 +1,58 @@
+@import '../../popup/popup.component';
+
+.popup-gc-body {
+  width: 798px;
+  //height: 408px;
+  padding: 8px;
+  box-sizing: border-box;
+  .modal-title {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    color: #000000;
+    margin-bottom: 16px;
+  }
+  .modal__step--title {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    color: #000000;
+    margin-top: 24px;
+    margin-bottom: 24px;
+  }
+  .popup-gc-body-actions {
+    margin-top: 98px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 36px;
+    background-color: #ffffff;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: #dadada;
+    .popup-gc-body-actions-hint {
+      // padding-bottom: 15px;
+    }
+    .icons__warning {
+      color: #DADADA;
+      width: 24px;
+      height: 24px;
+      margin: 0 10px 0 28px;
+    }
+    .btn {
+      width: 172px;
+      height: 36px;
+      color: #ffffff;
+      border: none;
+      background: #D8D8D8;;
+      border-radius: 4px;
+      margin: 0;
+    }
+  }
+  .company-is-not-found {
+    min-height: 20px;
+    margin-top: 22px;
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 16px;
+  }
+}

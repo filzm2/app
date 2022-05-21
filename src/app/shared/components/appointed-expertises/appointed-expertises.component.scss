@@ -1,0 +1,65 @@
+.expertise {
+  &-container {
+  }
+
+  &-item {
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    font-size: 18px;
+    line-height: 16px;
+    font-weight: normal;
+    padding: 18px 24px 24px 0;
+    border-bottom: 1px solid #E3E3E3;
+
+    &:last-child {
+      border: 0;
+    }
+
+    &-first-part {
+      display: flex;
+      align-items: center;
+
+      .expertise-type {
+        margin-left: 16px;
+        align-items: center;
+        padding: 6px 7px;
+        box-sizing: border-box;
+        border-radius: 4px;
+        font-weight: 500;
+
+        &-1 {
+          border: 1px solid #BBBBBB;
+          color: #BBBBBB;
+        }
+
+        &-2 {
+          border: 1px solid #3D50B7;
+          color: #3D50B7;
+        }
+
+        &-3 {
+          border: 1px solid #FF6C00;
+          color: #FF6C00;
+        }
+
+        &-4 {
+          border: 1px solid #B73D77;
+          color: #B73D77;
+        }
+      }
+    }
+
+    &-last-part {
+      display: flex;
+      align-items: center;
+
+      .calendar_today-icon {
+        margin-right: 10px;
+        color: #3D50B7;
+      }
+    }
+  }
+
+
+}

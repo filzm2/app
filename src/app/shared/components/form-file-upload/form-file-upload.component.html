@@ -1,0 +1,32 @@
+<div class="form-file-upload">
+  <div class="form-file-upload-field-wrapper">
+    <div *ngIf="!uploaded"
+         (dragover)="onDragOver($event)"
+         (drop)="onDropSuccess($event)"
+         (dragenter)="onDragEnter()"
+         (dragleave)="onDragLeave()"
+         [ngClass]="{drag: onDrag}"
+         class="form-file-upload-field">
+      <div class="form-file-upload-field-label">Перетащите или
+        <span (click)="onUploadLinkClick()" class="form-file-upload-field-label-link">выберите</span> {{label}}
+      </div>
+    </div>
+    <div [ngClass]="{uploaded: uploaded}" class="form-file-upload-progress"></div>
+    <div *ngIf="uploaded"
+         class="form-file-upload-field uploaded">
+      <div class="form-file-upload-icon">
+        <mat-icon class="form-file-upload-format-icon" [svgIcon]="fileFormat"></mat-icon>
+      </div>
+      <div class="form-file-upload-name">{{fileName}}</div>
+      <div class="form-file-upload-size">{{fileSize}}</div>
+      <mat-icon (click)="clear()" class="form-file-upload-delete" svgIcon="delete"></mat-icon>
+    </div>
+  </div>
+  <mat-hint *ngIf="!hasError() || !currentFile" [ngClass]="{transparent: uploaded}">{{hint}}</mat-hint>
+  <mat-error>{{getErrors()}}</mat-error>
+  <input #input
+         [formControl]="control"
+         (change)="onChange($event)"
+         type="file"
+         class="hidden">
+</div>

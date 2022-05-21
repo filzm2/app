@@ -1,0 +1,10 @@
+<div class="custom-json-editor-wrapper">
+  <mat-label class="custom-json-editor-label">{{label}}</mat-label>
+  <div [ngClass]="{focus: focus}" class="custom-json-editor">
+    <div class="custom-json-editor-outline" [ngClass]="height">
+      <json-editor #editor [options]="options" [formControl]="control"></json-editor>
+    </div>
+  </div>
+  <mat-hint *ngIf="!hasError()">{{hint}}</mat-hint>
+  <mat-error *ngIf="hasError()">{{getErrors()}}</mat-error>
+</div>

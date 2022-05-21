@@ -1,0 +1,9 @@
+<mat-form-field  class="color-schema-select" appearance="outline" >
+  <mat-label>Цветовая схема</mat-label>
+  <mat-select [formControl]="control">
+    <mat-option class="color-schema-select__option" *ngFor="let schema of schemes" [value]="schema.value">
+      <span class="color-schema-select__color" *ngFor="let color of schema.colors" [style.background]="color"></span>
+      <span>{{schema.label}}</span>
+    </mat-option>
+  </mat-select>
+</mat-form-field>

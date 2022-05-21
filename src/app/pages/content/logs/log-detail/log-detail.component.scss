@@ -1,0 +1,56 @@
+@import "../../../../../styles/exd-colors.scss";
+
+.app-log-detail {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 984px;
+  border-radius: 8px;
+  padding: 20px 32px 40px;
+  background-color: map-get($exd-primary, 1);
+
+  .close {
+    position: absolute;
+    top: 0;
+    right: -52px; // -36(ширина) -16(макет)
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background-color: map-get($exd-grayscale, 500);
+    cursor: pointer;
+  }
+
+  .log-title {
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 24px;
+    color: map-get($exd-primary, 0);
+  }
+
+  .table {
+    margin-top: 20px;
+
+    .row {
+      .title {
+        min-width: 165px;
+        padding: 8px 0 0 0;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16px;
+        color: map-get($exd-grayscale, 300);
+      }
+
+      .content {
+        padding: 8px 0 0 0;
+        word-break: break-word;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+        color: map-get($exd-grayscale, 500);
+      }
+    }
+  }
+}

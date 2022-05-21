@@ -1,0 +1,10 @@
+<div class="role-add">
+  <div class="role-add__title">Добавление роли</div>
+
+  <div class="role-add__body">
+    <div *ngIf="isLoading" class="settings-list-spinner">
+      <mat-spinner color="primary"></mat-spinner>
+    </div>
+    <app-role-form *ngIf="!isLoading" (submitForm)="save($event)"></app-role-form>
+  </div>
+</div>

@@ -1,0 +1,136 @@
+<div class="database-upload">
+  <div class="database-upload-header">
+    Загрузка CSV
+  </div>
+  <div class="database-upload-body" [formGroup]="formGroup">
+    <div class="database-upload-body-section">
+      <app-form-file-upload [control]="getFormControl('csv_file')"
+                            [availableFormats]="['csv']"
+                            (onUpload)="uploadFile($event)"
+                            hint="Выберите файл CSV для загрузки в базу данных"
+                            label="файл CSV">
+      </app-form-file-upload>
+      <app-form-field [control]="getFormControl('table_name')"
+                      [relativeHint]="true"
+                      label="Имя таблицы *"
+                      hint="Имя таблицы, которая будет создана из данных csv">
+      </app-form-field>
+      <div class="database-upload-body-row">
+        <app-form-field [control]="getFormControl('database')"
+                        [relativeHint]="true"
+                        label="База данных"
+                        hint="Для изменения базы обратитесь к администратору системы">
+        </app-form-field>
+        <app-form-field [control]="getFormControl('schema')"
+                        [relativeHint]="true"
+                        label="Схема"
+                        hint="Для изменения схемы обратитесь к администратору системы">
+        </app-form-field>
+      </div>
+      <div class="database-upload-body-row">
+
+        <div class="database-upload-body-item">
+          <app-form-field [control]="getFormControl('delimiter')"
+                          [relativeHint]="true"
+                          label="Разделитель данных *">
+          </app-form-field>
+          <span class="mat-tooltip-icon" matTooltip="Для разделения столбцов, указывается тот разделитель, который используется в загружаемом файле">i</span>
+
+        </div>
+        <div class="database-upload-body-item">
+          <mat-form-field class="relative-hint-field" appearance="outline">
+            <mat-label>Существующая таблица *</mat-label>
+            <mat-select [formControl]="getFormControl('if_exists')">
+              <mat-option *ngFor="let action of [{name: 'Без изменений', value: 'fail'}, {name: 'Заменить', value: 'replace'}, {name: 'Добавить', value: 'append'}]"
+                          [value]="action.value">{{action.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <span class="mat-tooltip-icon" matTooltipClass="app-tooltip" matTooltip='Условия для уже существующей в системе таблицы с тем же именем:
+
+Без изменений - оставляет имеющуюся в системе таблицу без изменений.
+
+Заменить - заменяет все данные на новые.
+
+Добавить - к имеющимся значениям добавляет все данные из загруженного файла.
+
+Примечание: При использовании метода "Добавить", исходная и загружаемая таблицы должны совпадать по формату (список полей и их тип).'>i</span>
+
+        </div>
+      </div>
+    </div>
+    <div class="database-upload-body-section">
+      <div class="database-upload-body-expanded-header">
+        <div (click)="toggleExpandedState()" class="database-upload-body-expanded-header-title">
+          <span>Расширенные настройки</span>
+          <div class="database-upload-body-expanded-header-icon">
+            <mat-icon [@turn180]="stateExpandedAnimation">keyboard_arrow_down</mat-icon>
+          </div>
+        </div>
+        <div [@verticalHide]="stateExpandedAnimation" class="database-upload-body-expanded-content">
+          <div class="database-upload-body-row">
+            <div class="database-upload-body-item">
+              <app-form-field [control]="getFormControl('header_row')"
+                              [relativeHint]="true"
+                              label="Строка заголовка">
+              </app-form-field>
+              <span class="mat-tooltip-icon" matTooltip="Строка, содержащая заголовки для использования в качестве имен столбцов (0 - первая строка данных).
+              Оставьте пустым, если нет строки заголовка">i</span>
+            </div>
+            <div class="database-upload-body-item">
+              <app-form-field [control]="getFormControl('index_col')"
+                              [relativeHint]="true"
+                              label="Индекс-столбец">
+              </app-form-field>
+              <span class="mat-tooltip-icon" matTooltip='Если указать номер столбца в качестве индекса, то происходит
+индексация по этому столбцу (нумерация столбцов начинается
+с "0"). Если поле оставить пустым, то индексация происходит
+              по нулевому столбцу.'>i</span>
+            </div>
+
+          </div>
+          <div class="database-upload-body-row checkbox-row">
+            <div>
+              <div>
+                <mat-checkbox formControlName="mangle_dupe_cols">Исключить повторяющиеся столбцы</mat-checkbox>
+              </div>
+              <div>
+                <mat-checkbox formControlName="skip_initial_space">Исключить пробел после разделителя</mat-checkbox>
+              </div>
+              <div>
+                <mat-checkbox formControlName="dataframe_index">Добавить индекс-столбец
+                  <span matTooltip='При включенном чекбоксе, добавляет индекс-столбец в качестве первого столбца данных.
+                  Название для столбца указывается в поле "Название индекс-столбца"' class="mat-tooltip-icon">i</span></mat-checkbox>
+              </div>
+            </div>
+
+            <div class="database-upload-body-item">
+              <app-form-field [control]="getFormControl('index_label')"
+                              [relativeHint]="true"
+                              label="Название индекс-столбца">
+              </app-form-field>
+              <span class="mat-tooltip-icon" matTooltip='Укажите название для индекс-столбца'>i</span>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="database-upload-actions">
+    <button
+      mat-raised-button
+      color="primary"
+      class="small-button "
+      (click)="saveChanges()">
+      Сохранить
+    </button>
+
+    <button
+      mat-stroked-button
+      color="primary"
+      class="small-button primary-color close-button"
+      (click)="routeBack()">
+      Закрыть
+    </button>
+  </div>
+</div>

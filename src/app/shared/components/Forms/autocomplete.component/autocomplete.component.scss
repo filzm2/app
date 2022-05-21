@@ -1,0 +1,61 @@
+.mat-option-custom {
+  height: auto;
+}
+.option_type {
+  width: 27px;
+  height: 21px;
+  margin-left: 24px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  padding: 2px 6px;
+  &-gc {
+    background: #F0F4FF;
+    border: 1px solid #CFD8F1;
+    color: #3D50B7;
+  }
+  &-company {
+    background: #FFFCF9;
+    border: 1px solid #F3E0D3;
+    color: #F37A1F;
+  }
+}
+
+.blue_part {
+  color: blue;
+  font-weight: bold;
+}
+
+.usual_part {
+
+}
+
+.entity-from-group-container {
+  display: flex;
+  align-items: baseline;
+  white-space: pre;
+  line-height: 1;
+  margin-top: -8px;
+  padding-bottom: 16px;
+  .log-download-file-vector {
+    align-self: end;
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+    margin-left: 16px;
+    border-left: 1px solid rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 0 0 0 7px;
+    box-sizing: border-box;
+    background-size: 100%;
+  }
+  .entity-title {
+    font-size: 12px;
+    line-height: 0;
+  }
+  .dod {
+    margin-top: 7px;
+  }
+}
+.entity-container {
+  white-space: pre;
+}

@@ -1,0 +1,276 @@
+@import "../../styles/exd-colors.scss";
+@import "../../styles/variables.scss";
+@import "../../styles/mixins.scss";
+
+.mat-form-field.small-input {
+  .mat-form-field-infix {
+    padding: 12px 0;
+    border-top: 2px solid transparent;
+  }
+
+  .mat-form-field-suffix {
+    top: 8px;
+  }
+
+  .mat-form-field-flex {
+    padding: 0 16px;
+  }
+
+  .mat-select-arrow-wrapper {
+    transform: none;
+  }
+}
+
+.mat-form-field-appearance-outline.mat-form-field-appearance-outline {
+  .mat-form-field-outline-start {
+    border-radius: $main-radius 0 0 $main-radius;
+    border-right-style: none;
+  }
+
+  .mat-form-field-outline-end {
+    border-radius: 0 $main-radius $main-radius 0;
+    border-left-style: none;
+    flex-grow: 1;
+  }
+}
+
+.mat-form-field {
+
+  min-width: 180px !important;
+  box-sizing: border-box;
+  * {
+    box-sizing: border-box;
+  }
+  .mat-form-field-label {
+    margin-top: 8px;
+    transform: translateY(-10px);
+  }
+
+  &.mat-focused,
+  &.ng-dirty {
+    .mat-form-field-label {
+      .ng-star-inserted {
+        color: map-get($exd-grayscale, 400);
+      }
+    }
+  }
+
+  .mat-hint,
+  .mat-error {
+    @include font(12px, 500);
+  }
+
+  .mat-datepicker-input {
+    margin-top: 0;
+    margin-bottom: 3px;
+  }
+
+  .mat-datepicker-input ~ .mat-form-field-label-wrapper .mat-form-field-label {
+    margin-top: 3px;
+  }
+
+  .mat-form-field-wrapper {
+    padding: 0;
+
+    .mat-form-field-outline {
+      height: 36px;
+    }
+
+    .mat-form-field-infix {
+      margin-top: 0;
+      border: 0;
+      font-size: 14px;
+
+      .mat-form-field-label-wrapper {
+        .mat-form-field-label {
+          margin-top: 8px;
+
+          .ng-star-inserted {
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 16px;
+            color: map-get($exd-grayscale, 400);
+          }
+        }
+      }
+    }
+
+    .mat-form-field-suffix {
+      top: 0;
+      margin-right: -16px;
+    }
+  }
+
+  .mat-error {
+    margin-top: 10px;
+  }
+
+  &.mat-textarea {
+    min-height: 90px;
+
+    .mat-form-field-wrapper {
+      textarea {
+        min-height: 90px;
+      }
+
+      .mat-form-field-outline {
+        min-height: 90px;
+        height: auto;
+      }
+    }
+  }
+
+  &.relative-hint-field {
+    .mat-form-field-subscript-wrapper {
+      position: relative;
+      margin-top: -15px;
+      margin-bottom: 16px;
+    }
+  }
+  &.l {
+    width: 100%;
+
+    .mat-form-field-outline {
+      height: 48px;
+    }
+
+    .mat-form-field-infix {
+      margin-top: 7px;
+    }
+
+    .mat-form-field-label .ng-star-inserted {
+      font-size: 16px !important;
+    }
+  }
+}
+
+.mat-form-field.large-header {
+  .mat-form-field-infix {
+    margin-top: 0;
+    border: 0;
+    font-size: 20px;
+
+    .mat-form-field-label-wrapper {
+      .mat-form-field-label {
+        margin-top: 8px;
+
+        .ng-star-inserted {
+          font-weight: 500;
+          font-size: 20px;
+          line-height: 24px;
+          color: map-get($exd-grayscale, 400);
+        }
+      }
+    }
+  }
+
+  .mat-form-field-outline {
+    height: 60px;
+  }
+}
+
+.mat-form-field.medium-header {
+  .mat-form-field-infix {
+    margin-top: 0;
+    border: 0;
+    font-size: 16px;
+
+    .mat-form-field-label-wrapper {
+      .mat-form-field-label {
+        margin-top: 8px;
+
+        .ng-star-inserted {
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 36px;
+          color: map-get($exd-grayscale, 400);
+        }
+      }
+    }
+  }
+
+  .mat-form-field-outline {
+    height: 50px;
+  }
+}
+
+.mat-form-field.small-header {
+  .mat-form-field-infix {
+    margin-top: 0;
+    border: 0;
+    font-size: 14px;
+
+    .mat-form-field-label-wrapper {
+      .mat-form-field-label {
+        margin-top: 8px;
+
+        .ng-star-inserted {
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 16px;
+          color: map-get($exd-grayscale, 400);
+        }
+      }
+    }
+  }
+  .mat-form-field-outline {
+    height: 40px;
+  }
+}
+
+.mat-form-field.extrasmall-header {
+  .mat-form-field-infix {
+    margin-top: 0;
+    border: 0;
+    font-size: 12px;
+
+    .mat-form-field-label-wrapper {
+      .mat-form-field-label {
+        margin-top: 8px;
+
+        .ng-star-inserted {
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 12px;
+          color: map-get($exd-grayscale, 400);
+        }
+      }
+    }
+  }
+  .mat-form-field-outline {
+    height: 30px;
+  }
+}
+
+.mat-form-field.mat-form-field-datepicker {
+  margin-top: 7px;
+}
+
+.mat-form-field.search-field {
+  position: relative;
+  width: 176px;
+
+  mat-icon {
+    position: absolute;
+    top: 15px;
+    width: 17px;
+    height: 17px;
+
+    &.search-logo {
+      right: -3px;
+
+      svg {
+        width: 17px;
+        height: 17px;
+      }
+
+      path {
+        stroke: map-get($exd-grayscale, 200);
+      }
+    }
+  }
+}
+
+app-form-field {
+  min-width: 180px;
+}

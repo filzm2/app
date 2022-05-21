@@ -1,0 +1,16 @@
+.login-container {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    border: 1px solid grey;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    
+    &__form {
+        display: flex;
+        flex-direction: column;
+    }
+}

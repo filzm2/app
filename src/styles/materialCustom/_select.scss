@@ -1,0 +1,62 @@
+@import "../../styles/exd-colors.scss";
+
+.app-mat-select {
+  &.mat-focused {
+    .mat-form-field-outline-thick {
+      color: map-get($exd-primary, 500) !important;
+    }
+
+    .mat-form-field-label {
+      color: map-get($exd-primary, 500) !important;
+    }
+
+    .mat-select-arrow {
+      color: map-get($exd-primary, 500) !important;
+    }
+  }
+
+  .mat-select {
+    .mat-select-arrow-wrapper {
+      transform: translateY(-4%) !important;
+    }
+  }
+}
+
+.mat-accent .mat-option.mat-selected:not(.mat-option-disabled) {
+  color: map-get($exd-primary, 500) !important;
+}
+
+.mat-form-field.outline-blue-select-field {
+  color: map-get($exd-psb-blue, 480);
+
+  .mat-form-field-outline,
+  .mat-select-value,
+  mat-label {
+    color: map-get($exd-psb-blue, 480) !important;
+  }
+
+  .mat-select-arrow {
+    color: map-get($exd-psb-blue, 480);
+
+    &-wrapper {
+      transform: translateY(-5%);
+    }
+  }
+
+  .mat-form-field-flex {
+    padding-left: 30px;
+  }
+
+  mat-icon.blue-logo {
+    position: absolute;
+    top: 15px;
+    width: 17px;
+    height: 17px;
+    left: -20px;
+    stroke: map-get($exd-psb-blue, 480);
+    svg {
+      width: 17px;
+      height: 17px;
+    }
+  }
+}

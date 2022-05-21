@@ -1,0 +1,268 @@
+<div class="row mb40 icm-flex-middle">
+  <div class="col b2-83">
+    <div class="readOnly-field">
+      <div class="readOnly-field-label">Полное наименование</div>
+      <div class="readOnly-field-text">{{activeDetailDoc.caption}}</div>
+    </div>
+  </div>
+  <div class="col b6">
+    <div class="icm-badge icm-badge-accent">Верифицирован</div>
+  </div>
+</div>
+
+<div class="row mb40" *ngIf="activeDetailDoc.docs">
+  <div class="col b1 inclosures">
+    <p class="inclosures-caption">Вложения</p>
+    <div class="inclosures-files">
+      <div *ngFor="let innerDoc of activeDetailDoc.docs" class="file">
+        <app-download-file-button [file]="{caption: innerDoc.caption, size: innerDoc.size}"
+                                  [delButton]="false"
+                                  [budgeButton]="false"></app-download-file-button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mb20">
+  <div class="col b1 inclosures-caption">Родительский документ</div>
+</div>
+<div class="row mb40">
+  <div class="col b1">
+    <div class="doc-item">
+      <div class="icm-flex">
+        <div class="doc-about" style="padding: 0">
+          <div class="doc-caption">
+            Расшифровка аналитического баланса 1130 "Нематериальные поисковые активы"
+          </div>
+          <!--с подсветкой-->
+          <div class="doc-part">
+            Финансовые документы/Реальность деятельности
+          </div>
+          <div class="doc-part">
+            <span style="margin-right: 20px">Иванов И.И.</span>
+            <span style="margin-right: 20px">Хранить до 22.07.2023</span>
+            <span style="color: #2C5DE5">Верифицирован</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mb20">
+  <div class="col b1 inclosures-caption">Дочерние документы</div>
+</div>
+<div class="row mb40">
+  <div class="col b1">
+    <div class="doc-item">
+      <div class="icm-flex">
+        <div class="doc-about" style="padding: 0">
+          <div class="doc-caption">
+            Расшифровка строки аналитического баланса 1130 "Нематериальные поисковые активы"
+          </div>
+          <!--с подсветкой-->
+          <div class="doc-part">
+            Финансовые документы/Реальность деятельности
+          </div>
+          <div class="doc-part">
+            <span style="margin-right: 20px">Иванов И.И.</span>
+            <span style="margin-right: 20px">Хранить до 22.07.2023</span>
+            <span style="color: #2C5DE5">Верифицирован</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mb20">
+  <div class="col b1 inclosures-caption">Атрибуты</div>
+</div>
+<div class="row mb20">
+  <div class="col b2">
+    <div class="readOnly-field">
+      <div class="readOnly-field-label">Наименование холдинга</div>
+      <div class="readOnly-field-text">Росгазнефтехимтяжмаш</div>
+    </div>
+  </div>
+  <div class="col b2">
+    <div class="readOnly-field">
+      <div class="readOnly-field-label">Период документа (квартал/год)</div>
+      <div class="readOnly-field-text">IV/2020</div>
+    </div>
+  </div>
+</div>
+<div class="row mb20">
+  <div class="col b2">
+    <div class="readOnly-field">
+      <div class="readOnly-field-label">Наименование ЮЛ</div>
+      <div class="readOnly-field-text">ЗАО “Октябрьский металлургический завод им. Брежнева”</div>
+    </div>
+  </div>
+  <div class="col b2">
+    <div class="readOnly-field">
+      <div class="readOnly-field-label">Статус</div>
+      <div class="readOnly-field-text">Действующий</div>
+    </div>
+  </div>
+</div>
+<div class="row mb20">
+  <div class="col b2">
+    <div class="readOnly-field">
+      <div class="readOnly-field-label">ИНН ЮЛ</div>
+      <div class="readOnly-field-text">2145632545</div>
+    </div>
+  </div>
+  <div class="col b2">
+    <div class="readOnly-field">
+      <div class="readOnly-field-label">Верификация документа</div>
+      <div class="readOnly-field-text">Выполнена</div>
+    </div>
+  </div>
+</div>
+<div class="row mb20">
+  <div class="col b2">
+    <div class="readOnly-field" *ngIf="activeDetailDoc.dossier_section">
+      <div class="readOnly-field-label">Раздел досье</div>
+      <div class="readOnly-field-text">{{activeDetailDoc.dossier_section}}</div>
+    </div>
+  </div>
+  <div class="col b2">
+    <div class="readOnly-field">
+      <div class="readOnly-field-label">Уведомления</div>
+      <div class="readOnly-field-text">Включены</div>
+    </div>
+  </div>
+</div>
+<div class="row mb20">
+  <div class="col b2">
+    <div *ngIf="activeDetailDoc.doc_extension" class="readOnly-field">
+      <div class="readOnly-field-label">Формат документа</div>
+      <div class="readOnly-field-text">{{activeDetailDoc.doc_extension}}</div>
+    </div>
+  </div>
+  <div class="col b2">
+    <div class="readOnly-icon">
+      <div class="readOnly-field-label">Дата документа</div>
+      <div class="readOnly-field-text">
+        <img src="assets/icons/calendar_blue_24px.png" alt="">
+        <span class="readOnly-field-text-with-icon">21.02.2021</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mb20">
+  <div class="col b2">
+    <div *ngIf="activeDetailDoc.storage_location" class="readOnly-field">
+      <div class="readOnly-field-label">Место хранения в каталоге</div>
+      <div class="readOnly-field-text">{{activeDetailDoc.storage_location}}</div>
+    </div>
+  </div>
+  <div class="col b2">
+    <div class="readOnly-icon">
+      <div class="readOnly-field-label">Срок действия документа</div>
+      <div class="readOnly-field-text">
+        <img src="assets/icons/calendar_blue_24px.png" alt="">
+        <span class="readOnly-field-text-with-icon">21.02.2023</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mb20">
+  <div class="col b2">
+    <div class="readOnly-field">
+      <div class="readOnly-field-label">Классификация</div>
+      <div class="readOnly-field-text">ГС ГО</div>
+    </div>
+  </div>
+  <div class="col b2">
+    <div class="readOnly-icon">
+      <div class="readOnly-field-label">Версия документа</div>
+      <div class="readOnly-field-text">
+        <img src="assets/icons/history_24px.png" alt="">
+        <span class="readOnly-field-text-with-icon">Версия 4</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mb20">
+  <div class="col b2">
+    <div class="readOnly-field">
+      <div class="readOnly-field-label">Вид документа</div>
+      <div class="readOnly-field-text">Документ ЮЛ</div>
+    </div>
+  </div>
+  <div class="col b2">
+    <div class="readOnly-icon" *ngIf="activeDetailDoc.doc_changed">
+      <div class="readOnly-field-label">Дата изменения документа</div>
+      <div class="readOnly-field-text">
+        <img src="assets/icons/calendar_blue_24px.png" alt="">
+        <span class="readOnly-field-text-with-icon">{{activeDetailDoc.doc_changed}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mb20">
+  <div class="col b2">
+    <div class="readOnly-field">
+      <div class="readOnly-field-label">Владелец документа</div>
+      <div class="readOnly-field-text">Документ клиента</div>
+    </div>
+  </div>
+  <div class="col b2">
+    <div class="readOnly-field">
+      <div class="readOnly-field-label">Автор изменения документа</div>
+      <div class="readOnly-field-text">Константинопольский Константин Константинович</div>
+    </div>
+  </div>
+</div>
+<div class="row mb20">
+  <div class="col b2">
+    <div class="readOnly-field">
+      <div class="readOnly-field-label">Номер документа</div>
+      <div class="readOnly-field-text">5464578098</div>
+    </div>
+  </div>
+  <div class="col b2">
+    <div class="readOnly-icon">
+      <div class="readOnly-field-label">Дата создания (legacy)</div>
+      <div class="readOnly-field-text">
+        <img src="assets/icons/calendar_blue_24px.png" alt="">
+        <span class="readOnly-field-text-with-icon">20.03.2021</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mb20">
+  <div class="col b2">
+    <div class="readOnly-field">
+      <div class="readOnly-field-label">ID документа</div>
+      <div class="readOnly-field-text">23657657</div>
+    </div>
+  </div>
+  <div class="col b2">
+    <div class="readOnly-icon" *ngIf="activeDetailDoc.doc_created">
+      <div class="readOnly-field-label">Дата создания карточки</div>
+      <div class="readOnly-field-text">
+        <img src="assets/icons/calendar_blue_24px.png" alt="">
+        <span class="readOnly-field-text-with-icon">{{activeDetailDoc.doc_created}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col b2">
+    <div class="readOnly-field">
+      <div class="readOnly-field-label">ID документа родителя</div>
+      <div class="readOnly-field-text">576588998</div>
+    </div>
+  </div>
+  <div class="col b2">
+    <div class="readOnly-icon">
+      <div class="readOnly-field-label">Дата истечения срока действия документа</div>
+      <div class="readOnly-field-text">
+        <img src="assets/icons/calendar_blue_24px.png" alt="">
+        <span class="readOnly-field-text-with-icon">20.03.2023</span>
+      </div>
+    </div>
+  </div>
+</div>

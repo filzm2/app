@@ -1,0 +1,426 @@
+@import 'assets/fonts/icm-icon-v1.0/style.css';
+@import '~jsoneditor/dist/jsoneditor.min.css';
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import '~@angular/material/theming';
+@import './styles/materialCustom/index';
+@import './styles/global.css';
+// Plus imports for other components in your app.
+
+// /* цвет accent основа #f37a1f*/
+// $md-icmpalette-accent: (
+//   50 : #feefe4,
+//   100 : #fbd7bc,
+//   200 : #f9bd8f,
+//   300 : #f7a262,
+//   400 : #f58e41,
+//   500 : #f37a1f,
+//   600 : #f1721b,
+//   700 : #ef6717,
+//   800 : #ed5d12,
+//   900 : #ea4a0a,
+//   A100 : #ffffff,
+//   A200 : #ffe8e0,
+//   A400 : #ffc1ad,
+//   A700 : #ffae94,
+//   contrast: (
+//     50 : #000000,
+//     100 : #000000,
+//     200 : #000000,
+//     300 : #000000,
+//     400 : #000000,
+//     500 : #000000,
+//     600 : #000000,
+//     700 : #000000,
+//     800 : #ffffff,
+//     900 : #ffffff,
+//     A100 : #000000,
+//     A200 : #000000,
+//     A400 : #000000,
+//     A700 : #000000,
+//   )
+// );
+// /* цвет primary основа #3d50b7 */
+// $md-icmpalette-primary: (
+//   50 : #e8eaf6,
+//   100 : #c5cbe9,
+//   200 : #9ea8db,
+//   300 : #7785cd,
+//   400 : #5a6ac2,
+//   500 : #3d50b7,
+//   600 : #3749b0,
+//   700 : #2f40a7,
+//   800 : #27379f,
+//   900 : #1a2790,
+//   A100 : #c8cdff,
+//   A200 : #959fff,
+//   A400 : #6271ff,
+//   A700 : #4859ff,
+//   contrast: (
+//     50 : #000000,
+//     100 : #000000,
+//     200 : #000000,
+//     300 : #000000,
+//     400 : #ffffff,
+//     500 : #ffffff,
+//     600 : #ffffff,
+//     700 : #ffffff,
+//     800 : #ffffff,
+//     900 : #ffffff,
+//     A100 : #000000,
+//     A200 : #000000,
+//     A400 : #ffffff,
+//     A700 : #ffffff,
+//   )
+// );
+
+// // Include the common styles for Angular Material. We include this here so that you only
+// // have to load a single css file for Angular Material in your app.
+// // Be sure that you only ever include this mixin once!
+// @include mat-core();
+
+// @import "assets/scss/icm";
+// //[BETA] ICM basic style-classes! developed by a.belokon
+
+// // Define the palettes for your theme using the Material Design palettes available in palette.scss
+// // (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// // hue. Available color palettes: https://material.io/design/color/
+// $credit-conv-primary: mat-palette($md-icmpalette-primary, 500, 500, 500);
+// $credit-conv-accent: mat-palette($md-icmpalette-accent, 500, 500, 500);
+
+// // The warn palette is optional (defaults to red).
+// $credit-conv-warn: mat-palette($mat-red);
+
+// // Create the theme object. A theme consists of configurations for individual
+// // theming systems such as "color" or "typography".
+// $credit-conv-theme: mat-light-theme((
+//   color: (
+//     primary: $credit-conv-primary,
+//     accent: $credit-conv-accent,
+//     warn: $credit-conv-warn,
+//   )
+// ));
+
+// // Include theme styles for core and each component used in your app.
+// // Alternatively, you can import and @include the theme mixins for each component
+// // that you are using.
+// @include angular-material-theme($credit-conv-theme);
+
+// /* You can add global styles to this file, and also import other style files */
+
+// @import "assets/scss/_base.scss";
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('/assets/fonts/gilroy/Gilroy-Medium_0.otf') format('opentype');
+}
+
+// html, body { height: 100%; }
+// body { box-sizing: border-box; margin: 0; font-family: Gilroy, sans-serif; }
+
+// /* width */
+// ::-webkit-scrollbar {
+//   width: 10px;
+//   height: 10px;
+
+// }
+
+// /* Track */
+// ::-webkit-scrollbar-track {
+//   background: #F9F9F9;
+// }
+
+// ::-webkit-scrollbar-track-piece {
+
+// }
+
+// /* Handle */
+// ::-webkit-scrollbar-thumb {
+//   border-radius: 2px;
+//   background: #CFCFCF;
+//   border-bottom: 46px solid #F9F9F9;
+//   border-top: 16px solid #F9F9F9;
+//   border-right: 6px solid #F9F9F9;
+//   border-left: 1px solid #F9F9F9;
+
+// }
+// ::-webkit-scrollbar-track-piece {
+//   height: 150px;
+// }
+
+// /* Handle on hover */
+// ::-webkit-scrollbar-thumb:hover {
+//   background: #CFCFCF;
+
+// }
+
+// .mat-form-field {
+//   display: block !important;
+// }
+
+// // TODO // Исправить!
+// .mat-badge-content {
+//   color: white;
+//   background: #F37A1F !important;
+// }
+
+// .custom-dialog-container  {
+//   overflow: scroll;
+//   .mat-dialog-container {
+//     border-radius: 4px;
+//     padding: 0;
+//   }
+// }
+
+// .popup-tmp-form {
+//   overflow: auto;
+// }
+// // попап в верефикации документов СЭБ
+// .doc-edit-popup {
+//   width: 70%;
+//   mat-dialog-container {
+//     padding: 44px !important;
+//   }
+// }
+
+// /** Замена шрифта в теме Material */
+// @import '~@angular/material/theming';
+// $custom-typography: mat-typography-config(
+//   $font-family: 'Gilroy, monospace'
+// );
+// @include mat-core($custom-typography);
+
+// /* Styles for tabs */
+// @import "assets/scss/icm/_tabs.scss";
+
+// styles from exd
+
+// @import '~@angular/material/theming';
+
+@import './styles/exd-colors.scss';
+@import './styles//gridster-custom.scss';
+@import './styles/materialCustom';
+
+$custom-typography: mat-typography-config(
+  $font-family: 'Gilroy, sans-serif',
+  $display-4: mat-typography-level(72px, 108px, 700),
+  $display-3: mat-typography-level(56px, 84px, 700),
+  $display-2: mat-typography-level(40px, 60px, 700),
+  $display-1: mat-typography-level(32px, 48px, 700),
+  $headline: mat-typography-level(24px, 36px, 700),
+  $title: mat-typography-level(20px, 32px, 700),
+  $subheading-2: mat-typography-level(16px, 24px, 700),
+  $subheading-1: mat-typography-level(14px, 20px, 700),
+  $body-1: mat-typography-level(14px, 20px, 500),
+  $body-2: mat-typography-level(14px, 20px, 700),
+  $caption: mat-typography-level(12px, 16px, 500),
+  $button: mat-typography-level(16px, 24px, 500),
+  $input: mat-typography-level(18px, 1.5, 400),
+);
+
+@include mat-core();
+
+$exd-app-primary: mat-palette($exd-primary);
+$exd-app-accent: mat-palette($exd-tretiary);
+$exd-app-warn: mat-palette($exd-warning);
+
+$exd-app-theme: mat-light-theme(
+  (
+    color: (
+      primary: $exd-app-primary,
+      accent: $exd-app-accent,
+      warn: $exd-app-warn,
+    ),
+  )
+);
+
+@function exd-mat-light-theme-foreground() {
+  @return (
+    base: mat-color($exd-back, 500),
+    divider: $black-12-opacity,
+    dividers: $black-12-opacity,
+    disabled: mat-color($exd-main, 300),
+    disabled-button: mat-color($exd-main, 300),
+    disabled-text: mat-color($exd-main, 300),
+    hint-text: mat-color($exd-main, 300),
+    secondary-text: mat-color($exd-main, 400),
+    icon: mat-color($exd-icon, 500),
+    icons: mat-color($exd-icon, 500),
+    text: mat-color($exd-main, 500),
+    slider-min: mat-color($exd-main, 500),
+    slider-off: mat-color($exd-main, 200),
+    slider-off-active: mat-color($exd-main, 300)
+  );
+}
+
+$exd-foreground: exd-mat-light-theme-foreground();
+$exd-app-theme-custom: map-merge(
+  $exd-app-theme,
+  (
+    foreground: $exd-foreground,
+  )
+);
+
+@include angular-material-theme($exd-app-theme-custom);
+@include angular-material-typography($custom-typography);
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  color: mat-color($exd-main, 500);
+  background: mat-color($exd-grayscale, 50);
+}
+
+// .exd-mini-fab {
+//   height: 32px !important;
+//   width: 32px  !important;
+// }
+
+// .mat-button-base {
+//   .mat-icon {
+//     width: 12px;
+//     height: 12px;
+//     font-size: 12px;
+//     line-height: 12px;
+//     padding-bottom: 2px;
+
+//   }
+// }
+
+// .mat-mini-fab {
+//   .mat-button-wrapper {
+//     padding: 0 !important;
+//   }
+//     .mat-icon {
+//       width: 20px;
+//       height: 20px;
+//       font-size: 20px;
+//       line-height: 20px;
+//       padding-bottom: 6px;
+//     }
+// }
+
+// .mat-icon-button {
+//   .mat-button-wrapper {
+//     padding: 0 !important;
+//   }
+//     .mat-icon {
+//       width: 20px;
+//       height: 20px;
+//       font-size: 24px;
+//       line-height: 20px;
+//       padding-bottom: 6px;
+//     }
+// }
+
+// .mat-fab {
+//   .mat-button-wrapper {
+//     padding: 0 !important;
+//   }
+//     .mat-icon {
+//       width: 20px;
+//       height: 20px;
+//       font-size: 20px;
+//       line-height: 20px;
+//       padding-bottom: 4px;
+//     }
+// }
+
+// .exd-subheading-1-bold {
+//   font-weight: 600 !important;
+//   color: map-get($exd-main, 400)
+// }
+
+// .exd-subheading-2-bold {
+//   font-weight: 600 !important;
+//   color: map-get($exd-main, 400)
+// }
+
+// .exd-title-bold {
+//   font-weight: 600 !important;
+//   color: map-get($exd-main, 400 )
+// }
+
+.mat-divider {
+  border-top: 2px solid map-get($exd-icon, 300);
+}
+
+a {
+  color: map-get($exd-primary, 500);
+  outline: none;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.mat-paginator-container {
+  font-size: 14px;
+}
+
+.mat-header-cell {
+  font-size: 14px;
+}
+
+.mat-progress-bar {
+  height: 30px !important;
+}
+
+.mat-progress-bar-fill::after {
+  background-color: #292584 !important;
+}
+
+.mat-progress-bar-buffer {
+  background-color: #8fb3ef;
+}
+
+.mat-dialog-container {
+  padding: 0 !important;
+  background-color: inherit;
+  box-shadow: none;
+  overflow: visible !important;
+}
+
+.mat-h2 {
+  margin: 0;
+}
+
+.dashboard-card .mat-card-header-text {
+  display: none;
+}
+
+::-webkit-scrollbar {
+  cursor: pointer;
+  width: 4px;
+  height: 4px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-button {
+  height: 0;
+  width: 0;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  cursor: pointer;
+  width: 4px;
+  height: 4px;
+  border-radius: 2px;
+  background: map-get($exd-grayscale, 250);
+}
+
+.mat-menu-content {
+  path {
+    fill: map-get($exd-grayscale, 300);
+  }
+}
+
+.stop-scrolling {
+  height: 100%;
+  overflow: hidden;
+}

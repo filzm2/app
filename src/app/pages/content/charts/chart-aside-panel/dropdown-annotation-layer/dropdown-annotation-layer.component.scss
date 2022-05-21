@@ -1,0 +1,60 @@
+@import "../../../../../../styles/exd-colors.scss";
+@import "../../../../../../styles/variables.scss";
+
+.dialog-chart {
+  background: white;
+  border-radius: $main-radius;
+  width: auto;
+  padding: 16px 0;
+  * {
+    box-sizing: border-box;
+  }
+  &__content {
+    display: flex;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 10px;
+    position: relative;
+    overflow: visible;
+    &_column {
+      padding: 0 20px 0 20px;
+      border-right: 1px solid map-get($exd-grayscale, 100);
+      width: 304px;
+    }
+    &_description {
+      margin: 8px;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 20px;
+    }
+    .subtitle {
+      padding: 0 0 15px 0;
+      font-size: 14px;
+      line-height: 20px;
+    }
+  }
+
+  &__checkbox-group {
+    padding-bottom: 10px;
+  }
+
+  &__title {
+    padding-left: 20px;
+  }
+
+  &__actions {
+    padding: 0 0 30px 20px;
+  }
+
+  .mat-form-field {
+    width: 100%;
+    .mat-hint {
+      margin-top: 12px;
+    }
+  }
+
+  .mat-tab-label {
+    min-width: 110px;
+  }
+}

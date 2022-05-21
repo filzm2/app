@@ -1,0 +1,74 @@
+.doc-item {
+  cursor: pointer;
+  background: #FFFFFF;
+  border: 1px solid #E4E4E4;
+  box-sizing: border-box;
+  border-radius: 4px;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+
+  &:not(:first-child) {
+    margin-top: 16px;
+  }
+
+  .doc-number {
+    display: flex;
+    align-items: start;
+    justify-content: center;
+  }
+
+  .doc-about {
+    padding: 0 16px;
+
+    .doc-caption {
+      font-family: Gilroy, serif;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+      color: #1A1A1A;
+    }
+
+    .doc-part {
+      font-family: Gilroy, serif;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 20px;
+      color: #A1A1A1;
+      margin-top: 4px;
+    }
+  }
+
+  .doc-open {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    mat-icon {
+      transform: rotate(180deg);
+      color: #2C5DE5;
+      margin: 16px;
+      cursor: pointer;
+    }
+  }
+}
+
+.inclosures {
+  &-caption {
+    font-family: Gilroy-SemiBold, serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    color: #1A1A1A;
+    margin-bottom: 24px;
+  }
+
+  &-files {
+    .file:not(:last-child) {
+      margin-bottom: 12px;
+    }
+  }
+}

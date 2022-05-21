@@ -1,0 +1,169 @@
+@import "../../../../../styles/exd-colors.scss";
+@import "../../../../../styles/mixins.scss";
+
+.settings-list {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+
+  &-container {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 455px 1fr;
+    grid-template-rows: 60px 1fr;
+    gap: 20px;
+
+    * {
+      box-sizing: border-box;
+    }
+  }
+
+  &-header {
+    grid-column: span 2;
+    padding: 12px 20px;
+    background: white;
+    border-radius: 8px;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &-title {
+      @include font(24px, 700);
+      padding-right: 20px;
+    }
+
+    .primary-light-flat-button {
+      margin-left: auto;
+    }
+
+    h1 {
+      margin: 0;
+    }
+
+    mat-icon {
+      margin-right: 7px;
+
+      path {
+        fill: white;
+      }
+    }
+  }
+
+  &-filters {
+    border-radius: 8px;
+    background: white;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    min-height: calc(100vh - 200px);
+
+    app-filters {
+      width: 100%;
+    }
+
+    &-wrapper {
+      width: 100%;
+    }
+
+  }
+
+  &-list {
+    border-radius: 8px;
+    width: 100%;
+    background: white;
+    position: relative;
+    min-height: calc(100vh - 200px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  &-table {
+    margin-top: 20px;
+    padding: 0 20px;
+    width: 100%;
+
+    tr.mat-row {
+      height: 52px;
+    }
+
+    .custom-badge {
+      margin-right: 8px;
+    }
+
+    .boolean-table-column {
+      width: 120px;
+    }
+
+    .action-table-column {
+      width: 52px;
+    }
+
+    .check-icon {
+      @include font(14px, 700);
+      width: 14px;
+      height: 14px;
+    }
+
+    .mat-cell {
+      &:nth-child(1) {
+        font-size: 16px;
+        line-height: 24px;
+      }
+    }
+
+    &-actions {
+    }
+
+    &-footer {
+      display: flex;
+      position: sticky;
+      bottom: 0;
+      border-radius: 8px;
+      background: white;
+      justify-content: space-between;
+
+      &-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 20px;
+      }
+
+      &-group-delete.mat-stroked-button.primary-stroked-button {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        border-radius: 50%;
+        padding: 0;
+
+        svg {
+          width: 18px;
+          height: 18px;
+          position: relative;
+          top: -1px;
+
+          path {
+            stroke: transparent !important;
+          }
+        }
+      }
+
+      .mat-paginator {
+        margin-left: auto;
+      }
+    }
+  }
+
+  &-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 500px;
+  }
+}

@@ -1,0 +1,54 @@
+@import "../../styles/exd-colors.scss";
+
+.mat-radio-group {
+  .mat-radio-button {
+    &:not(:first-child) {
+      margin-left: 25px;
+    }
+
+    &.mat-radio-checked {
+      .mat-radio-label {
+        .mat-radio-container {
+          .mat-radio-outer-circle {
+            border-color: map-get($exd-psb-blue, 480);
+          }
+
+          .mat-radio-inner-circle {
+            transform: scale(0.6);
+            background-color: map-get($exd-psb-blue, 480);
+          }
+        }
+      }
+    }
+
+    .mat-radio-label {
+      .mat-radio-container {
+        .mat-radio-outer-circle {
+        }
+
+        .mat-radio-inner-circle {
+        }
+      }
+
+      .mat-radio-label-content {
+        padding-left: 10px;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 20px;
+        color: map-get($exd-primary, 0);
+      }
+    }
+  }
+}
+
+.radio-button-star:hover {
+  cursor: pointer;
+}
+
+.mat-radio-group.filter-radio-group {
+  .mat-radio-button {
+  &:not(:first-child) {
+    margin-left: 5px;
+  }
+}
+}

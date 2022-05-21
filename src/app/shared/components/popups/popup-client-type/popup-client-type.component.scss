@@ -1,0 +1,28 @@
+.popup_choose_client_type {
+  .modal__step--title {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    color: #000000;
+    margin-bottom: 16px;
+  }
+  position: relative;
+  box-sizing: border-box;
+  //padding: 32px;
+  background: #fff;
+  //width: 402px;
+  //height: 164px;
+  border-radius: 4px;
+  /* margin exposes part of the modal background */
+  // margin: 250px auto;
+  .modal-title {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    color: #000000;
+    margin-bottom: 16px;
+  }
+  .client-select{
+    width: 338px;
+  }
+}

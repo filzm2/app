@@ -1,0 +1,15 @@
+<mat-card class="login-container">
+    <mat-card-header>Вход в систему</mat-card-header>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-container__form">
+        <mat-form-field appearance="outline">
+            <mat-label>Логин</mat-label>
+            <input matInput placeholder="Введите логин..." formControlName="username">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Пароль</mat-label>
+            <input matInput placeholder="Введите пароль..." formControlName="password" type="password">
+        </mat-form-field>
+        
+        <button mat-stroked-button color="primary">Войти</button>
+    </form>
+</mat-card>

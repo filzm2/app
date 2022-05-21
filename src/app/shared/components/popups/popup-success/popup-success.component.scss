@@ -1,0 +1,17 @@
+@import '../../popup/popup.component';
+
+.suc {
+  &__title {
+    font-size: 22px;
+    font-weight: 700;
+  }
+
+  &__description {
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  &__buttons {
+    justify-content: center;
+  }
+}

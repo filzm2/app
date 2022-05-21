@@ -1,0 +1,378 @@
+<div class="app-dataset">
+  <div class="page-headers">
+    <div class="page-header">Набор данных</div>
+
+    <div class="page-actions-container">
+      <div class="page-actions">
+        <mat-form-field appearance="outline" class="page-search">
+          <mat-label>Поиск</mat-label>
+
+          <input
+            matInput
+            placeholder="Введите фразу"
+            #search
+            [value]="filtersOptionsModel.table_name.inputValue"
+            (change)="filtersValueChanged('table_name', search.value)"
+          />
+
+          <mat-icon class="page-search-icon" svgIcon="search"></mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="outline-blue-select-field">
+          <mat-label>Сортировка</mat-label>
+          <mat-select [ngModel]="sortColumn" #sort>
+            <mat-option (click)="getSortList(sort.value)" value="table_name">
+              По наименованию
+            </mat-option>
+            <mat-option (click)="getSortList(sort.value)" value="database.database_name">
+              По источнику
+            </mat-option>
+            <mat-option (click)="getSortList(sort.value)" value="changed_on_delta_humanized">
+              По дате изменений
+            </mat-option>
+            <mat-option (click)="getSortList(sort.value)" value="changed_by.first_name">
+              По автору изменений
+            </mat-option>
+            <mat-option (click)="getSortList(sort.value)" value="schema"> По схеме </mat-option>
+          </mat-select>
+
+          <mat-icon class="blue-logo" svgIcon="sort"></mat-icon>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="filters-wrapper">
+      <!-- OWNERS -->
+      <div class="filters-container">
+        <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+          <mat-label>Владелец</mat-label>
+
+          <mat-select
+            [value]="filtersOptionsModel.owners.inputValue"
+            (selectionChange)="filtersValueChanged('owners', $event.value)"
+          >
+            <mat-option *ngFor="let option of filtersOptionsData.owners" [value]="option.id">
+              {{ option.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!-- SOURCE -->
+      <div class="filters-container">
+        <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+          <mat-label>База данных</mat-label>
+
+          <mat-select
+            [value]="filtersOptionsModel.source.inputValue"
+            (selectionChange)="filtersValueChanged('source', $event.value)"
+          >
+            <mat-option *ngFor="let option of filtersOptionsData.source" [value]="option.id">
+              {{ option.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!-- SCHEMA -->
+      <div class="filters-container">
+        <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+          <mat-label>Схема</mat-label>
+
+          <mat-select
+            [value]="filtersOptionsModel.schema.inputValue"
+            (selectionChange)="filtersValueChanged('schema', $event.value)"
+          >
+            <mat-option *ngFor="let option of filtersOptionsData.schema" [value]="option.name">
+              {{ option.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!-- TYPE -->
+      <div class="filters-container">
+        <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+          <mat-label>Тип</mat-label>
+
+          <mat-select
+            [value]="filtersOptionsModel.type.inputValue"
+            (selectionChange)="filtersValueChanged('type', $event.value)"
+          >
+            <mat-option *ngFor="let option of filtersOptionsData.type" [value]="option.value">
+              {{ option.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table [dataSource]="datasetList" mat-table class="table">
+        <ng-container matColumnDef="select">
+          <th *matHeaderCellDef mat-header-cell>
+            <mat-checkbox
+              class="example-margin"
+              [checked]="isCheckedAll()"
+              [indeterminate]="someButNotAtAllChecked()"
+              (change)="toggleAllCheckboxes($event)"
+            >
+            </mat-checkbox>
+          </th>
+
+          <td *matCellDef="let dataset" mat-cell (click)="$event.stopPropagation()">
+            <mat-checkbox
+              [checked]="checkboxesSelected[dataset.id]"
+              (change)="toggleCheckboxes($event, dataset.id)"
+            ></mat-checkbox>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th
+            *matHeaderCellDef
+            (click)="getSortList('table_name')"
+            class="sortable-column-header"
+            mat-header-cell
+          >
+            <span>
+              Наименование
+              <mat-icon
+                [ngClass]="{ desc: sortOrder === 'desc', active: sortColumn === 'table_name' }"
+                svgIcon="arrow_sort_down"
+              ></mat-icon>
+            </span>
+          </th>
+
+          <td *matCellDef="let dataset" mat-cell>
+            <span class="col-name"> {{ dataset.name }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="type">
+          <th *matHeaderCellDef mat-header-cell>Тип</th>
+
+          <td *matCellDef="let dataset" mat-cell>
+            <div *ngIf="dataset.type === 'physical'" class="column-type" [class]="dataset.type">
+              <img src="/assets/icons/phisical_icon.svg" width="12" alt="phisical_icon" />
+              <div class="column-type-text">Физический</div>
+            </div>
+
+            <div *ngIf="dataset.type === 'virtual'" class="column-type" [class]="dataset.type">
+              <img src="/assets/icons/virtual_icon.svg" width="12" alt="virtual_icon" />
+              <div class="column-type-text">Виртуальный</div>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="source">
+          <th
+            *matHeaderCellDef
+            (click)="getSortList('database.database_name')"
+            class="sortable-column-header"
+            mat-header-cell
+          >
+            <span>
+              Источник
+              <mat-icon
+                [ngClass]="{
+                  desc: sortOrder === 'desc',
+                  active: sortColumn === 'database.database_name'
+                }"
+                svgIcon="arrow_sort_down"
+              ></mat-icon>
+            </span>
+          </th>
+
+          <td *matCellDef="let dataset" mat-cell>
+            {{ dataset.source }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="schema">
+          <th
+            *matHeaderCellDef
+            class="sortable-column-header"
+            (click)="getSortList('schema')"
+            mat-header-cell
+          >
+            <span>
+              Схема
+              <mat-icon
+                [ngClass]="{ desc: sortOrder === 'desc', active: sortColumn === 'schema' }"
+                svgIcon="arrow_sort_down"
+              ></mat-icon>
+            </span>
+          </th>
+
+          <td *matCellDef="let dataset" mat-cell>
+            {{ dataset.schema }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="deltaTime">
+          <th
+            *matHeaderCellDef
+            class="sortable-column-header"
+            (click)="getSortList('changed_on_delta_humanized')"
+            mat-header-cell
+          >
+            <span>
+              Изменение
+              <mat-icon
+                [ngClass]="{
+                  desc: sortOrder === 'desc',
+                  active: sortColumn === 'changed_on_delta_humanized'
+                }"
+                svgIcon="arrow_sort_down"
+              ></mat-icon>
+            </span>
+          </th>
+
+          <td *matCellDef="let dataset" mat-cell>
+            {{ dataset.deltaTime }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="modifiedName">
+          <th
+            *matHeaderCellDef
+            class="sortable-column-header"
+            (click)="getSortList('changed_by.first_name')"
+            mat-header-cell
+          >
+            <span>
+              Кем изменен
+              <mat-icon
+                [ngClass]="{
+                  desc: sortOrder === 'desc',
+                  active: sortColumn === 'changed_by.first_name'
+                }"
+                svgIcon="arrow_sort_down"
+              ></mat-icon>
+            </span>
+          </th>
+
+          <td *matCellDef="let dataset" mat-cell>
+            {{ dataset.modifiedName }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="owners">
+          <th *matHeaderCellDef mat-header-cell>Владелец</th>
+
+          <td *matCellDef="let dataset" mat-cell>
+            <div class="owners">
+              <div *ngFor="let owner of dataset.owners" class="owner">
+                {{ owner }}
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th *matHeaderCellDef mat-header-cell></th>
+
+          <td *matCellDef="let dataset" mat-cell class="actions">
+            <app-icon-button
+              [matMenuTriggerFor]="actionMenu"
+              (click)="$event.stopPropagation()"
+              color="white"
+              class="dashboard-table-actions-button"
+              name="options"
+            >
+            </app-icon-button>
+
+            <mat-menu #actionMenu="matMenu">
+              <button
+                mat-menu-item
+                class="actions-menu-button"
+                [disabled]="!permissions.canWrite"
+                (click)="datasetEdit($event, dataset)"
+              >
+                <img src="/assets/icons/create_24px.png" width="24" alt="pencil" />
+                <span class="actions-menu-button-text"> Редактировать </span>
+              </button>
+
+              <button
+                mat-menu-item
+                class="actions-menu-button"
+                [disabled]="!permissions.canRead"
+                (click)="exportToCSV($event, dataset)"
+              >
+                <img src="/assets/icons/export.svg" width="24" alt="export" />
+                <span class="actions-menu-button-text"> Экспорт </span>
+              </button>
+
+              <button
+                mat-menu-item
+                class="actions-menu-button"
+                [disabled]="!permissions.canWrite"
+                (click)="confirmDeletion($event, [dataset], 'one')"
+              >
+                <img src="/assets/icons/delete_24px.png" width="24" alt="delete" />
+                <span class="actions-menu-button-text"> Удалить </span>
+              </button>
+            </mat-menu>
+          </td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+
+        <tr
+          *matRowDef="let i = index; let row; columns: displayedColumns"
+          mat-row
+          (click)="datasetOpen($event, row)"
+        ></tr>
+      </table>
+
+      <div class="paginator-container">
+        <div class="action-footer-container">
+          <button
+            *ngIf="allCheckboxesSelected > 0"
+            mat-raised-button
+            color="primary"
+            class="reset-button small-button"
+            (click)="toggleAllCheckboxes({ checked: false }, true)"
+          >
+            <img src="/assets/icons/plus_icon.svg" width="10" alt="plus" />
+
+            <span class="reset-button-text">
+              {{ allCheckboxesSelectedWithText }} данных выделено
+            </span>
+          </button>
+
+          <button
+            *ngIf="allCheckboxesSelected > 0"
+            mat-raised-button
+            class="action-footer-item"
+            [disabled]="!permissions.canRead"
+            (click)="exportDatasetsToCSV()"
+          >
+            <img src="/assets/icons/export_blue.svg" width="20" alt="export" />
+          </button>
+
+          <button
+            *ngIf="allCheckboxesSelected > 0"
+            mat-raised-button
+            class="action-footer-item"
+            [disabled]="!permissions.canWrite"
+            (click)="confirmDeletion($event, [], 'several')"
+          >
+            <img src="/assets/icons/delete_blue.svg" width="18" alt="delete" />
+          </button>
+        </div>
+
+        <mat-paginator
+          [length]="paginator.count"
+          [pageSize]="paginator.pageSize"
+          [pageSizeOptions]="paginator.pageSizeOptions"
+          [pageIndex]="paginator.currentPage"
+          (page)="onPageChange($event)"
+        ></mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>

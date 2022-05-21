@@ -1,0 +1,16 @@
+<div class="dialog-database-delete">
+  <div mat-dialog-content class="dialog-database-delete__content">
+    <div class="dialog-database-delete__text">
+      Вы уверены что хотите удалить базу данных?<br><br>
+      База данных <span class="strong">{{data.name}}</span> используется
+      в  <span class="strong">{{getLabel('chart')}}</span>, {{this.chartsCount === 1 ? 'который содержится' : 'которые содержатся'}}<br>
+      в  <span class="strong">{{getLabel('dashboard')}}!</span>
+    </div>
+
+    <app-form-field [control]="formControl" label='Введите "удалить" для подтверждения'></app-form-field>
+  </div>
+  <div class="dialog-database-delete__actions">
+    <button mat-stroked-button class="primary-color small-button" color="primary" (click)="onCancelClick()">Отмена</button>
+    <button mat-raised-button color="warn" class="small-button" (click)="onConfirmClick()" [disabled]="!valid">Удалить</button>
+  </div>
+</div>

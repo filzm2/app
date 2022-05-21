@@ -1,0 +1,101 @@
+@font-face {
+  font-family: Gilroy;
+  src: url('../../assets/fonts/gilroy/Gilroy-Medium_0.otf') format("opentype");
+}
+
+// Стилевой фал для таблиц
+
+.kk-table {
+  font-family: Gilroy, serif;
+  border-radius: 4px 4px 0 0;
+  box-sizing: border-box;
+  border: 1px solid #E4E4E4;
+
+  .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+    background-color: #2C5DE5;
+  }
+
+  .mat-header-cell {
+    font-size: 14px;
+  }
+
+  .mat-cell, .mat-footer-cell {
+    font-size: 16px;
+    padding: 16px 0;
+  }
+
+  tr.mat-row, tr.mat-footer-row {
+  }
+
+  tr.mat-row:last-child {
+    td.mat-cell {
+      border-bottom: none;
+    }
+  }
+
+  th.mat-header-cell:first-of-type,
+  td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+    padding-left: 16px;
+  }
+}
+
+.mat-paginator, .mat-paginator-page-size .mat-select-trigger {
+  font-family: Gilroy, serif;
+
+  .mat-paginator-outer-container {
+    border-radius: 0 0 4px 4px;
+    border: 1px solid #E4E4E4;
+    border-top: none;
+    padding-top: 10px;
+    padding-bottom: 3px;
+  }
+
+  .mat-paginator-page-size-select {
+    width: 80px;
+  }
+
+  .mat-form-field-appearance-legacy .mat-form-field-infix {
+    padding: 0.7em 1em;
+  }
+
+  button[disabled] {
+    border: none;
+    background: none;
+  }
+
+  .mat-form-field-infix {
+    border: none;
+    font-family: Gilroy, serif;
+  }
+
+  .mat-form-field-flex {
+    border: 1px solid #C7C7C7;
+    background: none !important;
+    border-radius: 4px !important;
+  }
+
+  .mat-form-field {
+    font-family: Gilroy, serif;
+  }
+
+  .mat-form-field-appearance-legacy .mat-form-field-underline {
+    display: none;
+  }
+}
+
+.mat-paginator-container {
+  font-family: Gilroy, serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  .mat-paginator-page-size-label {
+    margin-right: 16px;
+    color: #656565;
+  }
+  .mat-paginator-range-label {
+    color: #1A1A1A;
+  }
+  .mat-paginator-range-actions {
+    margin-bottom: 10px;
+  }
+}

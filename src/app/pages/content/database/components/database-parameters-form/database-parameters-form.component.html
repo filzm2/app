@@ -1,0 +1,105 @@
+<div class="database-parameters-form">
+  <div class="database-parameters-form-main-field">
+    <app-form-field
+      [control]="getFormControl('display_name')"
+      (blurEvent)="onBlur()"
+      [relativeHint]="true"
+      label="Отображаемое название базы данных *"
+      hint="Выберите псевдоним для этой базы данных для отображения в системе"
+    >
+    </app-form-field>
+  </div>
+  <div class="database-parameters-form-container">
+    <div class="database-parameters-form-column">
+      <div *ngIf="properties?.host || properties?.port" class="database-parameters-form-row">
+        <app-form-field
+          *ngIf="properties.host"
+          (blurEvent)="onBlur()"
+          [control]="getFormControl('host')"
+          label="Host *"
+          placeholder="127.0.0.1"
+        >
+        </app-form-field>
+        <app-form-field
+          *ngIf="properties.port"
+          (blurEvent)="onBlur()"
+          [control]="getFormControl('port')"
+          label="Port *"
+          placeholder="5432"
+        >
+        </app-form-field>
+      </div>
+      <div class="database-parameters-form-row">
+        <app-form-field
+          *ngIf="properties?.username"
+          (blurEvent)="onBlur()"
+          [control]="getFormControl('username')"
+          label="Username"
+          placeholder="Analytics"
+        >
+        </app-form-field>
+        <app-form-field
+          *ngIf="properties?.password"
+          (blurEvent)="onBlur()"
+          [control]="getFormControl('password')"
+          type="password"
+          label="Password"
+        >
+        </app-form-field>
+      </div>
+      <mat-slide-toggle [formControl]="getFormControl('encryption')" (change)="onBlur()"
+        >SSL<span matTooltip="SSL" class="mat-tooltip-icon">i</span></mat-slide-toggle
+      >
+
+      <!--      todo: разобраться что за поля-->
+      <app-form-field
+        *ngIf="properties?.catalog"
+        (blurEvent)="onBlur()"
+        [control]="getFormControl('catalog')"
+        label="catalog"
+      >
+      </app-form-field>
+    </div>
+    <div class="database-parameters-form-column">
+      <app-form-field
+        *ngIf="properties?.database"
+        (blurEvent)="onBlur()"
+        [control]="getFormControl('database')"
+        [relativeHint]="true"
+        label="Название базы данных *"
+        hint="Скопируйте название базы данных которую вы пытаетесь присоеденить"
+        placeholder="world_population"
+      >
+      </app-form-field>
+      <app-form-field
+        *ngIf="properties?.query"
+        (blurEvent)="onBlur()"
+        [control]="getFormControl('query')"
+        [relativeHint]="true"
+        hint="Добавить дополнительные специальные параметры"
+        label="Дополнительные параметры"
+      >
+      </app-form-field>
+
+      <!--      todo: разобраться что за поля-->
+      <app-form-field
+        *ngIf="properties?.credentials_info"
+        (blurEvent)="onBlur()"
+        [control]="getFormControl('credentials_info')"
+        label="credentials info"
+      >
+      </app-form-field>
+      <app-form-field
+        *ngIf="properties?.service_account_info"
+        (blurEvent)="onBlur()"
+        [control]="getFormControl('service_account_info')"
+        label="service account info"
+      >
+      </app-form-field>
+    </div>
+  </div>
+</div>
+<div *ngIf="generalErrors" class="database-parameters-form-errors">
+  <mat-icon svgIcon="warning"></mat-icon>
+  <div>{{ generalErrors }}</div>
+</div>

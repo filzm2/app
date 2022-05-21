@@ -1,0 +1,125 @@
+@import '../../../../styles/exd-colors.scss';
+
+.app-header {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  height: 60px;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: map-get($exd-primary, 1);
+  color: map-get($exd-main, 400);
+
+  &.app-header-mobile-opened {
+    background-color: transparent;
+  }
+
+  .logo {
+    &.open {
+      .header-link {
+        .logo-image-default {
+          display: none;
+        }
+
+        .logo-image-white {
+          display: block;
+        }
+      }
+    }
+
+    &.close {
+      .header-link {
+        .logo-image-default {
+          display: block;
+        }
+
+        .logo-image-white {
+          display: none;
+        }
+      }
+    }
+  }
+
+  &-icon {
+    font-weight: bold;
+    font-size: 32px;
+    padding-left: 20px;
+  }
+
+  .header-menu {
+    margin-left: 24px;
+
+    @media (max-width: 1460px) {
+      display: none;
+    }
+
+    .header-menu-item {
+      margin-left: 16px;
+    }
+
+    .header-link {
+      margin-left: 16px;
+      padding: 0 32px;
+      text-decoration: none;
+      user-select: none;
+    }
+  }
+
+  .right-menu {
+    margin-left: auto;
+    display: flex;
+  }
+
+  .create-menu {
+    margin: 0 20px;
+  }
+
+  .user-menu {
+    margin: 0 20px;
+
+    @media (max-width: 1460px) {
+      display: none;
+    }
+  }
+
+  .mobile-menu {
+    margin-right: 12px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 0;
+    border-radius: 4px;
+    background-color: map-get($exd-psb-blue, 450);
+    cursor: pointer;
+
+    @media (max-width: 1460px) {
+      display: flex;
+    }
+
+    &.open {
+      .burger-menu {
+        display: none;
+      }
+
+      .burger-menu-close {
+        display: block;
+      }
+    }
+
+    &.close {
+      .burger-menu {
+        display: block;
+      }
+
+      .burger-menu-close {
+        display: none;
+      }
+    }
+  }
+}
+
+.mat-menu-item {
+  text-decoration: none;
+}

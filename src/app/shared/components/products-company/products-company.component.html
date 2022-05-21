@@ -1,0 +1,57 @@
+<div class="products-company">
+  <div class="text--header mb-16">Продукты</div>
+  <div class="products-company__table">
+    <div class="mat-elevation-z8 bs-none">
+      <table class="mat-table-custom" mat-table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="num">
+          <th mat-header-cell *matHeaderCellDef [ngStyle]="{'padding-right': '10px'}"> №</th>
+          <td mat-cell *matCellDef="let element"> {{element.num}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="productType">
+          <th mat-header-cell *matHeaderCellDef> Вид кросс–продукта</th>
+          <td mat-cell *matCellDef="let element"> {{element.productType}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="typeProductCondition">
+          <th mat-header-cell *matHeaderCellDef> Тип условия продукта</th>
+          <td mat-cell *matCellDef="let element"> {{element.typeProductCondition}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="valueProductCondition">
+          <th mat-header-cell *matHeaderCellDef> Значение условия продукта</th>
+          <td mat-cell *matCellDef="let element"> {{element.valueProductCondition}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="priceOffer">
+          <th mat-header-cell *matHeaderCellDef> Ценовое предложение</th>
+          <td mat-cell *matCellDef="let element"> {{element.priceOffer}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="nonStandartProducts">
+          <th mat-header-cell *matHeaderCellDef> Нестандартные продукты</th>
+          <td mat-cell *matCellDef="let element"> {{element.nonStandartProducts}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="codInclude">
+          <th mat-header-cell *matHeaderCellDef> КОД</th>
+          <td mat-cell *matCellDef="let element">
+            <div class="td-icons">
+
+              <div class="done-container">
+                <mat-icon *ngIf="element.codInclude" class="mat-18 done">done</mat-icon>
+              </div>
+
+              <mat-icon class="mat-18 remove" (click)="deleteItem(element.num)">delete_outline</mat-icon>
+            </div>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
+  </div>
+</div>

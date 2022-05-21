@@ -1,0 +1,24 @@
+.products-company {
+  background: #F9F9F9;
+  padding: 24px;
+  &__table {
+    background: white;
+    .mat-table-custom {
+      width: 100%;
+      box-shadow: none;
+      .td-icons {
+        display: flex;
+        .done-container {
+          min-width: 50px;
+          .done {
+            color: #00C41F;
+          }
+        }
+        .remove {
+          color: #DADADA;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

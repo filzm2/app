@@ -1,0 +1,16 @@
+<div class="popup_choose_client_type">
+  <div class="modal__step--title">Выберите тип клиента</div>
+  <mat-form-field  class="client-select" appearance="fill">
+    <mat-label>Тип клиента</mat-label>
+    <mat-select [(ngModel)]="clientType">
+      <mat-option value="GROUP_OF_COMPANIES">Группа компаний</mat-option>
+      <mat-option value="ONE_COMPANY">Юридическое лицо</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <app-ui-button (clickButton)="completeTask()"
+                 title="Выбрать тип"
+                 [mat-dialog-close]="true"
+                 [disable]="!clientType"
+                 color="blue">
+  </app-ui-button>
+</div>

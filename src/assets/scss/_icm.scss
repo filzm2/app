@@ -1,0 +1,33 @@
+@import 'icm/flex';
+@import 'icm/margin';
+@import 'icm/padding';
+@import 'icm/position';
+@import 'icm/width';
+@import 'icm/heigth';
+@import 'icm/color';
+@import 'icm/text';
+@import "icm/button";
+@import "icm/badge";
+@import "icm/upload";
+@import "icm/typography";
+@import "icm/tabs";
+@import "icm/dataList";
+@import "icm/pagination";
+
+//TODO => finalize dimensions!!!
+@import 'icm/card'; // can use only .icm-card
+
+// don't use!!!
+@import 'icm/pledge';
+@import 'icm/grid';
+
+
+// TODO => finalize file struct!!!
+
+.icm-hr {
+  height: 1px;
+  background-color: #E3E3E3;
+  border: none;
+  margin: 0;
+}
+

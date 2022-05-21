@@ -1,0 +1,40 @@
+@import "../../styles/exd-colors.scss";
+@import "../../styles/mixins.scss";
+
+.cdk-overlay-container {
+  .cdk-overlay-connected-position-bounding-box {
+    .cdk-overlay-pane {
+      .ng-star-inserted {
+        .mat-tooltip {
+          padding: 4px 8px;
+          border-radius: 8px;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 16px;
+          color: map-get($exd-primary, 1);
+          background-color: map-get($exd-grayscale, 400);
+          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04), 0 4px 8px rgba(0, 0, 0, 0.16);
+        }
+      }
+    }
+  }
+}
+
+.mat-tooltip-icon {
+  @include font(12px, 500);
+  box-sizing: border-box;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+  background: map-get($exd-grayscale, 200);
+  border-radius: 50%;
+  color: white;
+  padding-top: 1px;
+  padding-left: 8px;
+}
+
+.app-tooltip {
+  white-space: pre-line;
+}

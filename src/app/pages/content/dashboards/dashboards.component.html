@@ -1,0 +1,484 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>Аналитические панели</h1>
+  </div>
+
+  <div class="dashboard-actions-wrapper">
+    <div class="dashboard-actions-icon-buttons">
+      <app-icon-button
+        [ngClass]="{ active: viewMode === 'list' }"
+        (click)="changeViewMode('list')"
+        name="list"
+      ></app-icon-button>
+
+      <app-icon-button
+        [ngClass]="{ active: viewMode === 'tile' }"
+        (click)="changeViewMode('tile')"
+        name="tile"
+      ></app-icon-button>
+
+      <div class="dashboard-actions-title">Аналитические панели</div>
+    </div>
+
+    <div class="dashboard-actions">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Поиск</mat-label>
+
+        <input
+          #search
+          [formControl]="searchFormControl"
+          matInput
+          placeholder="Введите фразу"
+          style="box-sizing: border-box; padding-right: 18px"
+          (change)="onSearch(search)"
+        />
+
+        <mat-icon class="search-logo" svgIcon="search"></mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="outline-blue-select-field">
+        <mat-label>Сортировка</mat-label>
+
+        <mat-select #sort [ngModel]="sortColumn">
+          <mat-option (click)="getSortList(sort.value)" value="dashboard_title">
+            По названию
+          </mat-option>
+
+          <mat-option (click)="getSortList(sort.value)" value="changed_on_delta_humanized">
+            По дате изменений
+          </mat-option>
+
+          <mat-option (click)="getSortList(sort.value)" value="changed_by.first_name">
+            По автору изменений
+          </mat-option>
+
+          <mat-option (click)="getSortList(sort.value)" value="published">
+            Статус публикации
+          </mat-option>
+        </mat-select>
+
+        <mat-icon class="blue-logo" svgIcon="sort"></mat-icon>
+      </mat-form-field>
+
+      <button
+        class="filters-mobile"
+        [class]="isMobileFiltersShowed ? 'open' : 'close'"
+        (click)="isMobileFiltersShowed = !isMobileFiltersShowed"
+      >
+        <img
+          src="assets/icons/table_filters.svg"
+          width="36"
+          height="36"
+          alt="table_filters"
+          class="table-filters-default"
+        />
+
+        <img
+          src="assets/icons/table_filters_rotate.svg"
+          width="36"
+          height="36"
+          alt="table_filters"
+          class="table-filters-rotate"
+        />
+      </button>
+    </div>
+  </div>
+
+  <div
+    [class]="isMobileFiltersShowed ? 'opened' : 'closed'"
+    class="dashboard-filters-mobile-wrapper"
+  >
+    <div class="dashboard-filters" [formGroup]="filterFormGroup">
+      <mat-button-toggle-group
+        class="split-toggle-button"
+        [multiple]="true"
+        formControlName="published_or_favorite"
+      >
+        <mat-button-toggle value="draft">Черновик</mat-button-toggle>
+        <mat-button-toggle value="published">Опубликовано</mat-button-toggle>
+        <mat-button-toggle value="favorite">Избранное</mat-button-toggle>
+      </mat-button-toggle-group>
+
+      <div class="selects-container">
+        <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+          <mat-label>Выбрать автора</mat-label>
+
+          <mat-select formControlName="created_by">
+            <mat-option [value]="null">Все</mat-option>
+
+            <mat-option *ngFor="let creator of creators" [value]="creator.value">
+              {{ creator.text }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+          <mat-label>Выбрать владельца</mat-label>
+
+          <mat-select formControlName="owners">
+            <mat-option [value]="null">Все</mat-option>
+
+            <mat-option *ngFor="let owner of owners" [value]="owner.value">
+              {{ owner.text }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard-filters-wrapper">
+    <div class="dashboard-filters" [formGroup]="filterFormGroup">
+      <mat-button-toggle-group
+        class="split-toggle-button"
+        [multiple]="true"
+        formControlName="published_or_favorite"
+      >
+        <mat-button-toggle value="draft">Черновик</mat-button-toggle>
+        <mat-button-toggle value="published">Опубликовано</mat-button-toggle>
+        <mat-button-toggle value="favorite">Избранное</mat-button-toggle>
+      </mat-button-toggle-group>
+
+      <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+        <mat-label>Выбрать автора</mat-label>
+
+        <mat-select formControlName="created_by">
+          <mat-option [value]="null">Все</mat-option>
+          <mat-option *ngFor="let creator of creators" [value]="creator.value">
+            {{ creator.text }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="filters-input mat-form-field small-input">
+        <mat-label>Выбрать владельца</mat-label>
+
+        <mat-select formControlName="owners">
+          <mat-option [value]="null">Все</mat-option>
+          <mat-option *ngFor="let owner of owners" [value]="owner.value">
+            {{ owner.text }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="dashboard-tile-wrapper" *ngIf="dashboardList && viewMode === 'tile'">
+    <div class="dashboard-tile">
+      <app-dashboard-card
+        *ngFor="let dashboard of dashboardList"
+        [dashboard]="dashboard"
+        [permissions]="permissions"
+        (export)="exportDashboard(dashboard)"
+        (delete)="confirmDeletion([dashboard], 'one')"
+        (setFavorite)="setFavoriteStatus(dashboard)"
+        (click)="redirectToDashboard(dashboard)"
+      >
+      </app-dashboard-card>
+    </div>
+
+    <mat-paginator
+      class="dashboard-paginator"
+      [length]="paginator.count"
+      [pageSize]="paginator.pageSize"
+      [pageSizeOptions]="[8, 12, 16]"
+      [pageIndex]="paginator.currentPage"
+      (page)="onPageChange($event)"
+    ></mat-paginator>
+  </div>
+
+  <div *ngIf="dashboardList && viewMode === 'list'" class="dashboard-list">
+    <table mat-table [dataSource]="dashboardList" class="dashboard-table">
+      <ng-container matColumnDef="checkbox">
+        <th class="checkbox-column" mat-header-cell *matHeaderCellDef>
+          <mat-checkbox
+            class="example-margin"
+            [checked]="isCheckedAll()"
+            [indeterminate]="someButNotAtAllChecked()"
+            (change)="setAllCheckbox($event.checked)"
+          >
+          </mat-checkbox>
+        </th>
+
+        <td
+          class="checkbox-column"
+          mat-cell
+          *matCellDef="let dashboard"
+          (click)="$event.stopPropagation()"
+        >
+          <mat-checkbox
+            class="example-margin"
+            (change)="changeSelect($event.checked, dashboard)"
+            [(ngModel)]="dashboard.select"
+          >
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="favorite">
+        <th class="star-radio-column" mat-header-cell *matHeaderCellDef></th>
+        <td class="star-radio-column" mat-cell *matCellDef="let dashboard">
+          <mat-icon
+            [ngClass]="{ checked: dashboard.favorite }"
+            class="star-checkbox"
+            role="checkbox"
+            svgIcon="star"
+            (click)="setFavoriteStatus(dashboard); $event.stopPropagation()"
+          ></mat-icon>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="dashboard_title">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          (click)="getSortList('dashboard_title')"
+          class="sortable-column-header"
+        >
+          <span>
+            Название аналитической панели
+            <mat-icon
+              [ngClass]="{ desc: sortOrder === 'desc', active: sortColumn === 'dashboard_title' }"
+              svgIcon="arrow_sort_down"
+            ></mat-icon>
+          </span>
+        </th>
+
+        <td mat-cell *matCellDef="let dashboard">
+          {{ dashboard.dashboard_title }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="published">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          (click)="getSortList('published')"
+          class="sortable-column-header"
+        >
+          <span>
+            Статус
+            <mat-icon
+              [ngClass]="{ desc: sortOrder === 'desc', active: sortColumn === 'published' }"
+              svgIcon="arrow_sort_down"
+            ></mat-icon>
+          </span>
+        </th>
+
+        <td mat-cell *matCellDef="let dashboard">
+          <div class="custom-badge custom-badge__gray" *ngIf="!dashboard.published">Черновик</div>
+          <div class="custom-badge custom-badge__primary-filled" *ngIf="dashboard.published">
+            Опубликовано
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="created_by">
+        <th mat-header-cell *matHeaderCellDef>Автор</th>
+
+        <td mat-cell *matCellDef="let dashboard">
+          {{ dashboard.created_by?.first_name }} {{ dashboard.created_by?.last_name }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="last_modified">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          (click)="getSortList('changed_on_delta_humanized')"
+          class="sortable-column-header"
+        >
+          <span>
+            Изменено
+            <mat-icon
+              [ngClass]="{
+                desc: sortOrder === 'desc',
+                active: sortColumn === 'changed_on_delta_humanized'
+              }"
+              svgIcon="arrow_sort_down"
+            ></mat-icon>
+          </span>
+        </th>
+
+        <td mat-cell *matCellDef="let dashboard">{{ dashboard.changed_on }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="changed_by">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          (click)="getSortList('changed_by.first_name')"
+          class="sortable-column-header cell-hidden-ipad"
+        >
+          <span>
+            Автор изменений
+            <mat-icon
+              [ngClass]="{
+                desc: sortOrder === 'desc',
+                active: sortColumn === 'changed_by.first_name'
+              }"
+              svgIcon="arrow_sort_down"
+            ></mat-icon>
+          </span>
+        </th>
+
+        <td mat-cell *matCellDef="let dashboard" class="cell-hidden-ipad">
+          {{ dashboard?.changed_by_name }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="owners">
+        <th *matHeaderCellDef mat-header-cell class="cell-hidden-ipad">Владельцы</th>
+
+        <td *matCellDef="let dataset" mat-cell class="cell-hidden-ipad">
+          <div class="dashboard-owners">
+            <div
+              *ngFor="let owner of dataset.formatOwners.slice(0, 3); let i = index"
+              [title]="dataset.formatOwnersFullName[i]"
+              class="dashboard-owners-item"
+            >
+              {{ owner }}
+            </div>
+
+            <div
+              *ngIf="dataset.formatOwners.length > 3"
+              class="dashboard-owners-item dashboard-owners-item-last"
+            >
+              +{{ dataset.formatOwners.length - 3 }}
+            </div>
+
+            <div class="dashboard-owners-item-popup">
+              <div
+                *ngFor="let owner of dataset.formatOwnersFullName.slice(3)"
+                class="dashboard-owners-item-popup-text"
+              >
+                {{ owner }}
+              </div>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+
+        <td class="dashboard-table-actions" mat-cell *matCellDef="let dashboard">
+          <app-icon-button
+            [matMenuTriggerFor]="actions_menu"
+            (click)="$event.stopPropagation()"
+            class="dashboard-table-actions-button"
+            name="options"
+          >
+          </app-icon-button>
+
+          <mat-menu class="dashboard-table-actions-menu" #actions_menu="matMenu">
+            <button
+              [disabled]="!permissions.canWrite"
+              mat-menu-item
+              (click)="editDashboard(dashboard)"
+            >
+              <mat-icon svgIcon="create"></mat-icon>
+              Редактировать
+            </button>
+
+            <button
+              [disabled]="!permissions.canRead"
+              mat-menu-item
+              (click)="exportDashboard(dashboard)"
+            >
+              <mat-icon svgIcon="file_upload"></mat-icon>
+              Экспорт
+            </button>
+
+            <div *ngIf="dashboard.favorite">
+              <button
+                *ngIf="!dashboardPins[dashboard.id]"
+                [disabled]="!permissions.canWrite"
+                mat-menu-item
+                (click)="togglePinMainPage(dashboard, true)"
+              >
+                <img src="assets/icons/pin.svg" width="24" height="24" class="mat-icon" />
+                Закрепить на главной
+              </button>
+
+              <button
+                *ngIf="dashboardPins[dashboard.id]"
+                [disabled]="!permissions.canWrite"
+                mat-menu-item
+                (click)="togglePinMainPage(dashboard, false)"
+              >
+                <img src="assets/icons/unpin.svg" width="24" height="24" class="mat-icon" />
+                Удалить с главной
+              </button>
+            </div>
+
+            <button
+              [disabled]="!permissions.canWrite"
+              mat-menu-item
+              (click)="confirmDeletion([dashboard], 'one')"
+            >
+              <mat-icon svgIcon="delete"></mat-icon>
+              Удалить
+            </button>
+          </mat-menu>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+        *matRowDef="let row; columns: displayedColumns"
+        mat-row
+        (click)="redirectToDashboard(row)"
+      ></tr>
+    </table>
+
+    <div class="dashboard-table-footer">
+      <div class="dashboard-table-footer-actions-wrapper">
+        <div *ngIf="someCheckedAllPage()" class="dashboard-table-footer-actions">
+          <button
+            mat-flat-button
+            class="primary-flat-button small-button"
+            (click)="setAllCheckbox(false, true)"
+          >
+            <mat-icon class="font-icon">close</mat-icon>
+            {{ getGroupDeleteButtonText() }}
+          </button>
+
+          <button
+            [disabled]="!permissions.canWrite"
+            mat-stroked-button
+            class="primary-stroked-button dashboard-table-footer-group-delete"
+            (click)="confirmDeletion(currentSelect, 'several')"
+          >
+            <mat-icon svgIcon="delete"></mat-icon>
+          </button>
+        </div>
+
+        <div *ngIf="!someCheckedAllPage()" class="dashboard-table-footer-actions">
+          <button
+            disabled
+            mat-stroked-button
+            class="primary-stroked-button dashboard-table-footer-group-delete"
+          >
+            <mat-icon svgIcon="delete"></mat-icon>
+          </button>
+
+          <div class="custom-badge custom-badge__flat-gray">
+            Выберите хотя бы одну аналитическую панель
+          </div>
+        </div>
+      </div>
+
+      <mat-paginator
+        class="dashboard-paginator"
+        [length]="paginator.count"
+        [pageSize]="paginator.pageSize"
+        [pageSizeOptions]="[10, 24]"
+        [pageIndex]="paginator.currentPage"
+        (page)="onPageChange($event)"
+      ></mat-paginator>
+    </div>
+  </div>
+
+  <a hidden href="" #downloadRef></a>
+</div>

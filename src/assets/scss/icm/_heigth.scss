@@ -1,0 +1,40 @@
+/* ========================================================================
+   Component: Height
+ ========================================================================== */
+[class*='icm-height'] {
+  box-sizing: border-box;
+}
+/*
+ * Only works if parent element has a height set
+ */
+.icm-height-1-1 {
+  height: 100%;
+}
+/*
+ * Useful to create image teasers
+ */
+.icm-height-viewport {
+  min-height: 100vh;
+}
+/*
+ * Pixel
+ * Useful for `overflow: auto`
+ */
+.icm-height-small {
+  height: 150px;
+}
+.icm-height-medium {
+  height: 300px;
+}
+.icm-height-large {
+  height: 450px;
+}
+.icm-height-max-small {
+  max-height: 150px;
+}
+.icm-height-max-medium {
+  max-height: 300px;
+}
+.icm-height-max-large {
+  max-height: 450px;
+}

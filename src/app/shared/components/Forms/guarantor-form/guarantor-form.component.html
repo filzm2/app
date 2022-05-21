@@ -1,0 +1,63 @@
+<section [formGroup]="form" class="mtb20">
+  <div class="mb20">
+    <div class="row">
+      <mat-form-field class="col b2" appearance="fill">
+        <mat-label>ФИО</mat-label>
+        <input formControlName="fio" type="text" matInput>
+      </mat-form-field>
+
+      <mat-form-field class="col b2" appearance="fill">
+        <mat-label>ИНН</mat-label>
+        <input formControlName="inn" type="text" matInput>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field class="col b2" appearance="fill">
+        <mat-label>Должность</mat-label>
+        <input formControlName="position" type="text" matInput>
+      </mat-form-field>
+
+      <mat-form-field class="col b2" appearance="fill">
+        <mat-label>Действующего на основании</mat-label>
+        <input formControlName="reason" type="text" matInput>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field class="col b1" appearance="fill">
+        <mat-label>Адрес по месту жительства</mat-label>
+        <input formControlName="address" type="text" matInput>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field class="col b1" appearance="fill">
+        <mat-label>Место фактического проживания</mat-label>
+        <input formControlName="addressFact" type="text" matInput>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field class="col b5" appearance="fill">
+        <mat-label>Документ серия</mat-label>
+        <input formControlName="docSeries" type="text" matInput>
+      </mat-form-field>
+
+      <mat-form-field class="col b15" appearance="fill">
+        <mat-label>№</mat-label>
+        <input formControlName="docNumber" type="text" matInput>
+      </mat-form-field>
+
+      <mat-form-field class="col b15" appearance="fill">
+        <mat-label>Дата выдачи</mat-label>
+        <input formControlName="docDate" matInput [matDatepicker]="tt">
+        <mat-datepicker-toggle matSuffix [for]="tt"></mat-datepicker-toggle>
+        <mat-datepicker #tt></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field class="col b2" appearance="fill">
+        <mat-label>Выдан</mat-label>
+        <input formControlName="docPlace" type="text" matInput>
+      </mat-form-field>
+    </div>
+  </div>
+  <button mat-flat-button color="accent" [disabled]="form.invalid" (click)="submitHandler()">Добавить</button>
+</section>
+

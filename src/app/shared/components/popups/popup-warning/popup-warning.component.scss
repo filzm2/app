@@ -1,0 +1,28 @@
+@import "../../../../../styles/exd-colors.scss";
+
+.dialog-warning {
+  background: white;
+  border-radius: 8px;
+  padding: 20px 32px 40px 32px;
+  &__content {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+    margin-left: 40px;
+    padding: 5px 30px 20px 0;
+    position: relative;
+    overflow: visible;
+    mat-icon {
+      position: absolute;
+      top: 5px;
+      left: -40px;
+      path {
+        fill: map-get($exd-warning, 400);
+      }
+    }
+  }
+  &__actions {
+
+  }
+}

@@ -1,0 +1,38 @@
+@import "../../styles/exd-colors.scss";
+
+.mat-checkbox {
+  &.mat-checkbox-checked,
+  &.mat-checkbox-indeterminate {
+    .mat-checkbox-background.mat-checkbox-background {
+      //todo theme-style
+      background-color: map-get($exd-psb-blue, 480);
+    }
+  }
+
+  .mat-checkbox-frame {
+    border-color: map-get($exd-grayscale, 200);
+  }
+}
+
+.star-checkbox {
+  width: 18px;
+  height: 18px;
+  display: block;
+  cursor: pointer;
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+  &:hover {
+    path {
+      stroke: map-get($exd-secondary, 450);
+    }
+  }
+
+  &.checked {
+    path {
+      fill: map-get($exd-secondary, 450);
+      stroke: map-get($exd-secondary, 450);
+    }
+  }
+}

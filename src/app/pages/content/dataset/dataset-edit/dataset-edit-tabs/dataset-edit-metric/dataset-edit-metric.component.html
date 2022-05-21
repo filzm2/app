@@ -1,0 +1,64 @@
+<div class="dataset-edit-metric">
+  <form *ngIf="formGroup" [formGroup]="formGroup">
+    <mat-accordion displayMode="flat"
+                   hideToggle
+                   formArrayName="metrics"
+                   class="ui-accordion-v2">
+      <mat-expansion-panel disabled class="mat-elevation-z0">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Метрика
+          </mat-panel-title>
+          <mat-panel-title>
+            Ярлык
+          </mat-panel-title>
+          <mat-panel-title>
+            SQL выражение
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel *ngFor="let metric of getFormArray().controls; let i = index"
+                           class="mat-elevation-z0"
+                           [expanded]="expanded === i"
+                           (opened)="setStep(i)">
+        <mat-expansion-panel-header>
+          <mat-icon class="arrow-drop-down" svgIcon="arrow_drop_down"></mat-icon>
+          <mat-panel-title>
+            <span (click)="focusHiddenField(metric_name, $event)" class="header-label">{{getControlByName('metric_name', metric).value || 'Новая метрика'}}</span>
+              <input #metric_name  class="hidden-field" [formControl]="getControlByName('metric_name', metric)" matInput>
+          </mat-panel-title>
+          <mat-panel-title>
+            <span (click)="focusHiddenField(verbose_name, $event)" class="header-label">{{getControlByName('verbose_name', metric).value}}</span>
+            <input #verbose_name  class="hidden-field" [formControl]="getControlByName('verbose_name', metric)" matInput>
+          </mat-panel-title>
+          <mat-panel-title>
+              <span (click)="focusHiddenField(expression, $event)" class="header-label">{{getControlByName('expression', metric).value}}</span>
+              <input #expression  class="hidden-field" [formControl]="getControlByName('expression', metric)" matInput>
+          </mat-panel-title>
+          <app-icon-button name="delete" (click)="deleteItem(i, $event)"></app-icon-button>
+
+        </mat-expansion-panel-header>
+
+        <div class="dataset-edit-metric-item">
+
+          <app-form-field label="Ярлык" [control]="getControlByName('verbose_name', metric)" placeholder=""></app-form-field>
+
+          <app-form-field label="Описание" [control]="getControlByName('description', metric)" placeholder="Description"></app-form-field>
+
+          <app-form-field label="D3 формат" [control]="getControlByName('d3format', metric)" placeholder="%y/%m/%d"></app-form-field>
+
+          <app-form-field label="Сертифицированно" [control]="getControlByName('certified_by', metric)" placeholder="Certified By"></app-form-field>
+
+          <app-form-field label="Детали сертификации" [control]="getControlByName('certification_details', metric)" placeholder="Certification Details"></app-form-field>
+
+          <mat-form-field appearance="outline" class="mat-textarea">
+            <mat-label>Предупреждение</mat-label>
+            <textarea [formControl]="getControlByName('warning_markdown', metric)" matInput ></textarea>
+          </mat-form-field>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </form>
+</div>
+

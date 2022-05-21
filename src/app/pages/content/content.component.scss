@@ -1,0 +1,21 @@
+@import "../../../styles/exd-colors.scss";
+
+.app-container {
+  min-height: 100%;
+
+  &.app-header-mobile-opened {
+    .router-container {
+      filter: blur(4px);
+      user-select: none;
+      pointer-events: none;
+    }
+  }
+
+  &.app-header-mobile-closed {
+  }
+
+  .router-container {
+    transition: filter 0.1s;
+    will-change: filter;
+  }
+}

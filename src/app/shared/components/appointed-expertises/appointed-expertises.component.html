@@ -1,0 +1,17 @@
+<mat-card [ngStyle]="{'padding': '24px 0 0 24px'}">
+  <mat-card-content>
+    <div class="text--header icm-margin-medium-bottom">Назначенные экспертизы</div>
+    <div class="expertise-container">
+      <div class="expertise-item" *ngFor="let expertise of expertises">
+        <div class="expertise-item-first-part">
+          <div>{{expertise.caption}}</div>
+          <div class="expertise-type {{'expertise-type-' + expertise.statusType}}">{{expertise.status}}</div>
+        </div>
+        <div class="expertise-item-last-part">
+          <mat-icon class="mat-18 calendar_today-icon">calendar_today</mat-icon>
+          {{expertise.date}}
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,88 @@
+<div class="settings-list-container">
+
+  <div class="settings-list-header">
+    <div class="settings-list-header-title">Редактировать роль - {{role?.name}}</div>
+  </div>
+  <div class="settings-list-filters-wrapper">
+    <div class="settings-list-filters role-user-list" >
+      <div class="role-user-list__header">
+        <div class="role-user-list__title">
+          Пользователи
+        </div>
+        <div class="role-user-list__add">
+          <button
+            [matMenuTriggerFor]="menu"
+            mat-stroked-button
+            color="primary"
+            class="role-user-list__add_button small-button primary-color">
+            <mat-icon>add</mat-icon>
+            Добавить пользователя
+          </button>
+          <mat-menu
+            #menu="matMenu"
+            class="role-user-list__menu">
+            <div *ngFor="let user of availableUsers, let i = index">
+              <button
+                mat-menu-item
+                (click)="selectUser(user, i)">
+                {{ user?.text }}
+              </button>
+            </div>
+          </mat-menu>
+        </div>
+      </div>
+      <div class="role-user-list__body">
+        <mat-form-field
+          appearance="outline"
+          class="search-field">
+          <mat-label>Пользователь</mat-label>
+
+          <input
+            matInput
+            [(ngModel)]="searchModel"
+            (input)="onSearch(searchModel)">
+          <mat-icon class="search-logo" svgIcon="search"></mat-icon>
+        </mat-form-field>
+        <table *ngIf="!isLoading" mat-table [dataSource]="users"
+               class="role-user-list__table">
+
+          <ng-container matColumnDef="name">
+            <th mat-header-cell
+                *matHeaderCellDef>
+          <span class="cell cell-header">Имя пользователя
+          </span>
+            </th>
+            <td [matMenuTriggerFor]="actions_menu" mat-cell *matCellDef="let user">
+              <span class="cell">
+                {{ user.name }}
+              </span>
+              <mat-menu class="role-user-list__menu" #actions_menu="matMenu">
+                <button mat-menu-item (click)="deleteUser(user)">
+                  <mat-icon svgIcon="delete"></mat-icon>
+                  Удалить
+                </button>
+              </mat-menu>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="['name']"></tr>
+          <tr mat-row *matRowDef="let row; columns: ['name'];"></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="settings-list-list">
+    <div *ngIf="isLoading" class="settings-list-spinner">
+      <mat-spinner color="primary"></mat-spinner>
+    </div>
+    <div *ngIf="!isLoading">
+      <app-role-form *ngIf="role"
+                     [role]="role"
+                     (submitForm)="save($event)">
+
+      </app-role-form>
+    </div>
+  </div>
+</div>
+

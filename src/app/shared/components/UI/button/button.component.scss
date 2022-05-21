@@ -1,0 +1,119 @@
+button {
+  box-sizing: border-box;
+  height: 36px;
+  min-width: 79px;
+  padding: 10px 16px;
+  outline: none;
+  border-radius: 4px;
+  border: none;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  margin-right: 32px;
+  &:hover {
+    cursor: pointer;
+  }
+
+  &.red{
+    background: #d92142;
+    color: #ffffff;
+    &:hover{
+      background: #F03A5B;;
+    }
+    &:active{
+      background: #C6203E;
+    }
+    &:disabled {
+      cursor: not-allowed;
+      background: #D8D8D8;;
+      color: #ffffff;
+    }
+  }
+  &.blue{
+    background: #3D50B7;
+    color: #ffffff;
+    &:hover{
+      background: #4E63D3;
+    }
+    &:active{
+      background: #3D50B7;
+    }
+    &:disabled {
+      cursor: not-allowed;
+      background: #D8D8D8;;
+      color: #ffffff;
+    }
+  }
+  &.orange{
+    background: #f37a1f;
+    color: #ffffff;
+    &:hover{
+      background:  #FF913F;
+    }
+    &:active{
+      background: #F37A1F;
+    }
+    &:disabled {
+      cursor: not-allowed;
+      background: #D8D8D8;;
+      color: #ffffff;
+    }
+  }
+  &.lBlue{
+    background: #ffffff;
+    color: #3D50B7;
+    &:hover{
+      color: #8B96D7;
+    }
+    &:active{
+      background: #F2F4FD;
+      color: #3D50B7;
+    }
+    &:disabled {
+      cursor: not-allowed;
+      background: #D8D8D8;;
+      color: #ffffff;
+    }
+  }
+  &.clearOrange{
+    background: #ffffff;
+    border: 1px solid #f37a1f;
+    color: #f37a1f;
+    &:hover{
+      background:  #FF913F;
+      border: 1px solid #FF913F;
+      color: #ffffff;
+    }
+    &:active{
+      background: #F37A1F;
+      border: 1px solid #f37a1f;
+      color: #ffffff;
+    }
+    &:disabled {
+      cursor: not-allowed;
+      background: #D8D8D8;;
+      color: #ffffff;
+    }
+  }
+  &.clearBlue{
+    border: 1px solid #3D50B7;
+    background: #ffffff;
+    color: #3D50B7;
+    &:hover{
+      background: #4E63D3;
+      color: #ffffff;
+      border: 1px solid #4E63D3;
+    }
+    &:active{
+      background: #3D50B7;
+      color: #ffffff;
+      border: 1px solid #3D50B7;
+    }
+    &:disabled {
+      cursor: not-allowed;
+      background: #D8D8D8;;
+      color: #ffffff;
+    }
+  }
+}

@@ -1,0 +1,10 @@
+.sss-container {
+  margin-left: 12px;
+  margin-right: 12px;
+  &:first-child {
+    margin-left: 24px;
+  }
+  &:last-child {
+    margin-right: 24px;
+  }
+}

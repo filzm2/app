@@ -1,0 +1,258 @@
+/* ========================================================================
+   Component: Text
+ ========================================================================== */
+/* Style modifiers
+ ========================================================================== */
+
+.icm-text--header {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 22px;
+  line-height: 140%;
+}
+
+.icm-text--paragraph {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 140%;
+}
+
+.icm-text--small-medium {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 140%;
+}
+
+.icm-text--small {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 140%;
+}
+
+.icm-text--very-small {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 140%;
+}
+
+
+.icm-text-lead {
+  font-size: 1.5rem;
+  line-height: 1.5;
+  color: #333;
+}
+.icm-text-meta {
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: #999;
+}
+.icm-text-meta a {
+  color: #999;
+}
+.icm-text-meta a:hover {
+  color: #666;
+  text-decoration: none;
+}
+
+.icm-text-underline {
+  text-decoration: underline;
+  text-decoration-color: #000000;
+}
+/* Size modifiers
+ ========================================================================== */
+.icm-text-small {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+.icm-text-large {
+  font-size: 1.5rem;
+  line-height: 1.5;
+}
+.icm-text-default {
+  font-size: 16px;
+  line-height: 1.5;
+}
+/* Weight modifier
+ ========================================================================== */
+.icm-text-light {
+  font-weight: 300;
+}
+.icm-text-normal {
+  font-weight: 400;
+}
+.icm-text-500 {
+  font-weight: 500;
+}
+.icm-text-bold {
+  font-weight: 700;
+}
+.icm-text-lighter {
+  font-weight: lighter;
+}
+.icm-text-bolder {
+  font-weight: bolder;
+}
+/* Style modifier
+ ========================================================================== */
+.icm-text-italic {
+  font-style: italic;
+}
+/* Transform modifier
+ ========================================================================== */
+.icm-text-capitalize {
+  text-transform: capitalize !important;
+}
+.icm-text-uppercase {
+  text-transform: uppercase !important;
+}
+.icm-text-lowercase {
+  text-transform: lowercase !important;
+}
+/* Color modifiers
+ ========================================================================== */
+.icm-text-muted {
+  color: #999 !important;
+}
+.icm-text-emphasis {
+  color: #333 !important;
+}
+.icm-text-primary {
+  color: #3D50B7 !important;
+}
+.icm-text-secondary {
+  color: #222 !important;
+}
+.icm-text-success {
+  color: #32d296 !important;
+}
+.icm-text-warning {
+  color: #faa05a !important;
+}
+.icm-text-danger {
+  color: #f0506e !important;
+}
+/* Alignment modifiers
+ ========================================================================== */
+.icm-text-left {
+  text-align: left !important;
+}
+.icm-text-right {
+  text-align: right !important;
+}
+.icm-text-center {
+  text-align: center !important;
+}
+.icm-text-justify {
+  text-align: justify !important;
+}
+/* Phone landscape and bigger */
+@media (min-width: 640px) {
+  .icm-text-left\@s {
+    text-align: left !important;
+  }
+  .icm-text-right\@s {
+    text-align: right !important;
+  }
+  .icm-text-center\@s {
+    text-align: center !important;
+  }
+}
+/* Tablet landscape and bigger */
+@media (min-width: 960px) {
+  .icm-text-left\@m {
+    text-align: left !important;
+  }
+  .icm-text-right\@m {
+    text-align: right !important;
+  }
+  .icm-text-center\@m {
+    text-align: center !important;
+  }
+}
+/* Desktop and bigger */
+@media (min-width: 1200px) {
+  .icm-text-left\@l {
+    text-align: left !important;
+  }
+  .icm-text-right\@l {
+    text-align: right !important;
+  }
+  .icm-text-center\@l {
+    text-align: center !important;
+  }
+}
+/* Large screen and bigger */
+@media (min-width: 1600px) {
+  .icm-text-left\@xl {
+    text-align: left !important;
+  }
+  .icm-text-right\@xl {
+    text-align: right !important;
+  }
+  .icm-text-center\@xl {
+    text-align: center !important;
+  }
+}
+/*
+ * Vertical
+ */
+.icm-text-top {
+  vertical-align: top !important;
+}
+.icm-text-middle {
+  vertical-align: middle !important;
+}
+.icm-text-bottom {
+  vertical-align: bottom !important;
+}
+.icm-text-baseline {
+  vertical-align: baseline !important;
+}
+/* Wrap modifiers
+ ========================================================================== */
+/*
+ * Prevent text from wrapping onto multiple lines
+ */
+.icm-text-nowrap {
+  white-space: nowrap;
+}
+/*
+ * 1. Make sure a max-width is set after which truncation can occur
+ * 2. Prevent text from wrapping onto multiple lines, and truncate with an ellipsis
+ * 3. Fix for table cells
+ */
+.icm-text-truncate {
+  /* 1 */
+  max-width: 100%;
+  /* 2 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* 2 */
+th.icm-text-truncate,
+td.icm-text-truncate {
+  max-width: 0;
+}
+/*
+ * 1. Wrap long words onto the next line and break them if they are too long to fit
+ * 2. Legacy `word-wrap` as fallback for `overflow-wrap`
+ * 3. Fix `overflow-wrap` which doesn't work with table cells in Chrome, Opera, IE11 and Edge
+ *    Must use `break-all` to support IE11 and Edge
+ * Note: Not using `hyphens: auto;` because it hyphenates text even if not needed
+ */
+.icm-text-break {
+  /* 1 */
+  overflow-wrap: break-word;
+  /* 2 */
+  word-wrap: break-word;
+}
+/* 3 */
+th.icm-text-break,
+td.icm-text-break {
+  word-break: break-all;
+}

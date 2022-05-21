@@ -1,0 +1,101 @@
+.database-sql-alchemy {
+  &-tab {
+    padding: 10px 32px;
+    min-height: 360px;
+  }
+
+  &-base {
+  }
+
+  &-sql {
+    &-columns {
+      display: flex;
+      > div {
+        width: 50%;
+        margin-left: 23px;
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  }
+
+  &-performance {
+    padding-right: 10px;
+    &-field-row {
+      display: flex;
+      .mat-tooltip-icon {
+        margin-right: 22px;
+        margin-top: 12px;
+      }
+    }
+
+    &-checkboxes {
+      display: flex;
+      flex-direction: column;
+      margin-top: 5px;
+    }
+
+    .mat-form-field {
+      width: 30%;
+    }
+  }
+  &-tabs {
+    margin-top: 20px;
+  }
+
+  &-security {
+    &-columns {
+      display: flex;
+      gap: 20px;
+    }
+    &-column {
+      width: 50%;
+    }
+
+    .mat-textarea {
+      .mat-hint {
+        margin-top: 20px;
+      }
+    }
+
+    .mat-textarea {
+      min-height: 110px;
+      .mat-form-field-wrapper {
+        textarea {
+          min-height: 110px;
+        }
+        .mat-form-field-outline {
+          min-height: 110px;
+          height: auto;
+        }
+      }
+    }
+  }
+
+  mat-tab {
+    min-height: 240px;
+  }
+
+  .mat-tooltip-icon {
+    margin-left: 10px;
+  }
+
+  .mat-checkbox {
+    margin-bottom: 10px !important;
+  }
+
+  .mat-hint-title {
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .custom-form-field {
+    .mat-hint {
+      font-size: 12px;
+      margin-top: -11px;
+      display: block;
+      margin-left: 10px;
+      margin-bottom: 12px;
+    }
+  }
+}

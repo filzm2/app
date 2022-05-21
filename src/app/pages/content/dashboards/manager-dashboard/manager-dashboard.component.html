@@ -1,0 +1,334 @@
+<div class="dashboard-container__header">
+  <div class="dashboard-container__header-row">
+    <div class="dashboard-container__header-row__headline">
+      <div>
+        <div class="mat-h1 exd-title-bold dashboard-name">Дашборд</div>
+      </div>
+
+      <mat-icon
+        [ngClass]="{ checked: true }"
+        class="star-checkbox"
+        role="checkbox"
+        svgIcon="star"
+        (click)="setFavoriteStatus(); $event.stopPropagation()"
+      ></mat-icon>
+
+      <div
+        *ngIf="isPublished"
+        class="custom-badge custom-badge__primary-filled status-badge"
+        (click)="publishDashboard()"
+      >
+        Опубликовано
+      </div>
+
+      <div
+        *ngIf="!isPublished"
+        class="custom-badge custom-badge__primary status-badge"
+        (click)="publishDashboard()"
+      >
+        Черновик
+      </div>
+    </div>
+
+    <div class="dashboard-container__header-row__actions">
+      <div>
+        <button mat-icon-button (click)="toggleOpenFilters()">
+          <img
+            *ngIf="isFiltersShowed"
+            src="assets/icons/filter_list_active.svg"
+            width="36"
+            height="36"
+          />
+
+          <img *ngIf="!isFiltersShowed" width="36" height="36" src="assets/icons/filter_list.svg" />
+        </button>
+      </div>
+
+      <div class="popup-card-dropdown">
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <img src="assets/icons/more_dots.svg" />
+        </button>
+
+        <mat-menu #menu="matMenu">
+          <button
+            mat-menu-item
+            class="dashboard-menu-button"
+            (click)="onCopyLinkDashboardId(dashboardId)"
+          >
+            <img src="/assets/icons/ui-kit/base/link.svg" width="20" height="20" class="icon" />
+            Скопировать ссылку
+          </button>
+
+          <button
+            mat-menu-item
+            class="dashboard-menu-button"
+            (click)="onOpenDialogSendDashboardToEmail(dashboardId)"
+          >
+            <img
+              src="/assets/icons/ui-kit/base/email_24px.svg"
+              width="20"
+              height="20"
+              class="icon"
+            />
+            Отправить через email
+          </button>
+
+          <button
+            [disabled]="loading"
+            mat-menu-item
+            class="dashboard-menu-button"
+            (click)="reloadDashboard()"
+          >
+            <img
+              src="/assets/icons/ui-kit/base/refresh_24px.svg"
+              width="20"
+              height="20"
+              class="icon"
+            />
+            Обновить аналитическую панель
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+  </div>
+
+  <app-manager-filters
+    *ngIf="isFiltersShowed"
+    [dashboardFilters]="filterList"
+    (chooseData)="processFilter($event)"
+  >
+  </app-manager-filters>
+</div>
+
+<div class="dashboard-container__header">
+  <mat-tab-group mat-align-tabs="start" (selectedTabChange)="changeTab($event)">
+    <mat-tab label="Банк"></mat-tab>
+    <mat-tab label="Бизнес-линии"></mat-tab>
+    <mat-tab label="ДЗО" disabled></mat-tab>
+    <mat-tab label="Детализация бизнес-линий" disabled></mat-tab>
+    <mat-tab label="Региональная сеть" disabled></mat-tab>
+    <mat-tab label="Ключевые задачи" disabled></mat-tab>
+  </mat-tab-group>
+</div>
+
+<div class="dashboard-container__body">
+  <div class="dashboard-container__area" *ngIf="selectedTab === 0">
+    <div class="subtab-container">
+      <div class="dashboard-container__subtab plans">
+        <div
+          class="dashboard-container__subtab_group"
+          *ngFor="let group of completedListLeftNew; let i = index"
+        >
+          <div class="dashboard-container__card-title">
+            <div>{{ group.group }}</div>
+            <mat-slide-toggle class="red-toggle" *ngIf="i === 0" (change)="OnRedToggleChange()">
+              Только «красные» показатели
+            </mat-slide-toggle>
+          </div>
+          <ng-container *ngIf="!group.full && group.group !== 'Эффективность'">
+            <app-plan-card
+              *ngFor="let data of group.data | slice: 0:2"
+              [settings]="data"
+              [onlyRed]="onlyRedToggle"
+              (select)="processSelect($event)"
+            >
+            </app-plan-card>
+          </ng-container>
+          <ng-container *ngIf="!group.full && group.group === 'Эффективность'">
+            <app-plan-card
+              *ngFor="let data of group.data | slice: 0:3"
+              [settings]="data"
+              [onlyRed]="onlyRedToggle"
+              (select)="processSelect($event)"
+            >
+            </app-plan-card>
+          </ng-container>
+          <ng-container *ngIf="group.full">
+            <app-plan-card
+              *ngFor="let data of group.data"
+              [settings]="data"
+              [onlyRed]="onlyRedToggle"
+              (select)="processSelect($event)"
+            >
+            </app-plan-card>
+          </ng-container>
+          <div class="dashboard-container__subtab_footer" (click)="openFull(i)" *ngIf="!group.full">
+            Полный набор показателей <mat-icon svgIcon="down"></mat-icon>
+          </div>
+          <div class="dashboard-container__subtab_footer" (click)="closeFull(i)" *ngIf="group.full">
+            Сокращённый набор показателей <mat-icon svgIcon="down" class="rotate-arrow"></mat-icon>
+          </div>
+        </div>
+        <!-- <div class="dashboard-container__subtab_group">
+        <div class="dashboard-container__card-title">Баланс</div>
+        <app-plan-card *ngFor="let settings of testPlanSettings.balance" [settings]="settings">
+        </app-plan-card>
+        <div class="dashboard-container__subtab_footer">
+          Полный набор показателей <mat-icon svgIcon="down"></mat-icon>
+        </div>
+      </div>
+      <div class="dashboard-container__subtab_group">
+        <div class="dashboard-container__card-title">Доходы и расходы</div>
+        <app-plan-card
+          *ngFor="let settings of testPlanSettings.incomeAndExpenses"
+          [settings]="settings"
+        >
+        </app-plan-card>
+        <div class="dashboard-container__subtab_footer">
+          Полный набор показателей <mat-icon svgIcon="down"></mat-icon>
+        </div>
+      </div>
+      <div class="dashboard-container__subtab_group">
+        <div class="dashboard-container__card-title">Эффективность</div>
+        <app-plan-card *ngFor="let settings of testPlanSettings.efficiency" [settings]="settings">
+        </app-plan-card>
+        <div class="dashboard-container__subtab_footer">
+          Полный набор показателей <mat-icon svgIcon="down"></mat-icon>
+        </div>
+      </div> -->
+      </div>
+    </div>
+    <div class="dashboard-container__area-charts 1" *ngIf="completedListRight">
+      <div
+        class="dashboard-container__area-charts__name dashboard-container__card-title"
+        *ngIf="completedListRight"
+      >
+        {{ completedListRight[selectedIndicatorIndex]?.group }} -
+        {{ completedListRight[selectedIndicatorIndex]?.indicator }}
+      </div>
+      <div class="charts-row">
+        <div echarts [options]="chartDynamicOptions" style="width: 100%; height: 350px"></div>
+      </div>
+      <div
+        class="charts-row"
+        *ngIf="
+          completedListRight[selectedIndicatorIndex]?.indicator !== 'CSI' &&
+          completedListRight[selectedIndicatorIndex]?.indicator !== 'NPS'
+        "
+      >
+        <div echarts [options]="chartDecompositionOptions" style="width: 50%; height: 400px"></div>
+        <div echarts [options]="chartRatingOptions" style="width: 50%; height: 400px"></div>
+      </div>
+      <div
+        class="charts-row"
+        *ngIf="
+          completedListRight[selectedIndicatorIndex]?.indicator === 'CSI' ||
+          completedListRight[selectedIndicatorIndex]?.indicator === 'NPS'
+        "
+      >
+        <div echarts [options]="chartDecompositionOptions" style="width: 100%; height: 400px"></div>
+      </div>
+    </div>
+    <!-- <div class="dashboard-container__subtab"></div> -->
+  </div>
+
+  <div *ngIf="selectedTab === 1">
+    <mat-tab-group mat-align-tabs="start">
+      <mat-tab label="РБ">
+        <div class="dashboard-container__area">
+          <div class="subtab-container">
+            <div class="dashboard-container__subtab plans">
+              <app-director-card></app-director-card>
+              <div
+                class="dashboard-container__subtab_group"
+                *ngFor="let group of completedListLeft; let i = index"
+              >
+                <div class="dashboard-container__card-title">
+                  <div>{{ group.group }}</div>
+                  <mat-slide-toggle
+                    class="red-toggle"
+                    *ngIf="i === 0"
+                    (change)="OnRedToggleChange()"
+                  >
+                    Только «красные» показатели
+                  </mat-slide-toggle>
+                </div>
+                <ng-container *ngIf="!group.full && group.group !== 'Эффективность'">
+                  <app-plan-card
+                    *ngFor="let data of group.data | slice: 0:2"
+                    [settings]="data"
+                    [onlyRed]="onlyRedToggle"
+                    (select)="processSelect($event)"
+                  >
+                  </app-plan-card>
+                </ng-container>
+                <ng-container *ngIf="!group.full && group.group === 'Эффективность'">
+                  <app-plan-card
+                    *ngFor="let data of group.data | slice: 0:3"
+                    [settings]="data"
+                    [onlyRed]="onlyRedToggle"
+                    (select)="processSelect($event)"
+                  >
+                  </app-plan-card>
+                </ng-container>
+                <ng-container *ngIf="group.full">
+                  <app-plan-card
+                    *ngFor="let data of group.data"
+                    [settings]="data"
+                    [onlyRed]="onlyRedToggle"
+                    (select)="processSelect($event)"
+                  >
+                  </app-plan-card>
+                </ng-container>
+                <div
+                  class="dashboard-container__subtab_footer"
+                  (click)="openFull(i)"
+                  *ngIf="!group.full"
+                >
+                  Полный набор показателей <mat-icon svgIcon="down"></mat-icon>
+                </div>
+                <div
+                  class="dashboard-container__subtab_footer"
+                  (click)="closeFull(i)"
+                  *ngIf="group.full"
+                >
+                  Сокращённый набор показателей
+                  <mat-icon svgIcon="down" class="rotate-arrow"></mat-icon>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="dashboard-container__area-charts">
+            <div
+              class="dashboard-container__area-charts__name dashboard-container__card-title"
+              *ngIf="completedListRight"
+            >
+              {{ completedListRight[selectedIndicatorIndex]?.group }} -
+              {{ completedListRight[selectedIndicatorIndex]?.indicator }}
+            </div>
+            <div class="charts-row">
+              <div echarts [options]="chartDynamicOptions" style="width: 50%; height: 350px"></div>
+              <div echarts [options]="chartRatingOptions" style="width: 50%; height: 350px"></div>
+            </div>
+            <div
+              class="charts-row"
+              *ngIf="completedListRight[selectedIndicatorIndex]?.indicator !== 'CSI'"
+            >
+              <div
+                echarts
+                [options]="chartDecompositionTretiaryOptions"
+                style="width: 50%; height: 400px"
+              ></div>
+              <div
+                echarts
+                [options]="chartDecompositionOptions"
+                style="width: 50%; height: 400px"
+              ></div>
+            </div>
+            <div
+              class="charts-row"
+              *ngIf="completedListRight[selectedIndicatorIndex]?.indicator === 'CSI'"
+            >
+              <div
+                echarts
+                [options]="chartDecompositionOptions"
+                style="width: 100%; height: 400px"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="СМБ" disabled></mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

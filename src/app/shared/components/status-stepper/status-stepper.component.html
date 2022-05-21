@@ -1,0 +1,8 @@
+<div class="task_status">
+  <app-status-stepper-step
+  *ngFor="let step of progressStepper"
+  [progressStepperType] = "step"
+  [ngStyle] = "{'width': '100%'}"
+  class="sss-container"
+  ></app-status-stepper-step>
+</div>

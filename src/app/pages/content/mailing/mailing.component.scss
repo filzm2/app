@@ -1,0 +1,63 @@
+@import "../../../../styles/exd-colors.scss";
+
+.app-mailing-container {
+  .header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    box-sizing: border-box;
+    height: 76px;
+    padding: 0 0 16px 20px;
+    font-size: 18px;
+    font-weight: 600;
+    color: map-get($exd-primary, 0);
+  }
+
+  .divider {
+    border-top: 1px solid map-get($exd-icon, 300);
+  }
+
+  .table {
+    width: 100%;
+    margin-top: 20px;
+    padding: 0 20px;
+
+    .tr {
+      height: 48px;
+
+      .th {
+        padding: 0 20px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        text-align: left;
+        font-size: 14px;
+        font-weight: 600;
+        color: rgba(0, 0, 0, 0.54);
+      }
+
+      .td {
+        padding: 0 20px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+
+        .button {
+          padding: 10px 16px;
+          font-size: 18px;
+          border: none;
+          background-color: transparent;
+          cursor: pointer;
+          transition: background-color 0.1s;
+
+          &:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+            color: map-get($exd-psb-blue, 500);
+          }
+        }
+      }
+    }
+  }
+
+  .not-found {
+    margin-top: 20px;
+    padding: 0 40px;
+    color: map-get($exd-psb-blue, 500);
+  }
+}

@@ -1,0 +1,44 @@
+.dataset-edit-metric {
+  padding: 10px 30px;
+  min-height: 180px;
+
+  &-item {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 20px;
+    mat-form-field, app-form-field {
+      width: 100%;
+    }
+  }
+  app-icon-button {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+  }
+
+  mat-panel-title {
+    .header-label {
+      min-width: 180px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      width: 200px;
+      overflow: hidden;
+    }
+    .hidden-field {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      z-index: 10;
+      top: 16px;
+      left: 0px;
+      background: white;
+      border-radius: 8px;
+      transition: .3s;
+      padding: 4px;
+      &:focus {
+        opacity: 1;
+        width: auto;
+      }
+    }
+  }
+}

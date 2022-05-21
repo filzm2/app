@@ -1,0 +1,12 @@
+<mat-card>
+  <mat-card-content class="mcc-task-status" [ngClass] = '{"type-completed": !!stepStatus}'>
+    <div class="mcc-task-status-steps">
+      <div class="mcc-task-status-step" *ngFor="let step of progressStepperType.steps"
+           [ngClass]="'part_of_step_'+step.status.toLowerCase()"
+           [ngStyle]="{'width': toFloor(100/progressStepperType.steps.length) + '%'}"></div>
+    </div>
+    <div class="task_status_caption">
+      <span>{{progressStepperType.name}}</span>
+    </div>
+  </mat-card-content>
+</mat-card>

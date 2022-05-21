@@ -1,0 +1,242 @@
+.icm-color {
+  &-red {
+    color: #F31F1F;
+  }
+
+  &-orange {
+    color: #F37A1F;;
+  }
+
+  &-white {
+    color: #ffffff;
+  }
+
+  &-green {
+    color: #0A9F58;
+  }
+
+  &-blue {
+    color: #3D50B7;
+  }
+
+  &-clearBlue {
+    color: #F4F6FF;;
+  }
+
+  &-clearOrange {
+    color: #F37A1F;;
+  }
+
+  &-meta {
+    color: #D6D6D6;;
+  }
+
+  &-black {
+    color: #000000;
+  }
+
+  // grey
+  &-grey-100 {
+    color: #1A1A1A;
+  }
+
+  &-grey-80 {
+    color: #656565;
+  }
+
+  &-grey-60 {
+    color: #A1A1A1;
+  }
+
+  &-grey-40 {
+    color: #C7C7C7;
+  }
+
+  &-grey-10 {
+    color: #E4E4E4;
+  }
+
+  &-grey-5 {
+    color: #F1F1F1;
+  }
+
+  &-grey-0 {
+    color: #FAFAFA;
+  }
+
+  // primary
+  &-primary-100 {
+    color: #E36200;
+  }
+
+  &-primary-50 {
+    color: #F37A1F;
+  }
+
+  &-primary-30 {
+    color: #FFAC6D;
+  }
+
+  &-primary-20 {
+    color: #FFD2B1;
+  }
+
+  &-primary-10 {
+    color: #FFE8D7;
+  }
+
+  &-primary-5 {
+    color: #FFF2E8;
+  }
+
+  &-primary-0 {
+    color: #FFF7F1;
+  }
+
+  // secondary
+  &-secondary-100 {
+    color: #2648A4;
+  }
+
+  &-secondary-50 {
+    color: #2C5DE5;
+  }
+
+  &-secondary-30 {
+    color: #91ADFA;
+  }
+
+  &-secondary-20 {
+    color: #BFD0FD;
+  }
+
+  &-secondary-10 {
+    color: #D7E1FE;
+  }
+
+  &-secondary-5 {
+    color: #EEF3FF;
+  }
+
+  &-secondary-0 {
+    color: #F4F7FF;
+  }
+
+  //support
+  // success
+  &-success-100 {
+    color: #086343;
+  }
+
+  &-success-50 {
+    color: #008556;
+  }
+
+  &-success-5 {
+    color: #D6F3E2;
+  }
+
+  // warning
+  &-warning-100 {
+    color: #A64F21;
+  }
+
+  &-warning-50 {
+    color: #E86825;
+  }
+
+  &-warning-5 {
+    color: #FFE1BE;
+  }
+
+  // alert
+  &-alert-100 {
+    color: #9F1B1F;
+  }
+
+  &-alert-50 {
+    color: #DE1C22;
+  }
+
+  &-alert-5 {
+    color: #F9D3D4;
+  }
+
+  // violet
+  &-violet-100 {
+    color: #664296;
+  }
+
+  &-violet-50 {
+    color: #8853CC;
+  }
+
+  &-violet-5 {
+    color: #F1E6FF;
+  }
+
+  // brown
+  &-brown-100 {
+    color: #7D4A30;
+  }
+
+  &-brown-50 {
+    color: #A6623E;
+  }
+
+  &-brown-5 {
+    color: #FFECE2;
+  }
+
+  // teal
+  &-teal-100 {
+    color: #348989;
+  }
+
+  &-teal-50 {
+    color: #3EA6A6;
+  }
+
+  &-teal-5 {
+    color: #DFFFFF;
+  }
+
+  // leafGreen
+  &-leafGreen-100 {
+    color: #628B0D;
+  }
+
+  &-leafGreen-50 {
+    color: #7EB40F;
+  }
+
+  &-leafGreen-5 {
+    color: #EFFFCE;
+  }
+
+  // yellow
+  &-yellow-100 {
+    color: #A59501;
+  }
+
+  &-yellow-50 {
+    color: #CDB900;
+  }
+
+  &-yellow-5 {
+    color: #FFFBD5;
+  }
+
+  // turquoise
+  &-turquoise-100 {
+    color: #2DAE90;
+  }
+
+  &-turquoise-50 {
+    color: #37D5AF;
+  }
+
+  &-turquoise-5 {
+    color: #E2FFF8;
+  }
+}
